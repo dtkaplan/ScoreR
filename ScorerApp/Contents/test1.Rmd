@@ -1,0 +1,30 @@
+Testing the WriteScoreR Package for Rmd files
+========================================================
+
+### Danny Kaplan
+### May 21, 2013
+
+This problem tests the `WriteScoreR` package.
+
+First, you must load the package:
+```{r message=FALSE,warning=FALSE}
+require(WriteScoreR)
+```
+Generally you will want to do this with an `include=FALSE` directive.
+
+Next, give a unique ID to the set of items.
+```{r}
+newScorerSet("test1-v0.1")
+```
+
+Now you can ask your questions:
+
+You may find it easier to define the items in one place and use them in another:
+```{r}
+spainrain = choiceItem(Algeria=list(pts=0,hint="Wrong continent"),
+                       Spain=list(pts=2,reward="My Fair Lady!"))
+hurricanes= choiceItem(often=list(pts=0),usually="no","hardly ever"="yes")
+```
+
+* The rain in BLANK falls mainly on the plain. `r I(spainrain)`
+* In Hartford, Hereford and Hampshire, hurricanes BLANK happen: `r I(hurricanes)`

@@ -1,0 +1,10 @@
+Package: WriteScoreR
+Type: Package
+Title: Creating Exercises for the ScoreR online system
+Version: 0.1
+Date: 2013-05-21
+Author: Daniel Kaplan
+Maintainer: Daniel Kaplan <dtkaplan@gmail.com>
+Description: Utilities for creating questions for use in the ScoreR online scoring system
+Depends: R (>= 2.15.0), RJSONIO
+License: To be determined.  All rights reserved.
