@@ -19,6 +19,20 @@ newScorerSet("test1-v0.1")
 
 Now you can ask your questions:
 
+### A Multiple Choice
+
+
+
+
+When in the course of human events ...
+```{r}
+f = newMC(pts=5) # Ordinarily, make this silent
+```
+* `r I(f(FALSE))` "you decide to bail."
+* `r I(f(TRUE))` "it becomes necessary ..."
+* `r I(f(FALSE))` "you've got to do what you've got to do ..." 
+`r I(f(finish=TRUE))`
+
 What's your opinion? 
 
 `r I(textItem(name="try text"))`

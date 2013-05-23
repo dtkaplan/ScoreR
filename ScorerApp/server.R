@@ -1,4 +1,5 @@
 library(shiny)
+library(RJSONIO)
 
 # permanent data (until database system is set up)
 passwords <- read.csv("passwords.csv")
@@ -45,6 +46,11 @@ shinyServer(function(input, output) {
     else return(NULL)
   })
   
+  
+  # Each problem should have a set of filenames/URLs and flags about grading, interactivity, etc.  
+
+  
+  # just for debugging.
   statusMessage = reactive({
     vals1 = input$in1
     vals2 = input$info1

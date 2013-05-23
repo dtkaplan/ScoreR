@@ -20,9 +20,10 @@
 #' nextScorerItem(name="algebra")
 #' @export
 newScorerSet <-function(ID) {
-  assign("fixedChoiceCount", 0, envir=.scorerEnv)
-  assign("textCount", 0, envir=.scorerEnv)
-  assign("uniqueID", ID, envir=.scorerEnv)
+  assign("fixedChoiceCount", 0, envir=.scorerEnv) # count of select/dropdown
+  assign("textCount", 0, envir=.scorerEnv) # count of text entry
+  assign("multChoiceCount", 0, envir=.scorerEnv) # Count of multiple choice
+  assign("uniqueID", ID, envir=.scorerEnv) # which item set is being displayed
   assign("timeStamp", date(),envir=.scorerEnv)
   # Put boilerplate, e.g. CSS definitions, here.
 }
@@ -49,6 +50,35 @@ nextScorerItem <- function(counter="fixedChoiceCount",increment=TRUE,name="defau
               )
          )
 }
+#' @export
+newMC <- function(name=NULL,pts=1,hint="",reward="",markers=LETTERS){
+  itemInfo <- nextScorerItem(counter="multiChoiceCount",name=name)
+  thisCount <- 0
+  # a function to create
+  res <- function(correct=TRUE,credit=as.numeric(correct),finish=FALSE,hint="",reward=""){
+      if(thisCount < 0) stop("You've already closed this multiple choice with 'finish=TRUE'")
+      if(finish) {
+        thisCount <<- -10
+        return("")
+      }
+      thisCount <<- thisCount + 1
+      thisName <- paste("MC",infoItem$itemN,sep="")
+      thisID <- paste("MCitem",thisCount,sep="")
+      identifier <- markers[thisCount]
+      # GET THIS IN THE SAME ORDER AS THE OTHERS, like textEntry()
+      #
+      # IMPORTANT to do this
+      # Right now, I'm just trying to get the formatting right.
+      vals = list(pts=pts,hint=hint,reward=reward,contents=identifier)
+      itemStr = paste("<label for='",thisID,
+                  "'><input type='radio' name='",thisName,
+                  "' id='",thisID,"' value='",toJSON(vals),
+                  "'> <b>",identifier,"</b></label>", sep="")
+      return(itemStr)
+  }
+  return(res) # the function to create items   
+}
+
 #' @export
 textItem <- function(name=NULL,pts=1,hint=""){
   itemInfo <- nextScorerItem(counter="textCount",name=name)
@@ -114,6 +144,7 @@ choiceItem <- function(name=NULL,style="dropdown",pts=0,hint="",reward="",...) {
 .scorerEnv <- new.env()
 assign("fixedChoiceCount",0,envir=.scorerEnv)
 assign("textCount",0,envir=.scorerEnv)
+assign("multiChoiceCount",0,envir=.scorerEnv)
 assign("uniqueID",NULL,envir=.scorerEnv)
 assign("timeStamp",NULL,envir=.scorerEnv)
 

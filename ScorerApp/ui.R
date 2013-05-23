@@ -9,6 +9,12 @@ possibleProblems <- dir("Contents")
 htmlFiles <- possibleProblems[grep(".+\\.html",possibleProblems)]
 htmlNames <- sub(".html","",htmlFiles)
 
+# get the list of current assignments:
+# Make this into something that reads from the assignment structure:
+assignmentList <- function(){c("One","Two","Three")}
+# Read from the problems under that assignment
+problemList <- function(){c("First","Second")}
+
 shinyUI(
   pageWithSidebar(
     headerPanel(paste(courseName,"Assignments")),
@@ -35,12 +41,18 @@ shinyUI(
         tabPanel("Problem",
                  htmlOutput("probContents")
                 ),
-         tabPanel("Scores",
+        tabPanel("Scores",
                  selectInput("scoreChoice","What do you want to see?",
-                             c("Current problem","All problems")),
+                             c("Current problem","Current assignment", "All assignments")),
                  h2(tableOutput("submissions")) # to track submissions for now
-                ),
-         tabPanel("Account Maintenance",
+        ),
+        tabPanel("Assignments",
+                  selectInput("assignmentList", "Assignments:",
+                              assignmentList()),
+                  selectInput("problemList","Problems in that assignment:",
+                              problemList())
+        ),
+        tabPanel("Account Maintenance",
                  h2(textOutput("AccountHeader"))
                 )
         )
