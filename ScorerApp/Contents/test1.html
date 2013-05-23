@@ -173,6 +173,10 @@ hljs.initHighlightingOnLoad();
 </script>
 
 
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
 
 
 </head>
@@ -198,11 +202,145 @@ hljs.initHighlightingOnLoad();
 <pre><code class="r">newScorerSet(&quot;test1-v0.1&quot;)
 </code></pre>
 
+<p>Put any answers in an &ldquo;aside&rdquo; HTML FLAG
+<aside>This will only be shown when the answers are on.</aside> But this will be shown all the time.
+<aside>Here&#39;s another aside.</aside></p>
+
 <p>Now you can ask your questions:</p>
 
-<p>What&#39;s your opinion? </p>
+<h3>A Multiple Choice</h3>
 
-<p><textarea cols='60' rows='5' id='text1' placeholder='Your answer here ...'></textarea> <input type='radio' name='trigger1' id='g2' value='F'><input type='radio' name='trigger1' id='g1' value='M'><select style='visibility: hidden' width='5' name='info1'><option value='{
+<p>When in the course of human events &hellip;</p>
+
+<pre><code class="r">f = newMC(pts = 5)  # Ordinarily, make this silent
+</code></pre>
+
+<p><label for='MCitem1'><input type='radio' name='MC1' id='MCitem1' value='{
+ "pts":      0,
+"hint": "",
+"itemInfo": {
+ "setID": "test1-v0.1",
+"itemN":      1,
+"name": "1" 
+},
+"type": "MC",
+"reward": "",
+"content": "A" 
+}'> <b>A</b></label> &ldquo;you decide to bail.&rdquo;
+<label for='MCitem2'><input type='radio' name='MC1' id='MCitem2' value='{
+ "pts":      5,
+"hint": "",
+"itemInfo": {
+ "setID": "test1-v0.1",
+"itemN":      1,
+"name": "1" 
+},
+"type": "MC",
+"reward": "",
+"content": "B" 
+}'> <b>B</b></label> &ldquo;it becomes necessary &hellip;&rdquo;
+<label for='MCitem3'><input type='radio' name='MC1' id='MCitem3' value='{
+ "pts":      0,
+"hint": "",
+"itemInfo": {
+ "setID": "test1-v0.1",
+"itemN":      1,
+"name": "1" 
+},
+"type": "MC",
+"reward": "",
+"content": "C" 
+}'> <b>C</b></label> &ldquo;you&#39;ve got to do what you&#39;ve got to do &hellip;&rdquo; 
+<span id='MCout1' class='shiny-html-output'> </span></p>
+
+<p>Which of these in in Europe?</p>
+
+<ul>
+<li><label for='MCitem1'><input type='radio' name='MC2' id='MCitem1' value='{
+"pts":      5,
+"hint": "",
+"itemInfo": {
+"setID": "test1-v0.1",
+"itemN":      2,
+"name": "2" 
+},
+"type": "MC",
+"reward": "",
+"content": "First" 
+}'> <b>First</b></label> Albania</li>
+<li><label for='MCitem2'><input type='radio' name='MC2' id='MCitem2' value='{
+"pts":      0,
+"hint": "",
+"itemInfo": {
+"setID": "test1-v0.1",
+"itemN":      2,
+"name": "2" 
+},
+"type": "MC",
+"reward": "",
+"content": "Second" 
+}'> <b>Second</b></label> Brazil</li>
+<li><label for='MCitem3'><input type='radio' name='MC2' id='MCitem3' value='{
+"pts":      0,
+"hint": "",
+"itemInfo": {
+"setID": "test1-v0.1",
+"itemN":      2,
+"name": "2" 
+},
+"type": "MC",
+"reward": "",
+"content": "Third" 
+}'> <b>Third</b></label> China 
+<span id='MCout2' class='shiny-html-output'> </span></li>
+</ul>
+
+<h4>And another</h4>
+
+<p>What&#39;s the answer?  </p>
+
+<p><label for='MCitem1'><input type='radio' name='MC3' id='MCitem1' value='{
+ "pts":      5,
+"hint": "",
+"itemInfo": {
+ "setID": "test1-v0.1",
+"itemN":      3,
+"name": "3" 
+},
+"type": "MC",
+"reward": "",
+"content": "A" 
+}'> <b>A</b></label> Chatty, but not as long as writing something like \( x^2 \sqrt{x} \)</p>
+
+<p><label for='MCitem2'><input type='radio' name='MC3' id='MCitem2' value='{
+ "pts":      0,
+"hint": "",
+"itemInfo": {
+ "setID": "test1-v0.1",
+"itemN":      3,
+"name": "3" 
+},
+"type": "MC",
+"reward": "",
+"content": "B" 
+}'> <b>B</b></label> Short and to the point, but with a <code>variable</code></p>
+
+<p><label for='MCitem3'><input type='radio' name='MC3' id='MCitem3' value='{
+ "pts":      0,
+"hint": "",
+"itemInfo": {
+ "setID": "test1-v0.1",
+"itemN":      3,
+"name": "3" 
+},
+"type": "MC",
+"reward": "",
+"content": "C" 
+}'> <b>C</b></label> Long and repetetive, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, </p>
+
+<p><span id='MCout3' class='shiny-html-output'> </span></p>
+
+<p>What&#39;s your opinion? <textarea cols='30' rows='1' id='text1' placeholder='Your answer here ...'></textarea> <input type='radio' name='trigger1' id='g2' value='F'><input type='radio' name='trigger1' id='g1' value='M'><select style='visibility: hidden' width='5' name='info1'><option value='{
  "pts":      1,
 "hint": "",
 "itemInfo": {
@@ -215,7 +353,7 @@ hljs.initHighlightingOnLoad();
 "content": "Free text" 
 }'>Ignore me</option></select><span id='tout1' value='spanvalue' class='shiny-html-output'></span></p>
 
-<p>Do you care to revise that? <textarea cols='60' rows='5' id='text2' placeholder='Your answer here ...'></textarea> <input type='radio' name='trigger2' id='g2' value='F'><input type='radio' name='trigger2' id='g1' value='M'><select style='visibility: hidden' width='5' name='info2'><option value='{
+<p>Do you care to revise that? <textarea cols='30' rows='2' id='text2' placeholder='Your answer here ...'></textarea> <input type='radio' name='trigger2' id='g2' value='F'><input type='radio' name='trigger2' id='g1' value='M'><select style='visibility: hidden' width='5' name='info2'><option value='{
  "pts":      1,
 "hint": "",
 "itemInfo": {

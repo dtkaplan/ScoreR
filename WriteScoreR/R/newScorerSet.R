@@ -54,25 +54,34 @@ nextScorerItem <- function(counter="fixedChoiceCount",increment=TRUE,name="defau
 newMC <- function(name=NULL,pts=1,hint="",reward="",markers=LETTERS){
   itemInfo <- nextScorerItem(counter="multiChoiceCount",name=name)
   thisCount <- 0
+  # These must in be in the same order in all the versions, e.g., choiceItem(),textItem()
+  vals <- list(pts=pts,hint=hint,itemInfo=itemInfo)
+  vals$type="MC"
+  vals$reward=reward
+  
   # a function to create
   res <- function(correct=TRUE,credit=as.numeric(correct),finish=FALSE,hint="",reward=""){
       if(thisCount < 0) stop("You've already closed this multiple choice with 'finish=TRUE'")
       if(finish) {
-        thisCount <<- -10
-        return("")
+        thisCount <<- -1 # Signal that it's finished to trigger error if re-used.
+        return(paste("<span id='MCout",itemInfo$itemN,
+                     "' class='shiny-html-output'> </span>",
+                     sep=""))
       }
       thisCount <<- thisCount + 1
-      thisName <- paste("MC",infoItem$itemN,sep="")
+      thisName <- paste("MC",itemInfo$itemN,sep="")
       thisID <- paste("MCitem",thisCount,sep="")
       identifier <- markers[thisCount]
-      # GET THIS IN THE SAME ORDER AS THE OTHERS, like textEntry()
-      #
-      # IMPORTANT to do this
-      # Right now, I'm just trying to get the formatting right.
-      vals = list(pts=pts,hint=hint,reward=reward,contents=identifier)
+      # update the information for this item
+      valsForThisChoice <- vals
+      # scale points depending on whether answer is correct
+      valsForThisChoice$pts <- valsForThisChoice$pts*credit 
+      valsForThisChoice$hint <- hint
+      valsForThisChoice$reward <- reward
+      valsForThisChoice$content=identifier # just a placeholder
       itemStr = paste("<label for='",thisID,
                   "'><input type='radio' name='",thisName,
-                  "' id='",thisID,"' value='",toJSON(vals),
+                  "' id='",thisID,"' value='",toJSON(valsForThisChoice),
                   "'> <b>",identifier,"</b></label>", sep="")
       return(itemStr)
   }
@@ -80,14 +89,14 @@ newMC <- function(name=NULL,pts=1,hint="",reward="",markers=LETTERS){
 }
 
 #' @export
-textItem <- function(name=NULL,pts=1,hint=""){
+textItem <- function(name=NULL,pts=1,hint="",rows=2,cols=30){
   itemInfo <- nextScorerItem(counter="textCount",name=name)
   # These must in be in the same order in all the versions, e.g., choiceItem(),textItem()
   vals <- list(pts=pts,hint=hint,itemInfo=itemInfo)
   vals$type="Free text"
   vals$reward=""
   vals$content="Free text" # just a placeholder
-  res <- paste("<textarea cols='60' rows='5' id='text",
+  res <- paste("<textarea cols='",cols,"' rows='",rows,"' id='text",
                itemInfo$itemN,
                "' placeholder='Your answer here ...'></textarea>",
                sep="")
@@ -121,14 +130,15 @@ choiceItem <- function(name=NULL,style="dropdown",pts=0,hint="",reward="",...) {
       vals <- dots[[k]]
     else
       vals <- dots[k]
-    vals$itemInfo <- itemInfo
-    vals$type <- "Fixed Choice"
-    vals$pts <- pts
-    vals$hint <- hint
-    vals$reward <- reward
-    vals$content <- nms[k]
+    vv = list()
+    vv$itemInfo <- itemInfo
+    vv$type <- "Fixed Choice"
+    vv$pts <- ifelse( "pts" %in% names(vals), vals$pts, pts) 
+    vv$hint <- ifelse( "hint" %in% names(vals), vals$hint, hint)
+    vv$reward <- ifelse( "reward" %in% names(vals), vals$reward, reward)
+    vv$content <- nms[k]
     opt <- paste("<option value='",
-                 toJSON(vals),
+                 toJSON(vv),
                  "'>",nms[k],"</option>",sep="")
     res <- paste(res, opt)
   }

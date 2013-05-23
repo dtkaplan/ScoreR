@@ -17,6 +17,10 @@ Next, give a unique ID to the set of items.
 newScorerSet("test1-v0.1")
 ```
 
+Put any answers in an "aside" HTML FLAG
+<aside>This will only be shown when the answers are on.</aside> But this will be shown all the time.
+<aside>Here's another aside.</aside>
+
 Now you can ask your questions:
 
 ### A Multiple Choice
@@ -28,14 +32,34 @@ When in the course of human events ...
 ```{r}
 f = newMC(pts=5) # Ordinarily, make this silent
 ```
-* `r I(f(FALSE))` "you decide to bail."
-* `r I(f(TRUE))` "it becomes necessary ..."
-* `r I(f(FALSE))` "you've got to do what you've got to do ..." 
+`r I(f(FALSE))` "you decide to bail."
+`r I(f(TRUE))` "it becomes necessary ..."
+`r I(f(FALSE))` "you've got to do what you've got to do ..." 
 `r I(f(finish=TRUE))`
 
-What's your opinion? 
+Which of these in in Europe?
 
-`r I(textItem(name="try text"))`
+`r f = newMC(pts=5,markers=c("First","Second","Third","Fourth")) # Ordinarily, make this silent`
+
+- `r I(f(TRUE))` Albania
+- `r I(f(FALSE))` Brazil
+- `r I(f(FALSE))` China 
+`r I(f(finish=TRUE))`
+
+#### And another
+
+What's the answer? `r f = newMC(pts=5)` 
+
+`r I(f(TRUE))` Chatty, but not as long as writing something like $x^2 \sqrt{x}$
+
+`r I(f(FALSE))` Short and to the point, but with a `variable`
+
+`r I(f(FALSE))` Long and repetetive, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, over and over, 
+
+`r I(f(finish=TRUE))`
+
+
+What's your opinion? `r I(textItem(name="try text",rows=1))`
 
 Do you care to revise that? `r I(textItem(name="revise text"))`
 

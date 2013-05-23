@@ -1,0 +1,63 @@
+Writing ScoreR Problems
+========================================================
+
+```{r include=FALSE}
+require(WriteScoreR)
+newScorerSet("intro-DTK-2013-05-23")
+```
+
+<aside>
+
+### With answers displayed!
+This example shows the conditional display of answers using the "aside" HTML flag.</aside>
+
+A **ScoreR** problem is a Rmd/HTML file containing zero or more items.  There are three types of items:
+
+
+### Selection from a set.
+
+This is intended for a set of short answers, e.g. one-word or number.
+
+```{r include=FALSE}
+spainrain = choiceItem(name="Rain",Algeria=list(pts=0,hint="Wrong continent"),
+                       Spain=list(pts=2,reward="My Fair Lady!"))
+hurricanes= choiceItem(name="Hurricanes", often=list(pts=0),usually=list(pts=1),"hardly ever"=list(pts=2))
+```
+
+* The rain in BLANK falls mainly on the plain. `r I(spainrain)`
+* In Hartford, Hereford and Hampshire, hurricanes BLANK happen: `r I(hurricanes)`
+
+<aside>You can also put answers in the markup, which will be displayed only if the Answer field is set to `TRUE`</aside>
+
+### Multiple choice, which can have short or long answers.
+
+Which of these is the start of the "Declaration of Independence"?
+
+```{r include=FALSE}
+f = newMC(pts=5,name="Declaration") # Ordinarily, make this silent
+```
+`r I(f(FALSE))` "We the people of the United States of America, in order to form a more perfect union ..."
+
+`r I(f(TRUE))` "When in the course of human events, it becomes necessary ..."
+
+`r I(f(FALSE))` "Four score and seven years ago, our forefathers brought forth upon this continent, a new nation, conceived in liberty and dedicated to the proposition that all men are created equal." 
+`r I(f(finish=TRUE))`
+
+### Free text.
+
+What would you like to write a question about? `r I(textItem(name="question-topic",rows=1))`
+
+You can re-size the text box on most browsers.  
+
+**Remember to press** the radio button to submit your answer.
+
+## For the future
+
+1. Numerical entry
+2. The markup contains provisions for hints and rewards.  These are not yet displayed.
+3. In an interactive mode, the result will be shown immediately.
+
+
+
+#### Danny Kaplan
+#### May 22, 2013

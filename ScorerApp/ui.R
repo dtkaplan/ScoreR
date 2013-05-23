@@ -4,16 +4,12 @@ courseName="Math 155"
 # This is a string containing JavaScript code
 loginFlag = "output.loginStatus=='Login Successful!'"
 
-# Get the list of problems
-possibleProblems <- dir("Contents")
-htmlFiles <- possibleProblems[grep(".+\\.html",possibleProblems)]
-htmlNames <- sub(".html","",htmlFiles)
 
-# get the list of current assignments:
-# Make this into something that reads from the assignment structure:
-assignmentList <- function(){c("One","Two","Three")}
-# Read from the problems under that assignment
-problemList <- function(){c("First","Second")}
+
+#possibleProblems <- dir("Contents")
+#htmlFiles <- possibleProblems[grep(".+\\.html",possibleProblems)]
+#htmlNames <- sub(".html","",htmlFiles)
+
 
 shinyUI(
   pageWithSidebar(
@@ -28,13 +24,12 @@ shinyUI(
       conditionalPanel(
         condition = "output.loginStatus == 'Login Successful!'",
         p(textOutput("asLoggedInStatus")),
-        selectInput("ThisProb", "Problem: ",c("Select Problem",htmlNames) )
+        uiOutput("assignmentSelector"),
+        uiOutput("problemSelector")
       ),
-      verbatimTextOutput("mainStatus"),
-      verbatimTextOutput("testingTextOutput")
+      verbatimTextOutput("mainStatus")
     ),
     mainPanel(
-      verbatimTextOutput("inProblemOutput"),
       conditionalPanel(
         condition = loginFlag, 
         tabsetPanel(
@@ -45,12 +40,6 @@ shinyUI(
                  selectInput("scoreChoice","What do you want to see?",
                              c("Current problem","Current assignment", "All assignments")),
                  h2(tableOutput("submissions")) # to track submissions for now
-        ),
-        tabPanel("Assignments",
-                  selectInput("assignmentList", "Assignments:",
-                              assignmentList()),
-                  selectInput("problemList","Problems in that assignment:",
-                              problemList())
         ),
         tabPanel("Account Maintenance",
                  h2(textOutput("AccountHeader"))
