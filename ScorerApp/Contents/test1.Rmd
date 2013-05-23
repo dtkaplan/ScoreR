@@ -19,6 +19,12 @@ newScorerSet("test1-v0.1")
 
 Now you can ask your questions:
 
+What's your opinion? 
+
+`r I(textItem(name="try text"))`
+
+Do you care to revise that? `r I(textItem(name="revise text"))`
+
 You may find it easier to define the items in one place and use them in another:
 ```{r}
 spainrain = choiceItem(Algeria=list(pts=0,hint="Wrong continent"),

@@ -200,6 +200,34 @@ hljs.initHighlightingOnLoad();
 
 <p>Now you can ask your questions:</p>
 
+<p>What&#39;s your opinion? </p>
+
+<p><textarea cols='60' rows='5' id='text1' placeholder='Your answer here ...'></textarea> <input type='radio' name='trigger1' id='g2' value='F'><input type='radio' name='trigger1' id='g1' value='M'><select style='visibility: hidden' width='5' name='info1'><option value='{
+ "pts":      1,
+"hint": "",
+"itemInfo": {
+ "setID": "test1-v0.1",
+"itemN":      1,
+"name": "try text" 
+},
+"type": "Free text",
+"reward": "",
+"content": "Free text" 
+}'>Ignore me</option></select><span id='tout1' value='spanvalue' class='shiny-html-output'></span></p>
+
+<p>Do you care to revise that? <textarea cols='60' rows='5' id='text2' placeholder='Your answer here ...'></textarea> <input type='radio' name='trigger2' id='g2' value='F'><input type='radio' name='trigger2' id='g1' value='M'><select style='visibility: hidden' width='5' name='info2'><option value='{
+ "pts":      1,
+"hint": "",
+"itemInfo": {
+ "setID": "test1-v0.1",
+"itemN":      2,
+"name": "revise text" 
+},
+"type": "Free text",
+"reward": "",
+"content": "Free text" 
+}'>Ignore me</option></select><span id='tout2' value='spanvalue' class='shiny-html-output'></span></p>
+
 <p>You may find it easier to define the items in one place and use them in another:</p>
 
 <pre><code class="r">spainrain = choiceItem(Algeria = list(pts = 0, hint = &quot;Wrong continent&quot;), Spain = list(pts = 2, 

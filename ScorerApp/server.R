@@ -11,25 +11,29 @@ responses <- NULL
 shinyServer(function(input, output) {
   
   # Function to handle a submission
-  doSubmit <- function(val) {
-    res = val
+  doSubmit <- function(val,text="NA") {
     if (isValidJSON(I(val))) {
       info <- fromJSON(I(val))
+      # package up submission for saving
       submit <- list(user=loggedIn(),when=date(),pts=info$pts,
                      set=info$itemInfo$setID,
                      itemN=info$itemInfo$itemN,
                      name=info$itemInfo$name,
+                     text=toJSON(I(text)),
                      content=info$content)
       cat(as.character(submit))
-      responses <<- rbind(responses,submit)
-      # ADD IN TO THIS the value of the answer:,
-      #                   ans=info$answer)
-      # need to add this to newScorerSet.R
+      # Don't submit blank responses, otherwise they will be sent on initialization of the page
+      if( text != "") responses <<- rbind(responses,submit)
       res = as.character(info$itemInfo$setID)
+      cat(paste(" with set ID",res))
+      invisible(3)
+    }
+    else {
+      info=list(itemInfo=list(setID=3,itemN=2,name="BOGUS"),content="unknown",pts=0)
+      cat("initializing ...")
+      invisible(1)
     }
     
-    cat(res)
-    invisible(3)
   }
   
   # is the user logged in?
@@ -43,8 +47,8 @@ shinyServer(function(input, output) {
   
   statusMessage = reactive({
     vals1 = input$in1
-    vals2 = input$in2
-    return(paste("in1: ",vals1,"  | in2: ", vals2,"goodbye")) #vals
+    vals2 = input$info1
+    return(paste(  vals1,"  |  ", vals2,"goodbye")) #vals
   })
   
   # Store the problem name and contents for later use
@@ -63,6 +67,8 @@ shinyServer(function(input, output) {
     if( input$ThisProb == "Select Problem")
       return("<center>No problem selected.</center>")
     fileName <- paste("Contents/",input$ThisProb, ".html",sep="")
+    # MAYBE AT THE START PUT A DIRECTIVE TO KILL THE ANSWER BLOCKS, perhaps by 
+    # Substituting out everything between the blocks.
     hoo <- readChar(fileName, file.info(fileName)$size)
     # MathJax update at the end of the file.
     # This kills the activity of the Shiny controls
@@ -86,8 +92,17 @@ shinyServer(function(input, output) {
  output$testingTextOutput <- renderPrint({statusMessage()})
   
  output$inProblemOutput <- renderPrint({statusMessage()})
-  
-  output$tout1 <- renderPrint({cat(input$text1)})
+#  output$tout1 <- renderPrint({input$text1})
+  output$tout1 <- renderPrint({input$trigger1 #just to trigger the text
+                               doSubmit(val=isolate(input$info1),text=isolate(input$text1))})
+  output$tout2 <- renderPrint({input$trigger2 #just to trigger the text
+                               doSubmit(val=isolate(input$info2),text=isolate(input$text2))})
+  output$tout3 <- renderPrint({input$trigger3 #just to trigger the text
+                               doSubmit(val=isolate(input$info3),text=isolate(input$text3))})
+  output$tout4 <- renderPrint({input$trigger4 #just to trigger the text
+                               doSubmit(val=isolate(input$info4),text=isolate(input$text4))})
+  output$tout5 <- renderPrint({input$trigger5 #just to trigger the text
+                               doSubmit(val=isolate(input$info5),text=isolate(input$text5))})
   # Multiple choice
   output$out1 <- renderPrint({doSubmit(input$in1)}) 
   output$out2 <- renderPrint({doSubmit(input$in2)}) 
