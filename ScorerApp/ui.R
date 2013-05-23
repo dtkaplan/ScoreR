@@ -37,8 +37,9 @@ shinyUI(
                  htmlOutput("probContents")
                 ),
         tabPanel("Scores",
+                 p("Make sure to select an assignment and problem if you want specifics."),
                  selectInput("scoreChoice","What do you want to see?",
-                             c("Current problem","Current assignment", "All assignments")),
+                             c("All assignments","Current assignment","Current problem")),
                  h2(tableOutput("submissions")) # to track submissions for now
         ),
         tabPanel("Account Maintenance",

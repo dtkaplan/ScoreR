@@ -1,5 +1,30 @@
 library(shiny)
 library(RJSONIO)
+# creating the database
+library(RSQLite)
+db = dbConnect(dbDriver("SQLite"),dbname="submissions.db",loadable.extensions=TRUE)
+dbGetQuery(db,paste("create table if not exists submit (",
+                    "id INTEGER PRIMARY KEY,",
+                    "setID TEXT NOT NULL,",
+                    "assignment TEXT NOT NULL,",
+                    "probID TEXT NOT NULL,",
+                    "itemName TEXT NOT NULL,",
+                    "firsttime TEXT NOT NULL,",
+                    "lasttime TEXT NOT NULL,",
+                    "score INTEGER,",
+                    "answer TEXT NOT NULL,",
+                    "freetext TEXT NOT NULL,",
+                    "user TEXT NOT NULL)",sep=""))
+# words = c("apple","berry","cherry","danish","egret")
+# for (k in 1:length(words)) {
+#   assignment=paste("assigment",sqrt(k),sep="")
+#   problem = paste("prob",k^2,sep="")
+#   score = k 
+#   user = paste("Fred",k,sep="-")
+#   dbGetQuery(db,paste("insert into submit values (null, '",
+#                       assignment,"','",problem,"','",
+#                       date(),"','",date(),"',",score,",'",words[k],"','",user,"')",sep=""))
+# }
 
 # permanent data (until database system is set up)
 passwords <- read.csv("passwords.csv",stringsAsFactors=FALSE)
@@ -11,38 +36,41 @@ assignmentList <- with(problemSets,Assignment[!duplicated(Assignment)])
 responses <- NULL
 
 
-# Function to handle a submission
-doSubmit <- function(val,text="NA",who="invalid") {
-#  cat(paste(text,"\n"),file=stderr())
-#  cat(paste(val,"\n"),file=stderr())
-  if (isValidJSON(I(val))) {
-    info <- fromJSON(I(val))
-    # package up submission for saving
-    submit <- list(user=who,when=date(),pts=info$pts,
-                   set=info$itemInfo$setID,
-                   itemN=info$itemInfo$itemN,
-                   name=info$itemInfo$name,
-                   text=toJSON(I(text)),
-                   content=info$content)
-    #cat("OK")
-    # cat(as.character(submit))
-    # Don't submit blank responses, otherwise they will be sent on initialization of the page
-    if( text != "") responses <<- rbind(responses,submit)
-    # res <- as.character(info$itemInfo$setID)
-    # cat(paste(" with set ID",res))
-    invisible(3)
-  }
-  else {
-    #cat("initializing ...")
-    invisible(1)
-  }
-  
-}
+
 
 
 # =================
 # Define server logic required to plot various variables against mpg
 shinyServer(function(input, output) {
+  
+  # Function to handle a submission
+  doSubmit <- function(val,text="NA",who="invalid") {
+    #  cat(paste(text,"\n"),file=stderr())
+    #  cat(paste(val,"\n"),file=stderr())
+    if (isValidJSON(I(val))) {
+      info <- fromJSON(I(val))
+
+      # Don't submit blank responses, otherwise they will be sent on initialization of the page
+      if( text != "" ) {
+        dbGetQuery(db,paste("insert into submit values (null, '",
+                          info$itemInfo$setID,"','",
+                          input$thisAssignment,"','",
+                          input$thisProblem,"','",
+                          info$itemInfo$name,"','",
+                          date(),"','",date(),"',",
+                          info$pts,",'",
+                          info$content,"','",
+                          toJSON(I(text)),"','",
+                          who,"')",sep=""))
+        }
+      invisible(3)
+    }
+    else {
+      #cat("initializing ...")
+      invisible(1)
+    }
+    
+  }
   
   output$assignmentSelector <- renderUI({
     selectInput("thisAssignment","Select Assignment:",assignmentList)
@@ -58,7 +86,7 @@ shinyServer(function(input, output) {
 
   # is the user logged in?
   loggedIn <- reactive({
-    return("for debugging") # SKIP login during development
+ #   return("for debugging") # SKIP login during development
     m <- subset(passwords, name==input$loginID) ## use tolower()?
     if( nrow(m)>0  & m[1,]$pass==input$password) 
       return(m[1,]$name)
@@ -145,8 +173,39 @@ shinyServer(function(input, output) {
   output$MCout5 <- renderPrint({try(doSubmit(input$MC5,who=loggedIn()))})
   # For the Scores Tab ==================
   # Need to figure out how to trigger this when "Scores" tab is revealed.
-  output$submissions <- renderTable({input$scoreChoice
-                                     responses})
+  
+  ## TO DO:
+  # Add an "out of" score.
+  # In the relevant display, list all of the problems and assignments, even those that the person hasn't answered.
+  output$submissions <- 
+    renderTable(
+      { 
+        user <- loggedIn()
+        query <- paste("select assignment,probID,answer,score,lasttime ",
+                      "from submit where user=='",
+                      user,"'",sep="")
+       # tab = dbGetQuery(db, query)
+       # tab = aggregate( score ~ assignment, data=tab, FUN=sum)
+       # return(tab)
+        cat(paste("Choice: ", input$scoreChoice), file=stderr())
+        
+        if (input$scoreChoice=="Current problem") {
+          query <- paste( query, " and probID=='",
+                          input$thisProblem,"'",sep="") 
+          tab <- dbGetQuery(db, query)
+        }
+        if (input$scoreChoice=="Current assignment") {
+          query <- paste( query, " and assignment=='",
+                          input$thisAssignment,"'",
+                          sep="")
+          tab <- dbGetQuery(db, query)
+          tab = aggregate(score ~ probID, data=tab, FUN=sum)
+        }
+        if (input$scoreChoice=="All assignments") {
+          tab <- dbGetQuery(db, query)
+          tab <- aggregate(score ~ assignment, data=tab, FUN=sum)
+        }
+        return(tab)})
   
 })
 
