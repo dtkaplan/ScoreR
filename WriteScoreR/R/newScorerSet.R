@@ -29,7 +29,10 @@ newScorerSet <-function(ID) {
 }
 #' @rdname newScorerSet
 #' @export
-nextScorerItem <- function(counter="fixedChoiceCount",increment=TRUE,name="default"){
+nextScorerItem <- function(counter="fixedChoiceCount",
+                           increment=TRUE,
+                           name="default",
+                           possiblePoints=1){
   nextScorerCount <- function(increment=TRUE) {
     .nextScorerCount <- function() {
       n <- get(counter, envir=.scorerEnv)
@@ -46,13 +49,14 @@ nextScorerItem <- function(counter="fixedChoiceCount",increment=TRUE,name="defau
   itemN=nextScorerCount(increment)
   return(list(setID=get("uniqueID",envir=.scorerEnv),
               itemN=itemN,
-              name=ifelse(is.null(name),as.character(itemN),name)
+              name=ifelse(is.null(name),as.character(itemN),name),
+              totalpts=possiblePoints
               )
          )
 }
 #' @export
 newMC <- function(name=NULL,pts=1,hint="",reward="",markers=LETTERS){
-  itemInfo <- nextScorerItem(counter="multiChoiceCount",name=name)
+  itemInfo <- nextScorerItem(counter="multiChoiceCount",name=name,possiblePoints=pts)
   thisCount <- 0
   # These must in be in the same order in all the versions, e.g., choiceItem(),textItem()
   vals <- list(pts=pts,hint=hint,itemInfo=itemInfo)
@@ -60,7 +64,7 @@ newMC <- function(name=NULL,pts=1,hint="",reward="",markers=LETTERS){
   vals$reward=reward
   
   # a function to create
-  res <- function(correct=TRUE,credit=as.numeric(correct),finish=FALSE,hint="",reward=""){
+  res <- function(correct=TRUE,credit=as.numeric(correct),finish=FALSE,hint="",reward="Right!"){
       if(thisCount < 0) stop("You've already closed this multiple choice with 'finish=TRUE'")
       if(finish) {
         thisCount <<- -1 # Signal that it's finished to trigger error if re-used.
@@ -89,7 +93,7 @@ newMC <- function(name=NULL,pts=1,hint="",reward="",markers=LETTERS){
 }
 
 #' @export
-textItem <- function(name=NULL,pts=1,hint="",rows=2,cols=30){
+textItem <- function(name=NULL,pts=1,hint="",rows=2,cols=30,possiblePoints=1){
   itemInfo <- nextScorerItem(counter="textCount",name=name)
   # These must in be in the same order in all the versions, e.g., choiceItem(),textItem()
   vals <- list(pts=pts,hint=hint,itemInfo=itemInfo)
@@ -116,27 +120,41 @@ textItem <- function(name=NULL,pts=1,hint="",rows=2,cols=30){
                "' value='spanvalue' class='shiny-html-output'></span>",sep="")
 }
 
+# For marking up individual items
+yes <- function(hint="Yes",credit=TRUE){
+  return(list(credit=credit,hint=hint))
+}
+no <- function(hint="Sorry",credit=FALSE){
+  yes(hint=hint,credit=credit)
+}
+
 #' @export
-choiceItem <- function(name=NULL,style="dropdown",pts=0,hint="",reward="",...) {
+selectSet <- function(name=NULL,style="dropdown",totalPts=1,hint="",reward="Right!",...) {
   dots <- list(...)
   nms <- names(dots)
-  itemInfo <- nextScorerItem(name=name)
+  itemInfo <- nextScorerItem(name=name,possiblePoints=totalPts)
   res <- paste("<select name='in",itemInfo$itemN,
                "'><option value='NA' selected>UNANSWERED</option>",
                sep="")
+  vv <- list()
+  vv$itemInfo <- itemInfo
+  vv$type <- "Fixed Choice"
   for (k in 1:length(dots)) {
     # make sure that it's a list.
-    if( is.list(dots[[k]]))
+    thisItem <- 
+    if( is.list(dots[[k]])) {
       vals <- dots[[k]]
-    else
-      vals <- dots[k]
-    vv = list()
-    vv$itemInfo <- itemInfo
-    vv$type <- "Fixed Choice"
-    vv$pts <- ifelse( "pts" %in% names(vals), vals$pts, pts) 
-    vv$hint <- ifelse( "hint" %in% names(vals), vals$hint, hint)
-    vv$reward <- ifelse( "reward" %in% names(vals), vals$reward, reward)
+      vv$pts <- totalPts*vals$credit
+      vv$hint <- vals$hint
+      vv$reward <- vals$reward
+    }
+    else {
+      vv$pts <- ifelse(dots[k],as.numeric(totalPts),0) # Accept TRUE and FALSE to indicate credit
+      vv$hint <- hint
+      vv$reward <- reward
+    }
     vv$content <- nms[k]
+
     opt <- paste("<option value='",
                  toJSON(vv),
                  "'>",nms[k],"</option>",sep="")

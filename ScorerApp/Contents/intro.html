@@ -155,64 +155,120 @@ hr {
 
 <p>This is intended for a set of short answers, e.g. one-word or number.</p>
 
+<p>DOCUMENT THIS IN selectSet.Rmd &ndash; can use numbers in quotes, can use TRUE and FALSE to indicate correctness, can give a hint in the yes/no function.</p>
+
 <ul>
 <li>The rain in BLANK falls mainly on the plain. <select name='in1'><option value='NA' selected>UNANSWERED</option> <option value='{
 "itemInfo": {
 "setID": "intro-DTK-2013-05-23",
 "itemN":      1,
-"name": "Rain" 
+"name": "Rain",
+"totalpts":      1 
 },
 "type": "Fixed Choice",
 "pts":      0,
 "hint": "Wrong continent",
-"reward": "",
 "content": "Algeria" 
 }'>Algeria</option> <option value='{
 "itemInfo": {
 "setID": "intro-DTK-2013-05-23",
 "itemN":      1,
-"name": "Rain" 
+"name": "Rain",
+"totalpts":      1 
 },
 "type": "Fixed Choice",
-"pts":      2,
-"hint": "",
-"reward": "My Fair Lady!",
+"pts":      0,
+"hint": "Sorry",
+"content": "1492" 
+}'>1492</option> <option value='{
+"itemInfo": {
+"setID": "intro-DTK-2013-05-23",
+"itemN":      1,
+"name": "Rain",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts":      1,
+"hint": "Yes",
 "content": "Spain" 
 }'>Spain</option> </select><span id='out1' class='shiny-html-output'> </span></li>
 <li>In Hartford, Hereford and Hampshire, hurricanes BLANK happen: <select name='in2'><option value='NA' selected>UNANSWERED</option> <option value='{
 "itemInfo": {
 "setID": "intro-DTK-2013-05-23",
 "itemN":      2,
-"name": "Hurricanes" 
+"name": "Hurricanes",
+"totalpts":      1 
 },
 "type": "Fixed Choice",
 "pts":      0,
-"hint": "",
-"reward": "",
+"hint": "Sorry",
 "content": "often" 
 }'>often</option> <option value='{
 "itemInfo": {
 "setID": "intro-DTK-2013-05-23",
 "itemN":      2,
-"name": "Hurricanes" 
+"name": "Hurricanes",
+"totalpts":      1 
 },
 "type": "Fixed Choice",
-"pts":      1,
-"hint": "",
-"reward": "",
+"pts":      0,
+"hint": "Sorry",
 "content": "usually" 
 }'>usually</option> <option value='{
 "itemInfo": {
 "setID": "intro-DTK-2013-05-23",
 "itemN":      2,
-"name": "Hurricanes" 
+"name": "Hurricanes",
+"totalpts":      1 
 },
 "type": "Fixed Choice",
-"pts":      2,
-"hint": "",
-"reward": "",
+"pts":      1,
+"hint": "Yes",
 "content": "hardly ever" 
 }'>hardly ever</option> </select><span id='out2' class='shiny-html-output'> </span></li>
+<li>Horses race at : <select name='in3'><option value='NA' selected>UNANSWERED</option> <option value='{
+"itemInfo": {
+"setID": "intro-DTK-2013-05-23",
+"itemN":      3,
+"name": "Horses",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"Ascot":      1 
+},
+"hint": "",
+"reward": "Right!",
+"content": "Ascot" 
+}'>Ascot</option> <option value='{
+"itemInfo": {
+"setID": "intro-DTK-2013-05-23",
+"itemN":      3,
+"name": "Horses",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"Pimlico":      1 
+},
+"hint": "",
+"reward": "Right!",
+"content": "Pimlico" 
+}'>Pimlico</option> <option value='{
+"itemInfo": {
+"setID": "intro-DTK-2013-05-23",
+"itemN":      3,
+"name": "Horses",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"Yankee Stadium":      0 
+},
+"hint": "",
+"reward": "Right!",
+"content": "Yankee Stadium" 
+}'>Yankee Stadium</option> </select><span id='out3' class='shiny-html-output'> </span></li>
 </ul>
 
 <p><aside>You can also put answers in the markup, which will be displayed only if the Answer field is set to <code>TRUE</code></aside></p>
@@ -227,10 +283,11 @@ hr {
 "itemInfo": {
  "setID": "intro-DTK-2013-05-23",
 "itemN":      1,
-"name": "Declaration" 
+"name": "Declaration",
+"totalpts":      5 
 },
 "type": "MC",
-"reward": "",
+"reward": "Right!",
 "content": "A" 
 }'> <b>A</b></label> &ldquo;We the people of the United States of America, in order to form a more perfect union &hellip;&rdquo;</p>
 
@@ -240,10 +297,11 @@ hr {
 "itemInfo": {
  "setID": "intro-DTK-2013-05-23",
 "itemN":      1,
-"name": "Declaration" 
+"name": "Declaration",
+"totalpts":      5 
 },
 "type": "MC",
-"reward": "",
+"reward": "Right!",
 "content": "B" 
 }'> <b>B</b></label> &ldquo;When in the course of human events, it becomes necessary &hellip;&rdquo;</p>
 
@@ -253,10 +311,11 @@ hr {
 "itemInfo": {
  "setID": "intro-DTK-2013-05-23",
 "itemN":      1,
-"name": "Declaration" 
+"name": "Declaration",
+"totalpts":      5 
 },
 "type": "MC",
-"reward": "",
+"reward": "Right!",
 "content": "C" 
 }'> <b>C</b></label> &ldquo;Four score and seven years ago, our forefathers brought forth upon this continent, a new nation, conceived in liberty and dedicated to the proposition that all men are created equal.&rdquo; 
 <span id='MCout1' class='shiny-html-output'> </span></p>
@@ -269,7 +328,8 @@ hr {
 "itemInfo": {
  "setID": "intro-DTK-2013-05-23",
 "itemN":      1,
-"name": "question-topic" 
+"name": "question-topic",
+"totalpts":      1 
 },
 "type": "Free text",
 "reward": "",

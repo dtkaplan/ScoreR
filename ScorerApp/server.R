@@ -12,19 +12,10 @@ dbGetQuery(db,paste("create table if not exists submit (",
                     "firsttime TEXT NOT NULL,",
                     "lasttime TEXT NOT NULL,",
                     "score INTEGER,",
+                    "possible INTEGER,",
                     "answer TEXT NOT NULL,",
                     "freetext TEXT NOT NULL,",
                     "user TEXT NOT NULL)",sep=""))
-# words = c("apple","berry","cherry","danish","egret")
-# for (k in 1:length(words)) {
-#   assignment=paste("assigment",sqrt(k),sep="")
-#   problem = paste("prob",k^2,sep="")
-#   score = k 
-#   user = paste("Fred",k,sep="-")
-#   dbGetQuery(db,paste("insert into submit values (null, '",
-#                       assignment,"','",problem,"','",
-#                       date(),"','",date(),"',",score,",'",words[k],"','",user,"')",sep=""))
-# }
 
 # permanent data (until database system is set up)
 passwords <- read.csv("passwords.csv",stringsAsFactors=FALSE)
@@ -47,22 +38,54 @@ shinyServer(function(input, output) {
   doSubmit <- function(val,text="NA",who="invalid") {
     #  cat(paste(text,"\n"),file=stderr())
     #  cat(paste(val,"\n"),file=stderr())
+    prob <- probData() # Get the data on the selected problem, File, Answers, etc.
+    if( !prob$Accept | !prob$Available) invisible(0) # don't accept submission
+    
+    # TO DO : if (prob$Accept=="Immediate") flash up the hint or reward.  
+    
     if (isValidJSON(I(val))) {
       info <- fromJSON(I(val))
-
+  
+      # This if() is to avoid overly fast updates from textEntry objects
+      # which appear to send an update every few characters or seconds
       # Don't submit blank responses, otherwise they will be sent on initialization of the page
       if( text != "" ) {
-        dbGetQuery(db,paste("insert into submit values (null, '",
+        # check if the problem has an earlier entry
+        searchQuery = paste("select * from submit where ",
+                            "user='",who,"' and ",
+                            "assignment='",input$thisAssignment,"' and ",
+                            "probID='",input$thisProblem,"' and ",
+                            "itemName='",info$itemInfo$name,"'",
+                            sep="")
+        res = dbGetQuery(db,searchQuery)
+        # cat(paste(searchQuery,"\n"),file=stderr())
+        if( nrow(res) == 0 ) {
+          query = paste("insert into submit values (null, '",
                           info$itemInfo$setID,"','",
                           input$thisAssignment,"','",
                           input$thisProblem,"','",
                           info$itemInfo$name,"','",
                           date(),"','",date(),"',",
-                          info$pts,",'",
+                          info$pts,",", # points scored
+                          info$itemInfo$totalpts,",'", # points possible
                           info$content,"','",
                           toJSON(I(text)),"','",
-                          who,"')",sep=""))
+                          who,"')",sep="")
+          # cat(paste(query,"\n"),file=stderr())
+          dbGetQuery(db,query)
         }
+        else { # replace the item
+          # cat(paste("item id",res$id,"\n"),file=stderr())
+          query = paste("update submit set ",
+                        "answer='",info$content,"',",
+                        "freetext='",toJSON(I(text)),"',",
+                        "score=",info$pts,",",
+                        "lasttime='",date(),"' ",
+                        "where id='",res$id[1],"'",sep="")
+          # cat(query,file=stderr())
+          dbGetQuery(db,query)
+        }
+      }
       invisible(3)
     }
     else {
@@ -86,7 +109,7 @@ shinyServer(function(input, output) {
 
   # is the user logged in?
   loggedIn <- reactive({
- #   return("for debugging") # SKIP login during development
+    return("for debugging") # SKIP login during development
     m <- subset(passwords, name==input$loginID) ## use tolower()?
     if( nrow(m)>0  & m[1,]$pass==input$password) 
       return(m[1,]$name)
@@ -116,9 +139,14 @@ shinyServer(function(input, output) {
       return("<center>No problem selected.</center>")
     
     prob <- probData() # Get the data on the selected problem, File, Answers, etc.
-    cat(paste("File name: ", prob$File,"\n"),file=stderr())
-    contents <- readChar(prob$File, file.info(prob$File)$size)
-
+#    cat(paste("File name: ", prob$File,"\n"),file=stderr())
+    
+    # Check to see if it's available.  If not, give a message to that effect.
+    if (prob$Available) contents <- readChar(prob$File, file.info(prob$File)$size)
+    else contents <- paste("Problem '",prob$Problem,
+                           "' in assignment '",prob$Assignment,
+                           "' not yet available.",sep="")
+    
     if( !prob$Answers ) # Strip answers from the HTML file
       contents <- gsub("<aside.*?</aside>","",contents)
     # The regex will match the first closing aside, so can handle multiple asides
@@ -181,29 +209,51 @@ shinyServer(function(input, output) {
     renderTable(
       { 
         user <- loggedIn()
-        query <- paste("select assignment,probID,answer,score,lasttime ",
+        query <- paste("select assignment,probID,answer,score,possible,lasttime,firsttime ",
                       "from submit where user=='",
                       user,"'",sep="")
        # tab = dbGetQuery(db, query)
        # tab = aggregate( score ~ assignment, data=tab, FUN=sum)
        # return(tab)
-        cat(paste("Choice: ", input$scoreChoice), file=stderr())
+ #       cat(paste("Choice: ", input$scoreChoice,"\n"), file=stderr())
         
         if (input$scoreChoice=="Current problem") {
-          query <- paste( query, " and probID=='",
-                          input$thisProblem,"'",sep="") 
-          tab <- dbGetQuery(db, query)
+          if( input$thisProblem == "Select Problem") tab=data.frame("No problem selected"=0)
+          else {
+            prob <- probData() # Get the data on the selected problem, File, Answers, etc.
+            query <- paste( query, " and probID=='",
+                            input$thisProblem,"'",sep="") 
+            tab <- dbGetQuery(db, query)
+            if (!prob$Answers) tab$score <- NULL  # hide the scores
+          }
         }
         if (input$scoreChoice=="Current assignment") {
           query <- paste( query, " and assignment=='",
                           input$thisAssignment,"'",
                           sep="")
           tab <- dbGetQuery(db, query)
-          tab = aggregate(score ~ probID, data=tab, FUN=sum)
+          tab <- merge(tab,problemSets, # See if the answers are released
+                       by.x=c("assignment","probID"),
+                       by.y=c("Assignment","Problem"))
+          # Kepp all the problems in this assignment so that the report shows zero for 
+          # those not yet done.
+          tab$score[!tab$Answers] <- NA # Don't show scores unless answers are available
+          if (nrow(tab) != 0)tab = aggregate(cbind(score,possible) ~ probID, data=tab, FUN=sum)
+          else tab=data.frame("No problem answers released"=0) # just to show the message
         }
         if (input$scoreChoice=="All assignments") {
           tab <- dbGetQuery(db, query)
-          tab <- aggregate(score ~ assignment, data=tab, FUN=sum)
+          tab <- merge(tab,problemSets, # see if the answers are released
+                       by.x=c("assignment","probID"),
+                       by.y=c("Assignment","Problem"))
+          # TO DO
+          # Keep all the assignments so that the report shows zero for those not
+          # yet done.
+          
+          # get rid of the unreleased ones
+          tab <- subset(tab,Answers)
+          if (nrow(tab) != 0) tab <- aggregate(cbind(score,possible) ~ assignment, data=tab, FUN=sum)
+          else tab=data.frame("No problem answers released"=0)
         }
         return(tab)})
   
