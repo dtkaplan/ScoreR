@@ -37,7 +37,7 @@ shinyServer(function(input, output) {
   # Function to handle a submission
   doSubmit <- function(val,text="NA",who="invalid") {
     #  cat(paste(text,"\n"),file=stderr())
-    #  cat(paste(val,"\n"),file=stderr())
+    # cat(paste(val,"\n"),file=stderr())
     prob <- probData() # Get the data on the selected problem, File, Answers, etc.
     if( !prob$Accept | !prob$Available) invisible(0) # don't accept submission
     

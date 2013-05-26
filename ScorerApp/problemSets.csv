@@ -1,6 +1,8 @@
 Assignment,Problem,Accept,Available,Answers,Mode,File,Note
 "Writing ScoreR Problems","Intro","TRUE","TRUE","TRUE","NA","./Contents/intro.html","Due on Thursday"
-"Writing ScoreR Problems","Answers","FALSE","FALSE","TRUE","NA","./Contents/intro.html","Another note"
+"Writing ScoreR Problems","Select from a Set","TRUE","TRUE","TRUE","NA","./Contents/SelectSet.html","NA"
+"Writing ScoreR Problems","Multiple Choice","TRUE","TRUE","TRUE","NA","./Contents/MultipleChoice.html","NA"
+"Writing ScoreR Problems","Answers to Intro","FALSE","FALSE","TRUE","NA","./Contents/intro.html","Another note"
 "Chapter 1","Two.1","TRUE","TRUE","FALSE","NA","./Contents/test1.html","Again, a note"
 "Chapter 1","Two.1withanswers","TRUE","TRUE","TRUE","NA","./Contents/test1.html","Still another note"
 

@@ -63,7 +63,7 @@ newMC <- function(name=NULL,pts=1,hint="",reward="",markers=LETTERS){
   vals$type="MC"
   vals$reward=reward
   
-  # a function to create
+  # a function to create multiple-choice items
   res <- function(correct=TRUE,credit=as.numeric(correct),finish=FALSE,hint="",reward="Right!"){
       if(thisCount < 0) stop("You've already closed this multiple choice with 'finish=TRUE'")
       if(finish) {
