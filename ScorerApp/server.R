@@ -1,7 +1,34 @@
 library(shiny)
 library(RJSONIO)
-# creating the database
 library(RSQLite)
+
+## Logging functions
+library(logging)
+basicConfig()
+addHandler(writeToFile, logger="shiny", file="/tmp/shiny.log")
+
+logit <- function(...) {
+  logwarn(paste(gsub("\\n", "", list(...)), collapse=" "), logger="shiny.module")
+}
+
+## some helpers
+isFalsy <- function(x) is.null(x) || is.na(x) || (is.character(x) && x == "") || (is.numeric(x) && (is.nan(x) || x==0))
+
+## handles hidden values
+from_JSON <- function(x) {
+  x <- RJSONIO::fromJSON(x)
+  val <- x$val
+  if(x$hidden) {
+    con <- textConnection(val)
+    val <- readRDS(con)
+    close(con)
+  }
+  val
+}
+
+
+##################################################
+## creating the database
 db = dbConnect(dbDriver("SQLite"),dbname="submissions.db",loadable.extensions=TRUE)
 dbGetQuery(db,paste("create table if not exists submit (",
                     "id INTEGER PRIMARY KEY,",
@@ -15,6 +42,7 @@ dbGetQuery(db,paste("create table if not exists submit (",
                     "answer TEXT NOT NULL,",
                     "freetext TEXT NOT NULL,",
                     "user TEXT NOT NULL)",sep=""))
+
 # words = c("apple","berry","cherry","danish","egret")
 # for (k in 1:length(words)) {
 #   assignment=paste("assigment",sqrt(k),sep="")
@@ -39,20 +67,35 @@ responses <- NULL
 
 
 
-# =================
-# Define server logic required to plot various variables against mpg
+## =================
 shinyServer(function(input, output) {
-  
-  # Function to handle a submission
-  doSubmit <- function(val,text="NA",who="invalid") {
-    #  cat(paste(text,"\n"),file=stderr())
-    #  cat(paste(val,"\n"),file=stderr())
-    if (isValidJSON(I(val))) {
-      info <- fromJSON(I(val))
+  logit("Call shiny sever")
 
-      # Don't submit blank responses, otherwise they will be sent on initialization of the page
-      if( text != "" ) {
-        dbGetQuery(db,paste("insert into submit values (null, '",
+  # Function to handle a submission
+  
+  doSubmit <- function(val,text="NA",who="invalid") {
+    if(is.null(val) || is.na(val) || !isValidJSON(I(val))) {
+      return(invisible(1))
+    }
+
+    
+    info <- from_JSON(I(val))
+
+    ## some things still need grading!
+    switch(info$type,
+           "NumericInput" = {
+             ## adjust points for numeric input if outside tolerance
+             ans <- as.numeric(info$ans); tolerance <- as.numeric(info$tolerance)
+             info$content <- student_ans <- as.numeric(text)
+             if(is.na(student_ans) || abs(student_ans - ans) > tolerance) info$pts <- 0
+           },
+           "Fixed Choice" = { text = info$content },
+           "MC"           = { text = info$content }
+           )
+                     
+    ## Don't submit blank responses, otherwise they will be sent on initialization of the page
+    if(!isFalsy(text)) {
+      dbGetQuery(db,paste("insert into submit values (null, '",
                           info$itemInfo$setID,"','",
                           input$thisAssignment,"','",
                           input$thisProblem,"','",
@@ -62,14 +105,8 @@ shinyServer(function(input, output) {
                           info$content,"','",
                           toJSON(I(text)),"','",
                           who,"')",sep=""))
-        }
-      invisible(3)
     }
-    else {
-      #cat("initializing ...")
-      invisible(1)
-    }
-    
+    invisible(3)
   }
   
   output$assignmentSelector <- renderUI({
@@ -102,7 +139,7 @@ shinyServer(function(input, output) {
   probData <- reactive({
 #    cat(paste("A:",input$thisAssignment,
 #              "P:", input$thisProblem,"\n"),file=stderr())
-    probs <- subset(problemSets,Assignment==input$thisAssignment & Problem == input$thisProblem)
+    probs <- subset(problemSets, Assignment==input$thisAssignment & Problem == input$thisProblem)
     if( nrow(probs)==0) stop("BUG: No such problem in problem list.")
     if( nrow(probs)>1 ) warning(paste(
       "More than one problem matches:",input$thisProblem, 
@@ -112,10 +149,19 @@ shinyServer(function(input, output) {
    
   probHTML <- reactive({        
     # Character string "Select Problem" is a flag not to load in any problem
+
+    if(is.null(input$thisProblem)) {
+      logit("null problem")
+      logit(names(input))
+      return()
+    }
+    
     if( input$thisProblem == "Select Problem")
       return("<center>No problem selected.</center>")
     
     prob <- probData() # Get the data on the selected problem, File, Answers, etc.
+
+    
     cat(paste("File name: ", prob$File,"\n"),file=stderr())
     contents <- readChar(prob$File, file.info(prob$File)$size)
 
@@ -142,37 +188,38 @@ shinyServer(function(input, output) {
     HTML(probHTML())
   })
   
-  output$mainStatus <- renderPrint({statusMessage()})
+#  output$mainStatus <- renderPrint({statusMessage()})
   
 
-  output$tout1 <- renderPrint({input$trigger1 #just to trigger the text
-                               doSubmit(val=isolate(input$info1),text=isolate(input$text1),who=loggedIn())})
-  output$tout2 <- renderPrint({input$trigger2 #just to trigger the text
-                               doSubmit(val=isolate(input$info2),text=isolate(input$text2),who=loggedIn())})
-  output$tout3 <- renderPrint({input$trigger3 #just to trigger the text
-                               doSubmit(val=isolate(input$info3),text=isolate(input$text3),who=loggedIn())})
-  output$tout4 <- renderPrint({input$trigger4 #just to trigger the text
-                               doSubmit(val=isolate(input$info4),text=isolate(input$text4),who=loggedIn())})
-  output$tout5 <- renderPrint({input$trigger5 #just to trigger the text
-                               doSubmit(val=isolate(input$info5),text=isolate(input$text5),who=loggedIn())})
-  # Choice from List
-  output$out1 <- renderPrint({doSubmit(input$in1,who=loggedIn())}) 
-  output$out2 <- renderPrint({doSubmit(input$in2,who=loggedIn())}) 
-  output$out3 <- renderPrint({doSubmit(input$in3,who=loggedIn())}) 
-  output$out4 <- renderPrint({doSubmit(input$in4,who=loggedIn())}) 
-  output$out5 <- renderPrint({doSubmit(input$in5,who=loggedIn())}) 
   
-  # Multiple Choice
-  #
-  # BUG: I don't know why I have to wrap this in try().  If not, on initialization I get
-  # an error message which shows up in the document.
-  output$MCout1 <- renderPrint({try(doSubmit(input$MC1,who=loggedIn()))}) 
-  output$MCout2 <- renderPrint({try(doSubmit(input$MC2,who=loggedIn()))})
-  output$MCout3 <- renderPrint({try(doSubmit(input$MC3,who=loggedIn()))})
-  output$MCout4 <- renderPrint({try(doSubmit(input$MC4,who=loggedIn()))})
-  output$MCout5 <- renderPrint({try(doSubmit(input$MC5,who=loggedIn()))})
-  # For the Scores Tab ==================
-  # Need to figure out how to trigger this when "Scores" tab is revealed.
+    output$mainStatus <- renderPrint({
+      val <- input$nin1
+    })
+
+
+  ## connect the various controls to call doSubmit. Names match those from writeR
+  sapply(1:10, function(n) {
+    output[[sprintf("out%s", n)]]  <- renderPrint({doSubmit(input[[sprintf("in%s", n)]],
+                                                            
+                                                            who=loggedIn())})
+    output[[sprintf("nout%s", n)]]  <- renderPrint({doSubmit(input[[sprintf("ninfo%s", n)]],
+                                                             text=input[[sprintf("nin%s", n)]],  who=loggedIn())})
+
+    
+    output[[sprintf("tout%s", n)]]  <- renderPrint({
+      input[[sprintf("trigger%s", n)]]  # the radio box trigger
+      doSubmit(val=isolate(input[[sprintf("info%s", n)]]),
+               text=isolate(input[[sprintf("text%s",n)]]),
+               who=loggedIn())
+    })
+    output[[sprintf("MCout%s", n)]] <- renderPrint({
+      try(doSubmit(input[[sprintf("MC%s", n)]],
+                   who=loggedIn())
+          )
+    }) 
+  })
+  ## # For the Scores Tab ==================
+  ## # Need to figure out how to trigger this when "Scores" tab is revealed.
   
   ## TO DO:
   # Add an "out of" score.

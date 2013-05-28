@@ -4,6 +4,7 @@ Writing ScoreR Problems
 ```{r include=FALSE}
 require(WriteScoreR)
 newScorerSet("intro-DTK-2013-05-23")
+options("hidden_json" = TRUE)
 ```
 
 <aside>
@@ -42,6 +43,12 @@ f = newMC(pts=5,name="Declaration") # Ordinarily, make this silent
 
 `r I(f(FALSE))` "Four score and seven years ago, our forefathers brought forth upon this continent, a new nation, conceived in liberty and dedicated to the proposition that all men are created equal." 
 `r I(f(finish=TRUE))`
+
+## Number choice
+* Enter in a value for pi 
+`r I(numberItem(name="number-choice", ans=pi, tol=1e-3, help="three digits accuracy"))`
+
+* Enter in an integer between 1 and 10 divisible by 7 `r I(numberItem(name="number-choice", ans=7, from=0, to=10, by=1))`
 
 ### Free text.
 

@@ -1,233 +1,104 @@
-<!DOCTYPE html>
-<!-- saved from url=(0014)about:internet -->
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-
-<title>Writing ScoreR Problems</title>
-
-<style type="text/css">
-body, td {
-   font-family: sans-serif;
-   background-color: white;
-   font-size: 12px;
-   margin: 8px;
-}
-
-tt, code, pre {
-   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
-}
-
-h1 { 
-   font-size:2.2em; 
-}
-
-h2 { 
-   font-size:1.8em; 
-}
-
-h3 { 
-   font-size:1.4em; 
-}
-
-h4 { 
-   font-size:1.0em; 
-}
-
-h5 { 
-   font-size:0.9em; 
-}
-
-h6 { 
-   font-size:0.8em; 
-}
-
-a:visited {
-   color: rgb(50%, 0%, 50%);
-}
-
-pre {	
-   margin-top: 0;
-   max-width: 95%;
-   border: 1px solid #ccc;
-   white-space: pre-wrap;
-}
-
-pre code {
-   display: block; padding: 0.5em;
-}
-
-code.r, code.cpp {
-   background-color: #F8F8F8;
-}
-
-table, td, th {
-  border: none;
-}
-
-blockquote {
-   color:#666666;
-   margin:0;
-   padding-left: 1em;
-   border-left: 0.5em #EEE solid;
-}
-
-hr {
-   height: 0px;
-   border-bottom: none;
-   border-top-width: thin;
-   border-top-style: dotted;
-   border-top-color: #999999;
-}
-
-@media print {
-   * { 
-      background: transparent !important; 
-      color: black !important; 
-      filter:none !important; 
-      -ms-filter: none !important; 
-   }
-
-   body { 
-      font-size:12pt; 
-      max-width:100%; 
-   }
-       
-   a, a:visited { 
-      text-decoration: underline; 
-   }
-
-   hr { 
-      visibility: hidden;
-      page-break-before: always;
-   }
-
-   pre, blockquote { 
-      padding-right: 1em; 
-      page-break-inside: avoid; 
-   }
-
-   tr, img { 
-      page-break-inside: avoid; 
-   }
-
-   img { 
-      max-width: 100% !important; 
-   }
-
-   @page :left { 
-      margin: 15mm 20mm 15mm 10mm; 
-   }
-     
-   @page :right { 
-      margin: 15mm 10mm 15mm 20mm; 
-   }
-
-   p, h2, h3 { 
-      orphans: 3; widows: 3; 
-   }
-
-   h2, h3 { 
-      page-break-after: avoid; 
-   }
-}
-
-</style>
+Writing ScoreR Problems
+========================================================
 
 
 
 
+<aside>
 
-</head>
+### With answers displayed!
+This example shows the conditional display of answers using the "aside" HTML flag.</aside>
 
-<body>
-<h1>Writing ScoreR Problems</h1>
+A **ScoreR** problem is a Rmd/HTML file containing zero or more items.  There are three types of items:
 
-<p><aside></p>
 
-<h3>With answers displayed!</h3>
+### Selection from a set.
 
-<p>This example shows the conditional display of answers using the &ldquo;aside&rdquo; HTML flag.</aside></p>
+This is intended for a set of short answers, e.g. one-word or number.
 
-<p>A <strong>ScoreR</strong> problem is a Rmd/HTML file containing zero or more items.  There are three types of items:</p>
 
-<h3>Selection from a set.</h3>
 
-<p>This is intended for a set of short answers, e.g. one-word or number.</p>
 
-<ul>
-<li><p>The rain in BLANK falls mainly on the plain. 
+* The rain in BLANK falls mainly on the plain. 
 <select id="in1">
 <option value='NA'>Unanswered</option>
 <option value='{
-"hidden": true,
+ "hidden": true,
 "val": [ "A", "2", "196608", "131840", "531", "6", "531", "3", "16", "1", "262153", "20", "intro-DTK-2013-05-23", "14", "1", "1", "16", "1", "262153", "4", "Rain", "1026", "1", "262153", "5", "names", "16", "3", "262153", "5", "setID", "262153", "5", "itemN", "262153", "4", "name", "254", "16", "1", "262153", "12", "Fixed\\040Choice", "14", "1", "0", "16", "1", "262153", "15", "Wrong\\040continent", "16", "1", "262153", "0", "", "16", "1", "262153", "7", "Algeria", "1026", "511", "16", "6", "262153", "8", "itemInfo", "262153", "4", "type", "262153", "3", "pts", "262153", "4", "hint", "262153", "6", "reward", "262153", "7", "content", "254" ] 
 }'>Algeria</option>
 <option value='{
-"hidden": true,
+ "hidden": true,
 "val": [ "A", "2", "196608", "131840", "531", "6", "531", "3", "16", "1", "262153", "20", "intro-DTK-2013-05-23", "14", "1", "1", "16", "1", "262153", "4", "Rain", "1026", "1", "262153", "5", "names", "16", "3", "262153", "5", "setID", "262153", "5", "itemN", "262153", "4", "name", "254", "16", "1", "262153", "12", "Fixed\\040Choice", "14", "1", "2", "16", "1", "262153", "0", "", "16", "1", "262153", "13", "My\\040Fair\\040Lady!", "16", "1", "262153", "5", "Spain", "1026", "511", "16", "6", "262153", "8", "itemInfo", "262153", "4", "type", "262153", "3", "pts", "262153", "4", "hint", "262153", "6", "reward", "262153", "7", "content", "254" ] 
 }'>Spain</option>
 </select>
-<span id="out1" class="shiny-html-output"></span></p></li>
-<li><p>In Hartford, Hereford and Hampshire, hurricanes BLANK happen: 
+<span id="out1" class="shiny-html-output"></span>
+
+* In Hartford, Hereford and Hampshire, hurricanes BLANK happen: 
 <select id="in2">
 <option value='NA'>Unanswered</option>
 <option value='{
-"hidden": true,
+ "hidden": true,
 "val": [ "A", "2", "196608", "131840", "531", "6", "531", "3", "16", "1", "262153", "20", "intro-DTK-2013-05-23", "14", "1", "2", "16", "1", "262153", "10", "Hurricanes", "1026", "1", "262153", "5", "names", "16", "3", "262153", "5", "setID", "262153", "5", "itemN", "262153", "4", "name", "254", "16", "1", "262153", "12", "Fixed\\040Choice", "14", "1", "0", "16", "1", "262153", "0", "", "16", "1", "262153", "0", "", "16", "1", "262153", "5", "often", "1026", "511", "16", "6", "262153", "8", "itemInfo", "262153", "4", "type", "262153", "3", "pts", "262153", "4", "hint", "262153", "6", "reward", "262153", "7", "content", "254" ] 
 }'>often</option>
 <option value='{
-"hidden": true,
+ "hidden": true,
 "val": [ "A", "2", "196608", "131840", "531", "6", "531", "3", "16", "1", "262153", "20", "intro-DTK-2013-05-23", "14", "1", "2", "16", "1", "262153", "10", "Hurricanes", "1026", "1", "262153", "5", "names", "16", "3", "262153", "5", "setID", "262153", "5", "itemN", "262153", "4", "name", "254", "16", "1", "262153", "12", "Fixed\\040Choice", "14", "1", "1", "16", "1", "262153", "0", "", "16", "1", "262153", "0", "", "16", "1", "262153", "7", "usually", "1026", "511", "16", "6", "262153", "8", "itemInfo", "262153", "4", "type", "262153", "3", "pts", "262153", "4", "hint", "262153", "6", "reward", "262153", "7", "content", "254" ] 
 }'>usually</option>
 <option value='{
-"hidden": true,
+ "hidden": true,
 "val": [ "A", "2", "196608", "131840", "531", "6", "531", "3", "16", "1", "262153", "20", "intro-DTK-2013-05-23", "14", "1", "2", "16", "1", "262153", "10", "Hurricanes", "1026", "1", "262153", "5", "names", "16", "3", "262153", "5", "setID", "262153", "5", "itemN", "262153", "4", "name", "254", "16", "1", "262153", "12", "Fixed\\040Choice", "14", "1", "2", "16", "1", "262153", "0", "", "16", "1", "262153", "0", "", "16", "1", "262153", "11", "hardly\\040ever", "1026", "511", "16", "6", "262153", "8", "itemInfo", "262153", "4", "type", "262153", "3", "pts", "262153", "4", "hint", "262153", "6", "reward", "262153", "7", "content", "254" ] 
 }'>hardly ever</option>
 </select>
-<span id="out2" class="shiny-html-output"></span></p></li>
-</ul>
+<span id="out2" class="shiny-html-output"></span>
 
-<p><aside>You can also put answers in the markup, which will be displayed only if the Answer field is set to <code>TRUE</code></aside></p>
 
-<h3>Multiple choice, which can have short or long answers.</h3>
+<aside>You can also put answers in the markup, which will be displayed only if the Answer field is set to `TRUE`</aside>
 
-<p>Which of these is the start of the &ldquo;Declaration of Independence&rdquo;?</p>
+### Multiple choice, which can have short or long answers.
 
-<p><label for="MCitem1.1">
+Which of these is the start of the "Declaration of Independence"?
+
+
+
+
+
+<label for="MCitem1.1">
   <input type="radio" name="MC1" id="MCitem1.1" value='{
  "hidden": true,
 "val": [ "A", "2", "196608", "131840", "531", "6", "14", "1", "0", "16", "1", "262153", "0", "", "531", "3", "16", "1", "262153", "20", "intro-DTK-2013-05-23", "14", "1", "1", "16", "1", "262153", "11", "Declaration", "1026", "1", "262153", "5", "names", "16", "3", "262153", "5", "setID", "262153", "5", "itemN", "262153", "4", "name", "254", "16", "1", "262153", "2", "MC", "16", "1", "262153", "0", "", "16", "1", "262153", "1", "A", "1026", "511", "16", "6", "262153", "3", "pts", "262153", "4", "hint", "262153", "8", "itemInfo", "262153", "4", "type", "262153", "6", "reward", "262153", "7", "content", "254" ] 
 }'>
   <b>A</b>
 </label>
- &ldquo;We the people of the United States of America, in order to form a more perfect union &hellip;&rdquo;</p>
+ "We the people of the United States of America, in order to form a more perfect union ..."
 
-<p><label for="MCitem1.2">
+
+
+<label for="MCitem1.2">
   <input type="radio" name="MC1" id="MCitem1.2" value='{
  "hidden": true,
 "val": [ "A", "2", "196608", "131840", "531", "6", "14", "1", "5", "16", "1", "262153", "0", "", "531", "3", "16", "1", "262153", "20", "intro-DTK-2013-05-23", "14", "1", "1", "16", "1", "262153", "11", "Declaration", "1026", "1", "262153", "5", "names", "16", "3", "262153", "5", "setID", "262153", "5", "itemN", "262153", "4", "name", "254", "16", "1", "262153", "2", "MC", "16", "1", "262153", "0", "", "16", "1", "262153", "1", "B", "1026", "511", "16", "6", "262153", "3", "pts", "262153", "4", "hint", "262153", "8", "itemInfo", "262153", "4", "type", "262153", "6", "reward", "262153", "7", "content", "254" ] 
 }'>
   <b>B</b>
 </label>
- &ldquo;When in the course of human events, it becomes necessary &hellip;&rdquo;</p>
+ "When in the course of human events, it becomes necessary ..."
 
-<p><label for="MCitem1.3">
+
+
+<label for="MCitem1.3">
   <input type="radio" name="MC1" id="MCitem1.3" value='{
  "hidden": true,
 "val": [ "A", "2", "196608", "131840", "531", "6", "14", "1", "0", "16", "1", "262153", "0", "", "531", "3", "16", "1", "262153", "20", "intro-DTK-2013-05-23", "14", "1", "1", "16", "1", "262153", "11", "Declaration", "1026", "1", "262153", "5", "names", "16", "3", "262153", "5", "setID", "262153", "5", "itemN", "262153", "4", "name", "254", "16", "1", "262153", "2", "MC", "16", "1", "262153", "0", "", "16", "1", "262153", "1", "C", "1026", "511", "16", "6", "262153", "3", "pts", "262153", "4", "hint", "262153", "8", "itemInfo", "262153", "4", "type", "262153", "6", "reward", "262153", "7", "content", "254" ] 
 }'>
   <b>C</b>
 </label>
- &ldquo;Four score and seven years ago, our forefathers brought forth upon this continent, a new nation, conceived in liberty and dedicated to the proposition that all men are created equal.&rdquo; </p>
+ "Four score and seven years ago, our forefathers brought forth upon this continent, a new nation, conceived in liberty and dedicated to the proposition that all men are created equal." 
 
-<p><span id="MCout1" class="shiny-html-output"></span></p>
+<span id="MCout1" class="shiny-html-output"></span>
 
-<h2>Number choice</h2>
 
-<ul>
-<li>Enter in a value for pi </li>
-</ul>
+## Number choice
+* Enter in a value for pi 
+
 
 <div class="control-group">
   
@@ -236,7 +107,6 @@ hr {
     <span class="help-inline">three digits accuracy</span>
   </div>
 </div>
-
 <script>
 $("#nin1").keyup(function(event) {
   event.preventDefault();
@@ -244,18 +114,16 @@ console.log("block keyup");
   $(this).val().length == 0 ? $(this).parent().parent().addClass("warning") : $(this).parent().parent().removeClass("warning")
 })
 </script>
-
-<p><select style="visibility: hidden" width="5" name="ninfo1">
+<select style="visibility: hidden" width="5" name="ninfo1">
   <option value='{
  "hidden": true,
 "val": [ "A", "2", "196608", "131840", "531", "8", "14", "1", "1", "16", "1", "262153", "0", "", "531", "3", "16", "1", "262153", "20", "intro-DTK-2013-05-23", "14", "1", "1", "16", "1", "262153", "13", "number-choice", "1026", "1", "262153", "5", "names", "16", "3", "262153", "5", "setID", "262153", "5", "itemN", "262153", "4", "name", "254", "16", "1", "262153", "12", "NumericInput", "16", "1", "262153", "0", "", "16", "1", "262153", "13", "Numeric\\040input", "14", "1", "3.141592653589793", "14", "1", "0.001", "1026", "511", "16", "8", "262153", "3", "pts", "262153", "4", "hint", "262153", "8", "itemInfo", "262153", "4", "type", "262153", "6", "reward", "262153", "7", "content", "262153", "3", "ans", "262153", "9", "tolerance", "254" ] 
 }'>ignore the man behind this curtain</option>
 </select>
-<span id="nout1" value="spanValue" class="shiny-html-output"></span></p>
+<span id="nout1" value="spanValue" class="shiny-html-output"></span>
 
-<ul>
-<li>Enter in an integer between 1 and 10 divisible by 7 </li>
-</ul>
+
+* Enter in an integer between 1 and 10 divisible by 7 
 
 <div class="control-group">
   
@@ -264,7 +132,6 @@ console.log("block keyup");
     
   </div>
 </div>
-
 <script>
 $("#nin2").keyup(function(event) {
   event.preventDefault();
@@ -272,20 +139,20 @@ console.log("block keyup");
   $(this).val().length == 0 ? $(this).parent().parent().addClass("warning") : $(this).parent().parent().removeClass("warning")
 })
 </script>
-
-<p><select style="visibility: hidden" width="5" name="ninfo2">
+<select style="visibility: hidden" width="5" name="ninfo2">
   <option value='{
  "hidden": true,
 "val": [ "A", "2", "196608", "131840", "531", "8", "14", "1", "1", "16", "1", "262153", "0", "", "531", "3", "16", "1", "262153", "20", "intro-DTK-2013-05-23", "14", "1", "2", "16", "1", "262153", "13", "number-choice", "1026", "1", "262153", "5", "names", "16", "3", "262153", "5", "setID", "262153", "5", "itemN", "262153", "4", "name", "254", "16", "1", "262153", "12", "NumericInput", "16", "1", "262153", "0", "", "16", "1", "262153", "13", "Numeric\\040input", "14", "1", "7", "14", "1", "0", "1026", "511", "16", "8", "262153", "3", "pts", "262153", "4", "hint", "262153", "8", "itemInfo", "262153", "4", "type", "262153", "6", "reward", "262153", "7", "content", "262153", "3", "ans", "262153", "9", "tolerance", "254" ] 
 }'>ignore the man behind this curtain</option>
 </select>
-<span id="nout2" value="spanValue" class="shiny-html-output"></span></p>
+<span id="nout2" value="spanValue" class="shiny-html-output"></span>
 
-<h3>Free text.</h3>
 
-<p>What would you like to write a question about? </p>
+### Free text.
 
-<p><textarea cols="30" rows="1" id="text1" placeholder="Your answer here ..."></textarea>
+What would you like to write a question about? 
+
+<textarea cols="30" rows="1" id="text1" placeholder="Your answer here ..."></textarea>
 <input type="radio" name="trigger1" id="g2" value="F">
 <input type="radio" name="trigger1" id="g1" value="M">
 <select style="visibility: hidden" width=5 name="info1">
@@ -294,25 +161,20 @@ console.log("block keyup");
 "val": [ "A", "2", "196608", "131840", "531", "6", "14", "1", "1", "16", "1", "262153", "0", "", "531", "3", "16", "1", "262153", "20", "intro-DTK-2013-05-23", "14", "1", "1", "16", "1", "262153", "14", "question-topic", "1026", "1", "262153", "5", "names", "16", "3", "262153", "5", "setID", "262153", "5", "itemN", "262153", "4", "name", "254", "16", "1", "262153", "9", "Free\\040text", "16", "1", "262153", "0", "", "16", "1", "262153", "9", "Free\\040text", "1026", "511", "16", "6", "262153", "3", "pts", "262153", "4", "hint", "262153", "8", "itemInfo", "262153", "4", "type", "262153", "6", "reward", "262153", "7", "content", "254" ] 
 }'>Ignore me</option>
 </select>
-<span id="tout1" value="spanvalue" class="shiny-html-output"></span></p>
+<span id="tout1" value="spanvalue" class="shiny-html-output"></span>
 
-<p>You can re-size the text box on most browsers.  </p>
 
-<p><strong>Remember to press</strong> the radio button to submit your answer.</p>
+You can re-size the text box on most browsers.  
 
-<h2>For the future</h2>
+**Remember to press** the radio button to submit your answer.
 
-<ol>
-<li>Numerical entry</li>
-<li>The markup contains provisions for hints and rewards.  These are not yet displayed.</li>
-<li>In an interactive mode, the result will be shown immediately.</li>
-</ol>
+## For the future
 
-<h4>Danny Kaplan</h4>
+1. Numerical entry
+2. The markup contains provisions for hints and rewards.  These are not yet displayed.
+3. In an interactive mode, the result will be shown immediately.
 
-<h4>May 22, 2013</h4>
 
-</body>
 
-</html>
-
+#### Danny Kaplan
+#### May 22, 2013
