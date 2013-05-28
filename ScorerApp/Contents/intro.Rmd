@@ -64,7 +64,7 @@ You can re-size the text box on most browsers.
 2. The markup contains provisions for hints and rewards.  These are not yet displayed.
 3. In an interactive mode, the result will be shown immediately.
 
-
+`r I(closeProblem())`
 
 #### Danny Kaplan
 #### May 22, 2013

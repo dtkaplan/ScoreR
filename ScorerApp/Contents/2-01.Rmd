@@ -60,7 +60,7 @@ Some of the following are categorical variables, some are quantitative variables
 * Transmission type `r I(selectSet(name="trans",totalPts=1,"A level of a categorical variable"=FALSE,"A categorical variable"=TRUE,"A quantitative variable"=FALSE))`
 * Number of cylinders `r I(selectSet(name="cylinders",totalPts=1,"A level of a categorical variable"=FALSE,"A categorical variable"=FALSE,"A quantitative variable"=TRUE))`
 
-
+`r I(closeProblem())`
 
 
 #### from [Statistical Modeling: A Fresh Approach](http://www.mosaic-web.org/go/StatisticalModeling/)

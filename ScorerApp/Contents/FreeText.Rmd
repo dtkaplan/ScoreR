@@ -30,6 +30,6 @@ The value of `totalPts` sets the maximum point value of the essay. This is recor
 
 Note that the user **must** click on the radio buttons to the right of the box in order to submit the text.  **To do**: Replace with with a simple button, or change the updating rule so that an event is triggered only when the user leaves the box.  Currently, events are triggered every few characters or seconds, which leads to frequent updating when a user is editing.  **Question**: Is this a problem?  Perhaps it's alright to have the submission be automatic and frequent.
 
-
+`r I(closeProblem())`
 
 #### Danny Kaplan, May 26, 2013

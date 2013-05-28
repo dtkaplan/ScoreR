@@ -19,10 +19,25 @@
 #' newScorerSet("Math155-Sept-3-2014") 
 #' nextScorerItem(name="algebra")
 #' @export
+#' 
+# Every problem must have a roster.
+closeProblem <- function() {
+  nSS <- get("fixedChoiceCount",envir=.scorerEnv)
+  SSset <- if (nSS > 0) paste("in",1:nSS,sep="") else NULL
+  nMC <- get("multiChoiceCount",envir=.scorerEnv)
+  MCset <- if (nMC > 0) paste("MC",1:nMC,sep="") else NULL
+  nText <- get("textCount",envir=.scorerEnv)
+  Textset <- if (nText > 0) paste("text",1:nText,sep="") else NULL
+  roster <- c(SSset,MCset,Textset)
+  holdvals <- paste("<select style='visibility: hidden' width='5' name='roster'>",
+                    "<option value='",toJSON(I(roster)),
+                    "'>Ignore me</option></select>",sep="")
+  return(holdvals)
+}
 newScorerSet <-function(ID) {
   assign("fixedChoiceCount", 0, envir=.scorerEnv) # count of select/dropdown
   assign("textCount", 0, envir=.scorerEnv) # count of text entry
-  assign("multChoiceCount", 0, envir=.scorerEnv) # Count of multiple choice
+  assign("multiChoiceCount", 0, envir=.scorerEnv) # Count of multiple choice
   assign("uniqueID", ID, envir=.scorerEnv) # which item set is being displayed
   assign("timeStamp", date(),envir=.scorerEnv)
   # Put boilerplate, e.g. CSS definitions, here.
@@ -143,15 +158,14 @@ selectSet <- function(name=NULL,style="dropdown",totalPts=1,hint="",reward="Righ
   vv$type <- "Fixed Choice"
   for (k in 1:length(dots)) {
     # make sure that it's a list.
-    thisItem <- 
     if( is.list(dots[[k]])) {
       vals <- dots[[k]]
-      vv$pts <- totalPts*vals$credit
+      vv$pts <- as.numeric(totalPts*vals$credit)
       vv$hint <- vals$hint
       vv$reward <- vals$reward
     }
     else {
-      vv$pts <- ifelse(dots[k],as.numeric(totalPts),0) # Accept TRUE and FALSE to indicate credit
+      vv$pts <- ifelse(dots[[k]],as.numeric(totalPts),0) # Accept TRUE and FALSE to indicate credit
       vv$hint <- hint
       vv$reward <- reward
     }

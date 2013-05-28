@@ -63,4 +63,5 @@ piQuestion2 = selectSet(name="piValue2",totalPts=4,
 
 * Provide different formats, not just the dropdown menu.
 
+`r I(closeProblem())`
 #### Danny Kaplan, May 25, 2013

@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<title>Selecting from a Set</title>
+<title>Setting up an assignment</title>
 
 <style type="text/css">
 body, td {
@@ -182,32 +182,24 @@ hljs.initHighlightingOnLoad();
 </head>
 
 <body>
-<h1>Selecting from a Set</h1>
-
-<p>A question in the form of <strong>selecting from a set</strong> provides the reader with a set of short possible answers.  The reader picks one for the answer.</p>
-
-<p>As with all <em>ScoreR</em> problems, the source Rmd file makes use of commands in the <code>WriteScoreR</code> package.  The function <code>newScorerSet()</code> is used to provide a unique ID to the problem. The following commands, which typically will be hidden from the reader by the use of the <code>include=FALSE</code> directive, do this.  </p>
+<h1>Setting up an assignment</h1>
 
 <pre><code class="r">require(WriteScoreR)
-newScorerSet(&quot;select-set-DTK-2013-05-25&quot;)
+newScorerSet(&quot;set-up-DTK-2013-05-27&quot;)
 </code></pre>
 
-<p>The uniqueness of the ID is ensured by the author.  One way to help ensure uniqueness is to include the date in the ID.</p>
+<p>How to set up an assignment</p>
 
-<p>The <code>selectSet()</code> function in <code>WriteScoreR</code> implements selection from a set.  The function returns a character string which needs to be embedded in the document at the point where the selection is to occur.  You may find it helpful to create the string in an ordinary knitr code block, and then reference it using inline knitr notation.</p>
-
-<p>The simplest style for selecting from a set is to provide the choices as the namres of assigned arguments, indicating the correct answer by assigning <code>TRUE</code>.  For instance, here&#39;s a command to create a set of three for a question about \( \pi \):</p>
+<h3>Just a couple of questions to illustrate scoring</h3>
 
 <pre><code class="r">piQuestion = selectSet(name = &quot;piValue&quot;, totalPts = 4, `2.71727` = FALSE, `3.14159` = TRUE, 
     `6.28318` = FALSE)
 </code></pre>
 
-<p>To create the question, embed the string &ldquo;as-is&rdquo; using knitr.  In the knitr markup, this requires wrapping the string with the <code>I()</code> function.</p>
-
 <ul>
-<li>Which is closest to \( \pi \)? <select name='in1'><option value='NA' selected>UNANSWERED</option> <option value='{
+<li><p>Which is closest to \( \pi \)? <select name='in1'><option value='NA' selected>UNANSWERED</option> <option value='{
 "itemInfo": {
-"setID": "select-set-DTK-2013-05-25",
+"setID": "set-up-DTK-2013-05-27",
 "itemN":      1,
 "name": "piValue",
 "totalpts":      4 
@@ -219,7 +211,7 @@ newScorerSet(&quot;select-set-DTK-2013-05-25&quot;)
 "content": "2.71727" 
 }'>2.71727</option> <option value='{
 "itemInfo": {
-"setID": "select-set-DTK-2013-05-25",
+"setID": "set-up-DTK-2013-05-27",
 "itemN":      1,
 "name": "piValue",
 "totalpts":      4 
@@ -231,7 +223,7 @@ newScorerSet(&quot;select-set-DTK-2013-05-25&quot;)
 "content": "3.14159" 
 }'>3.14159</option> <option value='{
 "itemInfo": {
-"setID": "select-set-DTK-2013-05-25",
+"setID": "set-up-DTK-2013-05-27",
 "itemN":      1,
 "name": "piValue",
 "totalpts":      4 
@@ -241,23 +233,10 @@ newScorerSet(&quot;select-set-DTK-2013-05-25&quot;)
 "hint": "",
 "reward": "Right!",
 "content": "6.28318" 
-}'>6.28318</option> </select><span id='out1' class='shiny-html-output'> </span></li>
-</ul>
-
-<p>Notice that the numbers have been created as character strings.  Of course, you can use any character string, not just numerals.</p>
-
-<p>The problem has been assigned a name using the <code>name</code> argument.  This facilitates interpretation of the scores when grading the problems.  If no name is assigned, a numerical value, in sequence, will be assigned. </p>
-
-<p>The point value for the question is set by the argument <code>totalPts</code> (with a default of 1).</p>
-
-<h3>Purely Numerical Selections</h3>
-
-<p>When the set contains only numbers, there is a shortcut function, <code>selectNumber()</code> that lets you provide vectors of choices and the correct answer(s).  Be careful that your correct answers match the corresponding choices exactly.  For instance:</p>
-
-<ul>
-<li>Pick an even number out of this set:  <select name='in2'><option value='NA' selected>UNANSWERED</option> <option value='{
+}'>6.28318</option> </select><span id='out1' class='shiny-html-output'> </span></p></li>
+<li><p>Pick an even number out of this set:  <select name='in2'><option value='NA' selected>UNANSWERED</option> <option value='{
 "itemInfo": {
-"setID": "select-set-DTK-2013-05-25",
+"setID": "set-up-DTK-2013-05-27",
 "itemN":      2,
 "name": "evens",
 "totalpts":      1 
@@ -269,7 +248,7 @@ newScorerSet(&quot;select-set-DTK-2013-05-25&quot;)
 "content": "3" 
 }'>3</option> <option value='{
 "itemInfo": {
-"setID": "select-set-DTK-2013-05-25",
+"setID": "set-up-DTK-2013-05-27",
 "itemN":      2,
 "name": "evens",
 "totalpts":      1 
@@ -281,7 +260,7 @@ newScorerSet(&quot;select-set-DTK-2013-05-25&quot;)
 "content": "5" 
 }'>5</option> <option value='{
 "itemInfo": {
-"setID": "select-set-DTK-2013-05-25",
+"setID": "set-up-DTK-2013-05-27",
 "itemN":      2,
 "name": "evens",
 "totalpts":      1 
@@ -293,7 +272,7 @@ newScorerSet(&quot;select-set-DTK-2013-05-25&quot;)
 "content": "6" 
 }'>6</option> <option value='{
 "itemInfo": {
-"setID": "select-set-DTK-2013-05-25",
+"setID": "set-up-DTK-2013-05-27",
 "itemN":      2,
 "name": "evens",
 "totalpts":      1 
@@ -305,7 +284,7 @@ newScorerSet(&quot;select-set-DTK-2013-05-25&quot;)
 "content": "7" 
 }'>7</option> <option value='{
 "itemInfo": {
-"setID": "select-set-DTK-2013-05-25",
+"setID": "set-up-DTK-2013-05-27",
 "itemN":      2,
 "name": "evens",
 "totalpts":      1 
@@ -317,7 +296,7 @@ newScorerSet(&quot;select-set-DTK-2013-05-25&quot;)
 "content": "8" 
 }'>8</option> <option value='{
 "itemInfo": {
-"setID": "select-set-DTK-2013-05-25",
+"setID": "set-up-DTK-2013-05-27",
 "itemN":      2,
 "name": "evens",
 "totalpts":      1 
@@ -327,71 +306,12 @@ newScorerSet(&quot;select-set-DTK-2013-05-25&quot;)
 "hint": "",
 "reward": "Right!",
 "content": "9" 
-}'>9</option> </select><span id='out2' class='shiny-html-output'> </span></li>
+}'>9</option> </select><span id='out2' class='shiny-html-output'> </span></p></li>
 </ul>
 
 <pre><code class="r">I(selectNumber(choices = c(3, 5, 6, 7, 8, 9), correct = c(6, 8), name = &quot;evens&quot;, 
     totalPts = 2))
 </code></pre>
-
-<h3>Interactive Problems, Hints, and Partial Credit</h3>
-
-<p>For interactive problems you may wish to give a hint when the wrong answer is selected, and a reward for the right answer. To do this, use the <code>yes()</code> and <code>no()</code> functions to indicate correctness.</p>
-
-<pre><code class="r">piQuestion2 = selectSet(name=&quot;piValue2&quot;,totalPts=4,
-                       &quot;2.71727&quot;=no(hint=&quot;That&#39;s &#39;e&#39;.&quot;),
-                       &quot;3.0&quot;=no(credit=0.5), # half credit
-                       &quot;3.14159&quot;=yes(hint=&quot;Right as rain!&quot;),
-                       &quot;6.28318&quot;=no(hint=&quot;That&#39;s &#39;tau&#39;&quot;))
-</code></pre>
-
-<ul>
-<li>Let&#39;s try that again &hellip; <select name='in3'><option value='NA' selected>UNANSWERED</option> <option value='{
-"itemInfo": {
-"setID": "select-set-DTK-2013-05-25",
-"itemN":      3,
-"name": "piValue2",
-"totalpts":      4 
-},
-"type": "Fixed Choice",
-"pts":      0,
-"hint": "That's 'e'.",
-"content": "2.71727" 
-}'>2.71727</option> <option value='{
-"itemInfo": {
-"setID": "select-set-DTK-2013-05-25",
-"itemN":      3,
-"name": "piValue2",
-"totalpts":      4 
-},
-"type": "Fixed Choice",
-"pts":      2,
-"hint": "Sorry",
-"content": "3.0" 
-}'>3.0</option> <option value='{
-"itemInfo": {
-"setID": "select-set-DTK-2013-05-25",
-"itemN":      3,
-"name": "piValue2",
-"totalpts":      4 
-},
-"type": "Fixed Choice",
-"pts":      4,
-"hint": "Right as rain!",
-"content": "3.14159" 
-}'>3.14159</option> <option value='{
-"itemInfo": {
-"setID": "select-set-DTK-2013-05-25",
-"itemN":      3,
-"name": "piValue2",
-"totalpts":      4 
-},
-"type": "Fixed Choice",
-"pts":      0,
-"hint": "That's 'tau'",
-"content": "6.28318" 
-}'>6.28318</option> </select><span id='out3' class='shiny-html-output'> </span></li>
-</ul>
 
 <h3>To Do</h3>
 
@@ -399,7 +319,7 @@ newScorerSet(&quot;select-set-DTK-2013-05-25&quot;)
 <li>Provide different formats, not just the dropdown menu.</li>
 </ul>
 
-<p><select style='visibility: hidden' width='5' name='roster'><option value='[ "in1", "in2", "in3" ]'>Ignore me</option></select></p>
+<p><select style='visibility: hidden' width='5' name='roster'><option value='[ "in1", "in2" ]'>Ignore me</option></select></p>
 
 <h4>Danny Kaplan, May 25, 2013</h4>
 

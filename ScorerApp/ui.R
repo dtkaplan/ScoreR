@@ -28,8 +28,7 @@ shinyUI(
         uiOutput("assignmentSelector"),
         uiOutput("problemSelector"),
         actionButton("save","Submit")
-      ),
-      verbatimTextOutput("mainStatus")
+      )
     ),
     mainPanel(
       conditionalPanel(

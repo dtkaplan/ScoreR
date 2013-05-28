@@ -72,4 +72,6 @@ f = newMC(name="Anna Karenina",totalPts=4,
 
 `r f(finish=TRUE)`
 
+
+`r I(closeProblem())`
 #### Danny Kaplan, May 25, 2013

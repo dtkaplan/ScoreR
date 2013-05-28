@@ -33,4 +33,6 @@ I(selectNumber(choices=c(3,5,6,7,8,9),correct=c(6,8),name="evens",totalPts=2))
 
 * Provide different formats, not just the dropdown menu.
 
+`r I(closeProblem())`
+
 #### Danny Kaplan, May 25, 2013
