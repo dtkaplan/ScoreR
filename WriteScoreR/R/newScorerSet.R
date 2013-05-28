@@ -121,12 +121,13 @@ textItem <- function(name=NULL,totalPts=1,hint="",rows=2,cols=30){
                itemInfo$itemN,
                "' placeholder='Your answer here ...'></textarea>",
                sep="")
+  # Obsolete with submit-button style
   # Trigger for the text so that the input isn't updated every few character strokes
-  trigger = paste("<input type='radio' name='trigger",
-                  itemInfo$itemN,"' id='g2' value='F'>",
-                  "<input type='radio' name='trigger",
-                  itemInfo$itemN,"' id='g1' value='M'>",sep="")
-  res <- paste(res,trigger)
+  #trigger = paste("<input type='radio' name='trigger",
+  #                itemInfo$itemN,"' id='g2' value='F'>",
+  #                "<input type='radio' name='trigger",
+  #                itemInfo$itemN,"' id='g1' value='M'>",sep="")
+  #res <- paste(res,trigger)
   # Something to hold the values, e.g. the name of the item, etc.
   holdvals <- paste("<select style='visibility: hidden' width='5' name='info",itemInfo$itemN,
                     "'><option value='",toJSON(vals),
