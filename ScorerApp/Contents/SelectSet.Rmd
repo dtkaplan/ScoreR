@@ -35,6 +35,16 @@ The problem has been assigned a name using the `name` argument.  This facilitate
 
 The point value for the question is set by the argument `totalPts` (with a default of 1).
 
+### Purely Numerical Selections
+
+When the set contains only numbers, there is a shortcut function, `selectNumber()` that lets you provide vectors of choices and the correct answer(s).  Be careful that your correct answers match the corresponding choices exactly.  For instance:
+
+* Pick an even number out of this set:  `r I(selectNumber(choices=c(3,5,6,7,8,9),correct=c(6,8),name="evens",totalPts=2))`
+
+```{r eval=FALSE}
+I(selectNumber(choices=c(3,5,6,7,8,9),correct=c(6,8),name="evens",totalPts=2))
+```
+
 ### Interactive Problems, Hints, and Partial Credit
 
 For interactive problems you may wish to give a hint when the wrong answer is selected, and a reward for the right answer. To do this, use the `yes()` and `no()` functions to indicate correctness.

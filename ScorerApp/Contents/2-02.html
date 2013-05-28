@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<title>Multiple Choice Questions</title>
+<title>Problem 2-01</title>
 
 <style type="text/css">
 body, td {
@@ -173,204 +173,543 @@ hljs.initHighlightingOnLoad();
 </script>
 
 
-<!-- MathJax scripts -->
-<script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
 
 
 </head>
 
 <body>
-<h1>Multiple Choice Questions</h1>
+<h1>Problem 2-01</h1>
 
-<p>A <strong>multiple choice</strong> question is in many respects like selecting from a set.  The different format is to accommodate long answers that might not be appropriate in a drop-down menu.  A multiple choice format also can be used with mathematical markup that can&#39;t be included in a drop-down menu.</p>
+<p>Here is a small data frame about automobiles.</p>
 
-<h3>The Header</h3>
+<table><thead>
+<tr>
+<th>Make and model</th>
+<th align="center">Vehicle type</th>
+<th align="center">Trans. type</th>
+<th align="center"># of cyl.</th>
+<th align="center">City MPG</th>
+<th align="center">Hwy MPG</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Kia Optima</td>
+<td align="center">compact</td>
+<td align="center">Man.</td>
+<td align="center">4</td>
+<td align="center">21</td>
+<td align="center">31</td>
+</tr>
+<tr>
+<td>Kia Optima</td>
+<td align="center">compact</td>
+<td align="center">Auto.</td>
+<td align="center">6</td>
+<td align="center">20</td>
+<td align="center">28</td>
+</tr>
+<tr>
+<td>Saab 9-7X AWD</td>
+<td align="center">SUV</td>
+<td align="center">Auto.</td>
+<td align="center">6</td>
+<td align="center">14</td>
+<td align="center">20</td>
+</tr>
+<tr>
+<td>Saab 9-7X AWD</td>
+<td align="center">SUV</td>
+<td align="center">Auto.</td>
+<td align="center">8</td>
+<td align="center">12</td>
+<td align="center">16</td>
+</tr>
+<tr>
+<td>Ford Focus</td>
+<td align="center">compact</td>
+<td align="center">Man.</td>
+<td align="center">4</td>
+<td align="center">24</td>
+<td align="center">35</td>
+</tr>
+<tr>
+<td>Ford Focus</td>
+<td align="center">compact</td>
+<td align="center">Auto.</td>
+<td align="center">4</td>
+<td align="center">24</td>
+<td align="center">33</td>
+</tr>
+<tr>
+<td>Ford F150  2WD</td>
+<td align="center">pickup</td>
+<td align="center">Auto.</td>
+<td align="center">8</td>
+<td align="center">13</td>
+<td align="center">17</td>
+</tr>
+</tbody></table>
 
-<p>As with all <em>ScoreR</em> problem, the source Rmd file makes use of commands in the <code>WriteScoreR</code> package.  The function <code>newScorerSet()</code> is used to provide a unique ID to the problem. The following commands, which typically will be hidden from the reader by the use of the <code>include=FALSE</code> directive, do this.  </p>
+<h4>(a) Why are some cars listed twice?  Is this a mistake in the table?</h4>
 
-<pre><code class="r">require(WriteScoreR)
-newScorerSet(&quot;multiple-choice-DTK-2013-05-25&quot;)
+<pre><code class="r">f = newMC(name = &quot;twice&quot;, totalPts = 2)
 </code></pre>
 
-<h3>Three steps</h3>
-
-<p>There are three (simple) steps to creating a multiple-choice problem in <em>ScoreR</em>:
-1. Initialization of the question
-2. Creation of the individual items, typically embedded in <em>markdown</em> statements
-3. Termination of the question.</p>
-
-<p>Initialization is done with the <code>newMC()</code> function.</p>
-
-<pre><code class="r">f = newMC(totalPts = 5)  # Ordinarily, make this silent
-</code></pre>
-
-<p>The function name, in this case <code>f</code>, is arbitrary.  You will use that name to create the individual items with statements like <code>I(f(TRUE))</code> and I(f(FALSE)), which will be embedded in text.  For instance:</p>
-
-<p>Which of these is equal to \( -1 \)?</p>
-
-<ul>
-<li><label for='MCitem1'><input type='radio' name='MC1' id='MCitem1' value='{
-"pts":      0,
+<p><label for='MCitem1'><input type='radio' name='MC1' id='MCitem1' value='{
+ "pts":      0,
 "hint": "",
 "itemInfo": {
-"setID": "multiple-choice-DTK-2013-05-25",
+ "setID": "Ch2-prob02-DTK-2013-05-27",
 "itemN":      1,
-"name": "1",
-"totalpts":      5 
+"name": "twice",
+"totalpts":      2 
 },
 "type": "MC",
 "reward": "Right!",
 "content": "A" 
-}'> <b>A</b></label> The value of \( a x^2 + b x - c \) for all \( a \), \( b \), and \( c \)</li>
-<li><label for='MCitem2'><input type='radio' name='MC1' id='MCitem2' value='{
-"pts":      5,
+}'> <b>A</b></label> Yes, it&#39;s a mistake<br/>
+<label for='MCitem2'><input type='radio' name='MC1' id='MCitem2' value='{
+ "pts":      2,
 "hint": "",
 "itemInfo": {
-"setID": "multiple-choice-DTK-2013-05-25",
+ "setID": "Ch2-prob02-DTK-2013-05-27",
 "itemN":      1,
-"name": "1",
-"totalpts":      5 
+"name": "twice",
+"totalpts":      2 
 },
 "type": "MC",
 "reward": "Right!",
 "content": "B" 
-}'> <b>B</b></label>  \( e^{i\pi} \)</li>
-<li><label for='MCitem3'><input type='radio' name='MC1' id='MCitem3' value='{
-"pts":      0,
+}'> <b>B</b></label> A car brand might be listed more than once, but the cases have different attributes on other variables.<br/>
+<label for='MCitem3'><input type='radio' name='MC1' id='MCitem3' value='{
+ "pts":      0,
 "hint": "",
 "itemInfo": {
-"setID": "multiple-choice-DTK-2013-05-25",
+ "setID": "Ch2-prob02-DTK-2013-05-27",
 "itemN":      1,
-"name": "1",
-"totalpts":      5 
+"name": "twice",
+"totalpts":      2 
 },
 "type": "MC",
 "reward": "Right!",
 "content": "C" 
-}'> <b>C</b></label> \( \ln(0) \)</li>
-<li><label for='MCitem4'><input type='radio' name='MC1' id='MCitem4' value='{
-"pts":      0,
+}'> <b>C</b></label> Some cars are more in demand than others.    </p>
+
+<p><span id='MCout1' class='shiny-html-output'> </span></p>
+
+<h4>(b) What are the cases in the data frame?</h4>
+
+<p><label for='MCitem1'><input type='radio' name='MC2' id='MCitem1' value='{
+ "pts":      0,
 "hint": "",
 "itemInfo": {
-"setID": "multiple-choice-DTK-2013-05-25",
-"itemN":      1,
-"name": "1",
-"totalpts":      5 
-},
-"type": "MC",
-"reward": "Right!",
-"content": "D" 
-}'> <b>D</b></label> There&#39;s no such thing as a negative number, just a negative attitude. </li>
-</ul>
-
-<p>After the items have been defined, terminate the question by calling the function with the argument <code>finish=TRUE</code></p>
-
-<pre><code class="r">I(f(finish = TRUE))
-</code></pre>
-
-<p>You may well want to use inline knitr notation &mdash; that&#39;s up to you.</p>
-
-<h3>Hints and Labels</h3>
-
-<p>You may prefer not to have bullet points before the individual items, yet still have each on it&#39;s own line.  To do this, in Markdown, put several blank spaces at the end of each line.</p>
-
-<p>Which of these is a movie?<br/>
-<label for='MCitem1'><input type='radio' name='MC2' id='MCitem1' value='{
- "pts":      1,
-"hint": "",
-"itemInfo": {
- "setID": "multiple-choice-DTK-2013-05-25",
+ "setID": "Ch2-prob02-DTK-2013-05-27",
 "itemN":      2,
-"name": "movietitle",
-"totalpts":      1 
+"name": "cases",
+"totalpts":      2 
 },
 "type": "MC",
 "reward": "Right!",
 "content": "A" 
-}'> <b>A</b></label> Gone with the Wind<br/>
+}'> <b>A</b></label> Individual car companies<br/>
 <label for='MCitem2'><input type='radio' name='MC2' id='MCitem2' value='{
  "pts":      0,
 "hint": "",
 "itemInfo": {
- "setID": "multiple-choice-DTK-2013-05-25",
+ "setID": "Ch2-prob02-DTK-2013-05-27",
 "itemN":      2,
-"name": "movietitle",
-"totalpts":      1 
+"name": "cases",
+"totalpts":      2 
 },
 "type": "MC",
 "reward": "Right!",
 "content": "B" 
-}'> <b>B</b></label> The Wind is Gone<br/>
+}'> <b>B</b></label> Individual makes and models of cars<br/>
 <label for='MCitem3'><input type='radio' name='MC2' id='MCitem3' value='{
- "pts":      0,
+ "pts":      2,
 "hint": "",
 "itemInfo": {
- "setID": "multiple-choice-DTK-2013-05-25",
+ "setID": "Ch2-prob02-DTK-2013-05-27",
 "itemN":      2,
-"name": "movietitle",
-"totalpts":      1 
+"name": "cases",
+"totalpts":      2 
 },
 "type": "MC",
 "reward": "Right!",
 "content": "C" 
-}'> <b>C</b></label> Go Wind, Go!   </p>
+}'> <b>C</b></label>  Individual configurations of cars<br/>
+<label for='MCitem4'><input type='radio' name='MC2' id='MCitem4' value='{
+ "pts":      0,
+"hint": "",
+"itemInfo": {
+ "setID": "Ch2-prob02-DTK-2013-05-27",
+"itemN":      2,
+"name": "cases",
+"totalpts":      2 
+},
+"type": "MC",
+"reward": "Right!",
+"content": "D" 
+}'> <b>D</b></label> Different sizes of cars    </p>
 
-<p>You can use the <code>markers</code> argument to <code>newMc()</code> to specify labels other than A,B,C,&hellip;.  You can also assign a name to the item and specify a reward for the correct answer.  Within the individual items (e.g., within <code>f()</code>), you can specify a hint.</p>
+<p><span id='MCout2' class='shiny-html-output'> </span></p>
 
-<p>For example: </p>
+<p><aside>
+Each case must be a unique entity.  The same car company shows up more than once, as does the same &ldquo;Make and model&rdquo; and size of car.  The concept that marks each case as unique is the overall configuration of the car.  For example, the two Kia Optimas have different transmission types and different numbers of cylinders, whereas the two Saabs are identical in transmission but differ in the number of cylinders. 
+</aside></p>
 
-<pre><code class="r">f = newMC(name = &quot;Anna Karenina&quot;, totalPts = 4, markers = c(&quot;Б&quot;, &quot;Г&quot;, &quot;Д&quot;))
-</code></pre>
+<h4>(<span>c</span>) Quantitative and categorical</h4>
 
-<h4>What are the first words of Tolstoy&#39;s &ldquo;Anna Karenina&rdquo;?</h4>
+<p>Some of the following are categorical variables, some are quantitative variables, while others are not a variable but a <strong>level</strong> of a categorical variable.  Which is which?</p>
 
 <ul>
-<li><label for='MCitem1'><input type='radio' name='MC3' id='MCitem1' value='{
-"pts":      4,
-"hint": "",
+<li>Kia Optima     <select name='in1'><option value='NA' selected>UNANSWERED</option> <option value='{
 "itemInfo": {
-"setID": "multiple-choice-DTK-2013-05-25",
-"itemN":      3,
-"name": "Anna Karenina",
-"totalpts":      4 
+"setID": "Ch2-prob02-DTK-2013-05-27",
+"itemN":      1,
+"name": "Kia",
+"totalpts":      1 
 },
-"type": "MC",
-"reward": "Right!",
-"content": "Б" 
-}'> <b>Б</b></label> Happy families are all alike; every unhappy family is unhappy in its own way.</li>
-<li><label for='MCitem2'><input type='radio' name='MC3' id='MCitem2' value='{
-"pts":      0,
+"type": "Fixed Choice",
+"pts": {
+"A level of a categorical variable":      1 
+},
 "hint": "",
-"itemInfo": {
-"setID": "multiple-choice-DTK-2013-05-25",
-"itemN":      3,
-"name": "Anna Karenina",
-"totalpts":      4 
-},
-"type": "MC",
 "reward": "Right!",
-"content": "Г" 
-}'> <b>Г</b></label> The prettiest belle of them all was Anna.  Also, the saddest.</li>
-<li><label for='MCitem3'><input type='radio' name='MC3' id='MCitem3' value='{
-"pts":      4,
+"content": "A level of a categorical variable" 
+}'>A level of a categorical variable</option> <option value='{
+"itemInfo": {
+"setID": "Ch2-prob02-DTK-2013-05-27",
+"itemN":      1,
+"name": "Kia",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"A categorical variable":      0 
+},
 "hint": "",
-"itemInfo": {
-"setID": "multiple-choice-DTK-2013-05-25",
-"itemN":      3,
-"name": "Anna Karenina",
-"totalpts":      4 
-},
-"type": "MC",
 "reward": "Right!",
-"content": "Д" 
-}'> <b>Д</b></label> Все счастливые семьи похожи друг на друга, каждая несчастливая семья несчастлива по-своему.</li>
+"content": "A categorical variable" 
+}'>A categorical variable</option> <option value='{
+"itemInfo": {
+"setID": "Ch2-prob02-DTK-2013-05-27",
+"itemN":      1,
+"name": "Kia",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"A quantitative variable":      0 
+},
+"hint": "",
+"reward": "Right!",
+"content": "A quantitative variable" 
+}'>A quantitative variable</option> </select><span id='out1' class='shiny-html-output'> </span></li>
+<li>City MPG       <select name='in2'><option value='NA' selected>UNANSWERED</option> <option value='{
+"itemInfo": {
+"setID": "Ch2-prob02-DTK-2013-05-27",
+"itemN":      2,
+"name": "city",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"A level of a categorical variable":      0 
+},
+"hint": "",
+"reward": "Right!",
+"content": "A level of a categorical variable" 
+}'>A level of a categorical variable</option> <option value='{
+"itemInfo": {
+"setID": "Ch2-prob02-DTK-2013-05-27",
+"itemN":      2,
+"name": "city",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"A categorical variable":      0 
+},
+"hint": "",
+"reward": "Right!",
+"content": "A categorical variable" 
+}'>A categorical variable</option> <option value='{
+"itemInfo": {
+"setID": "Ch2-prob02-DTK-2013-05-27",
+"itemN":      2,
+"name": "city",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"A quantitative variable":      1 
+},
+"hint": "",
+"reward": "Right!",
+"content": "A quantitative variable" 
+}'>A quantitative variable</option> </select><span id='out2' class='shiny-html-output'> </span></li>
+<li>Vehicle type  <select name='in3'><option value='NA' selected>UNANSWERED</option> <option value='{
+"itemInfo": {
+"setID": "Ch2-prob02-DTK-2013-05-27",
+"itemN":      3,
+"name": "vtype",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"A level of a categorical variable":      0 
+},
+"hint": "",
+"reward": "Right!",
+"content": "A level of a categorical variable" 
+}'>A level of a categorical variable</option> <option value='{
+"itemInfo": {
+"setID": "Ch2-prob02-DTK-2013-05-27",
+"itemN":      3,
+"name": "vtype",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"A categorical variable":      1 
+},
+"hint": "",
+"reward": "Right!",
+"content": "A categorical variable" 
+}'>A categorical variable</option> <option value='{
+"itemInfo": {
+"setID": "Ch2-prob02-DTK-2013-05-27",
+"itemN":      3,
+"name": "vtype",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"A quantitative variable":      0 
+},
+"hint": "",
+"reward": "Right!",
+"content": "A quantitative variable" 
+}'>A quantitative variable</option> </select><span id='out3' class='shiny-html-output'> </span></li>
+<li>SUV <select name='in4'><option value='NA' selected>UNANSWERED</option> <option value='{
+"itemInfo": {
+"setID": "Ch2-prob02-DTK-2013-05-27",
+"itemN":      4,
+"name": "SUV",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"A level of a categorical variable":      1 
+},
+"hint": "",
+"reward": "Right!",
+"content": "A level of a categorical variable" 
+}'>A level of a categorical variable</option> <option value='{
+"itemInfo": {
+"setID": "Ch2-prob02-DTK-2013-05-27",
+"itemN":      4,
+"name": "SUV",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"A categorical variable":      0 
+},
+"hint": "",
+"reward": "Right!",
+"content": "A categorical variable" 
+}'>A categorical variable</option> <option value='{
+"itemInfo": {
+"setID": "Ch2-prob02-DTK-2013-05-27",
+"itemN":      4,
+"name": "SUV",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"A quantitative variable":      0 
+},
+"hint": "",
+"reward": "Right!",
+"content": "A quantitative variable" 
+}'>A quantitative variable</option> </select><span id='out4' class='shiny-html-output'> </span></li>
+<li>Transmission type <select name='in5'><option value='NA' selected>UNANSWERED</option> <option value='{
+"itemInfo": {
+"setID": "Ch2-prob02-DTK-2013-05-27",
+"itemN":      5,
+"name": "trans",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"A level of a categorical variable":      0 
+},
+"hint": "",
+"reward": "Right!",
+"content": "A level of a categorical variable" 
+}'>A level of a categorical variable</option> <option value='{
+"itemInfo": {
+"setID": "Ch2-prob02-DTK-2013-05-27",
+"itemN":      5,
+"name": "trans",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"A categorical variable":      1 
+},
+"hint": "",
+"reward": "Right!",
+"content": "A categorical variable" 
+}'>A categorical variable</option> <option value='{
+"itemInfo": {
+"setID": "Ch2-prob02-DTK-2013-05-27",
+"itemN":      5,
+"name": "trans",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"A quantitative variable":      0 
+},
+"hint": "",
+"reward": "Right!",
+"content": "A quantitative variable" 
+}'>A quantitative variable</option> </select><span id='out5' class='shiny-html-output'> </span></li>
+<li><p>Number of cylinders <select name='in6'><option value='NA' selected>UNANSWERED</option> <option value='{
+"itemInfo": {
+"setID": "Ch2-prob02-DTK-2013-05-27",
+"itemN":      6,
+"name": "cylinders",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"A level of a categorical variable":      0 
+},
+"hint": "",
+"reward": "Right!",
+"content": "A level of a categorical variable" 
+}'>A level of a categorical variable</option> <option value='{
+"itemInfo": {
+"setID": "Ch2-prob02-DTK-2013-05-27",
+"itemN":      6,
+"name": "cylinders",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"A categorical variable":      0 
+},
+"hint": "",
+"reward": "Right!",
+"content": "A categorical variable" 
+}'>A categorical variable</option> <option value='{
+"itemInfo": {
+"setID": "Ch2-prob02-DTK-2013-05-27",
+"itemN":      6,
+"name": "cylinders",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"A quantitative variable":      1 
+},
+"hint": "",
+"reward": "Right!",
+"content": "A quantitative variable" 
+}'>A quantitative variable</option> </select><span id='out6' class='shiny-html-output'> </span></p></li>
+<li><p>Transmission type <select name='in7'><option value='NA' selected>UNANSWERED</option> <option value='{
+"itemInfo": {
+"setID": "Ch2-prob02-DTK-2013-05-27",
+"itemN":      7,
+"name": "trans2",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"A level of a categorical variable":      0 
+},
+"hint": "",
+"reward": "Right!",
+"content": "A level of a categorical variable" 
+}'>A level of a categorical variable</option> <option value='{
+"itemInfo": {
+"setID": "Ch2-prob02-DTK-2013-05-27",
+"itemN":      7,
+"name": "trans2",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"A categorical variable":      1 
+},
+"hint": "",
+"reward": "Right!",
+"content": "A categorical variable" 
+}'>A categorical variable</option> <option value='{
+"itemInfo": {
+"setID": "Ch2-prob02-DTK-2013-05-27",
+"itemN":      7,
+"name": "trans2",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"A quantitative variable":      0 
+},
+"hint": "",
+"reward": "Right!",
+"content": "A quantitative variable" 
+}'>A quantitative variable</option> </select><span id='out7' class='shiny-html-output'> </span></p></li>
+<li><p>Number of cylinders <select name='in8'><option value='NA' selected>UNANSWERED</option> <option value='{
+"itemInfo": {
+"setID": "Ch2-prob02-DTK-2013-05-27",
+"itemN":      8,
+"name": "cylinders2",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"A level of a categorical variable":      0 
+},
+"hint": "",
+"reward": "Right!",
+"content": "A level of a categorical variable" 
+}'>A level of a categorical variable</option> <option value='{
+"itemInfo": {
+"setID": "Ch2-prob02-DTK-2013-05-27",
+"itemN":      8,
+"name": "cylinders2",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"A categorical variable":      0 
+},
+"hint": "",
+"reward": "Right!",
+"content": "A categorical variable" 
+}'>A categorical variable</option> <option value='{
+"itemInfo": {
+"setID": "Ch2-prob02-DTK-2013-05-27",
+"itemN":      8,
+"name": "cylinders2",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"A quantitative variable":      1 
+},
+"hint": "",
+"reward": "Right!",
+"content": "A quantitative variable" 
+}'>A quantitative variable</option> </select><span id='out8' class='shiny-html-output'> </span></p></li>
 </ul>
 
-<p><span id='MCout3' class='shiny-html-output'> </span></p>
-
-<h4>Danny Kaplan, May 25, 2013</h4>
+<h4>from <a href="http://www.mosaic-web.org/go/StatisticalModeling/">Statistical Modeling: A Fresh Approach</a></h4>
 
 </body>
 

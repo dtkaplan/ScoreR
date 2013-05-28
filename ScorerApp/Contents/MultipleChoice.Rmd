@@ -25,7 +25,7 @@ There are three (simple) steps to creating a multiple-choice problem in *ScoreR*
 Initialization is done with the `newMC()` function.
 
 ```{r}
-f = newMC(pts=5) # Ordinarily, make this silent
+f = newMC(totalPts=5) # Ordinarily, make this silent
 ```
 
 The function name, in this case `f`, is arbitrary.  You will use that name to create the individual items with statements like `I(f(TRUE))` and I(f(FALSE))`, which will be embedded in text.  For instance:
@@ -44,12 +44,23 @@ You may well want to use inline knitr notation --- that's up to you.
 
 ### Hints and Labels
 
+You may prefer not to have bullet points before the individual items, yet still have each on it's own line.  To do this, in Markdown, put several blank spaces at the end of each line.
+`r f=newMC(name="movietitle",totalPts=1)`
+Which of these is a movie?    
+`r I(f(TRUE))` Gone with the Wind    
+`r I(f(FALSE))` The Wind is Gone    
+`r I(f(FALSE))` Go Wind, Go!   
+
+```{r include=FALSE}
+f(finish=TRUE)
+```
+
 You can use the `markers` argument to `newMc()` to specify labels other than A,B,C,....  You can also assign a name to the item and specify a reward for the correct answer.  Within the individual items (e.g., within `f()`), you can specify a hint.
 
 For example: 
 
 ```{r}
-f = newMC(name="Anna Karenina",pts=4,
+f = newMC(name="Anna Karenina",totalPts=4,
           markers=c("Б","Г","Д"))
 ```
 

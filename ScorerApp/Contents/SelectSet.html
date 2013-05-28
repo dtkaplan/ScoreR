@@ -186,7 +186,7 @@ hljs.initHighlightingOnLoad();
 
 <p>A question in the form of <strong>selecting from a set</strong> provides the reader with a set of short possible answers.  The reader picks one for the answer.</p>
 
-<p>As with all <em>ScoreR</em> problem, the source Rmd file makes use of commands in the <code>WriteScoreR</code> package.  The function <code>newScorerSet()</code> is used to provide a unique ID to the problem. The following commands, which typically will be hidden from the reader by the use of the <code>include=FALSE</code> directive, do this.  </p>
+<p>As with all <em>ScoreR</em> problems, the source Rmd file makes use of commands in the <code>WriteScoreR</code> package.  The function <code>newScorerSet()</code> is used to provide a unique ID to the problem. The following commands, which typically will be hidden from the reader by the use of the <code>include=FALSE</code> directive, do this.  </p>
 
 <pre><code class="r">require(WriteScoreR)
 newScorerSet(&quot;select-set-DTK-2013-05-25&quot;)
@@ -256,6 +256,102 @@ newScorerSet(&quot;select-set-DTK-2013-05-25&quot;)
 
 <p>The point value for the question is set by the argument <code>totalPts</code> (with a default of 1).</p>
 
+<h3>Purely Numerical Selections</h3>
+
+<p>When the set contains only numbers, there is a shortcut function, <code>selectNumber()</code> that lets you provide vectors of choices and the correct answer(s).  Be careful that your correct answers match the corresponding choices exactly.  For instance:</p>
+
+<ul>
+<li>Pick an even number out of this set:  <select name='in2'><option value='NA' selected>UNANSWERED</option> <option value='{
+"itemInfo": {
+"setID": "select-set-DTK-2013-05-25",
+"itemN":      2,
+"name": "evens",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"3":      0 
+},
+"hint": "",
+"reward": "Right!",
+"content": "3" 
+}'>3</option> <option value='{
+"itemInfo": {
+"setID": "select-set-DTK-2013-05-25",
+"itemN":      2,
+"name": "evens",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"5":      0 
+},
+"hint": "",
+"reward": "Right!",
+"content": "5" 
+}'>5</option> <option value='{
+"itemInfo": {
+"setID": "select-set-DTK-2013-05-25",
+"itemN":      2,
+"name": "evens",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"6":      1 
+},
+"hint": "",
+"reward": "Right!",
+"content": "6" 
+}'>6</option> <option value='{
+"itemInfo": {
+"setID": "select-set-DTK-2013-05-25",
+"itemN":      2,
+"name": "evens",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"7":      0 
+},
+"hint": "",
+"reward": "Right!",
+"content": "7" 
+}'>7</option> <option value='{
+"itemInfo": {
+"setID": "select-set-DTK-2013-05-25",
+"itemN":      2,
+"name": "evens",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"8":      1 
+},
+"hint": "",
+"reward": "Right!",
+"content": "8" 
+}'>8</option> <option value='{
+"itemInfo": {
+"setID": "select-set-DTK-2013-05-25",
+"itemN":      2,
+"name": "evens",
+"totalpts":      1 
+},
+"type": "Fixed Choice",
+"pts": {
+"9":      0 
+},
+"hint": "",
+"reward": "Right!",
+"content": "9" 
+}'>9</option> </select><span id='out2' class='shiny-html-output'> </span></li>
+</ul>
+
+<pre><code class="r">I(selectNumber(choices = c(3, 5, 6, 7, 8, 9), correct = c(6, 8), name = &quot;evens&quot;, 
+    totalPts = 2))
+</code></pre>
+
 <h3>Interactive Problems, Hints, and Partial Credit</h3>
 
 <p>For interactive problems you may wish to give a hint when the wrong answer is selected, and a reward for the right answer. To do this, use the <code>yes()</code> and <code>no()</code> functions to indicate correctness.</p>
@@ -268,10 +364,10 @@ newScorerSet(&quot;select-set-DTK-2013-05-25&quot;)
 </code></pre>
 
 <ul>
-<li>Let&#39;s try that again &hellip; <select name='in2'><option value='NA' selected>UNANSWERED</option> <option value='{
+<li>Let&#39;s try that again &hellip; <select name='in3'><option value='NA' selected>UNANSWERED</option> <option value='{
 "itemInfo": {
 "setID": "select-set-DTK-2013-05-25",
-"itemN":      2,
+"itemN":      3,
 "name": "piValue2",
 "totalpts":      4 
 },
@@ -282,7 +378,7 @@ newScorerSet(&quot;select-set-DTK-2013-05-25&quot;)
 }'>2.71727</option> <option value='{
 "itemInfo": {
 "setID": "select-set-DTK-2013-05-25",
-"itemN":      2,
+"itemN":      3,
 "name": "piValue2",
 "totalpts":      4 
 },
@@ -293,7 +389,7 @@ newScorerSet(&quot;select-set-DTK-2013-05-25&quot;)
 }'>3.0</option> <option value='{
 "itemInfo": {
 "setID": "select-set-DTK-2013-05-25",
-"itemN":      2,
+"itemN":      3,
 "name": "piValue2",
 "totalpts":      4 
 },
@@ -304,7 +400,7 @@ newScorerSet(&quot;select-set-DTK-2013-05-25&quot;)
 }'>3.14159</option> <option value='{
 "itemInfo": {
 "setID": "select-set-DTK-2013-05-25",
-"itemN":      2,
+"itemN":      3,
 "name": "piValue2",
 "totalpts":      4 
 },
@@ -312,7 +408,7 @@ newScorerSet(&quot;select-set-DTK-2013-05-25&quot;)
 "pts":      0,
 "hint": "That's 'tau'",
 "content": "6.28318" 
-}'>6.28318</option> </select><span id='out2' class='shiny-html-output'> </span></li>
+}'>6.28318</option> </select><span id='out3' class='shiny-html-output'> </span></li>
 </ul>
 
 <h3>To Do</h3>

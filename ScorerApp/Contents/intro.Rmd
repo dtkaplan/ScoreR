@@ -40,7 +40,7 @@ horses = selectSet(name="Horses",Ascot=TRUE,Pimlico=TRUE,"Yankee Stadium"=FALSE)
 Which of these is the start of the "Declaration of Independence"?
 
 ```{r include=FALSE}
-f = newMC(pts=5,name="Declaration") # Ordinarily, make this silent
+f = newMC(totalPts=5,name="Declaration") # Ordinarily, make this silent
 ```
 `r I(f(FALSE))` "We the people of the United States of America, in order to form a more perfect union ..."
 
@@ -51,7 +51,8 @@ f = newMC(pts=5,name="Declaration") # Ordinarily, make this silent
 
 ### Free text.
 
-What would you like to write a question about? `r I(textItem(name="question-topic",rows=1))`
+What would you like to write a question about?     
+`r I(textItem(name="question-topic",rows=3))`
 
 You can re-size the text box on most browsers.  
 

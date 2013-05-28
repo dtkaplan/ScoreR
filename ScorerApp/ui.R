@@ -1,4 +1,5 @@
 library(shiny)
+library(shinyIncubator)
 courseName="Math 155"
 # a flag to indicate when the person has logged in.
 # This is a string containing JavaScript code
@@ -25,7 +26,8 @@ shinyUI(
         condition = "output.loginStatus == 'Login Successful!'",
         p(textOutput("asLoggedInStatus")),
         uiOutput("assignmentSelector"),
-        uiOutput("problemSelector")
+        uiOutput("problemSelector"),
+        actionButton("save","Submit")
       ),
       verbatimTextOutput("mainStatus")
     ),

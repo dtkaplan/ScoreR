@@ -41,6 +41,7 @@ nextScorerItem <- function(counter="fixedChoiceCount",
     }
     if (increment) n <- .nextScorerCount()
     else n <- get(counter, envir=.scorerEnv)
+    if (n > 10) stop("Server still only configured for 10 items of each type.")
     return(n)
   }
   # return a list with pertinent information
@@ -54,12 +55,13 @@ nextScorerItem <- function(counter="fixedChoiceCount",
               )
          )
 }
+
 #' @export
-newMC <- function(name=NULL,pts=1,hint="",reward="",markers=LETTERS){
-  itemInfo <- nextScorerItem(counter="multiChoiceCount",name=name,possiblePoints=pts)
+newMC <- function(name=NULL,totalPts=1,hint="",reward="",markers=LETTERS){
+  itemInfo <- nextScorerItem(counter="multiChoiceCount",name=name,possiblePoints=totalPts)
   thisCount <- 0
   # These must in be in the same order in all the versions, e.g., choiceItem(),textItem()
-  vals <- list(pts=pts,hint=hint,itemInfo=itemInfo)
+  vals <- list(pts=totalPts,hint=hint,itemInfo=itemInfo)
   vals$type="MC"
   vals$reward=reward
   
@@ -79,7 +81,7 @@ newMC <- function(name=NULL,pts=1,hint="",reward="",markers=LETTERS){
       # update the information for this item
       valsForThisChoice <- vals
       # scale points depending on whether answer is correct
-      valsForThisChoice$pts <- valsForThisChoice$pts*credit 
+      valsForThisChoice$pts <- valsForThisChoice$pts*credit # scale total points according to credit.
       valsForThisChoice$hint <- hint
       valsForThisChoice$reward <- reward
       valsForThisChoice$content=identifier # just a placeholder
@@ -93,10 +95,10 @@ newMC <- function(name=NULL,pts=1,hint="",reward="",markers=LETTERS){
 }
 
 #' @export
-textItem <- function(name=NULL,pts=1,hint="",rows=2,cols=30,possiblePoints=1){
-  itemInfo <- nextScorerItem(counter="textCount",name=name)
+textItem <- function(name=NULL,totalPts=1,hint="",rows=2,cols=30){
+  itemInfo <- nextScorerItem(counter="textCount",name=name,possiblePoints=totalPts)
   # These must in be in the same order in all the versions, e.g., choiceItem(),textItem()
-  vals <- list(pts=pts,hint=hint,itemInfo=itemInfo)
+  vals <- list(pts=0,hint=hint,itemInfo=itemInfo)
   vals$type="Free text"
   vals$reward=""
   vals$content="Free text" # just a placeholder
@@ -165,7 +167,13 @@ selectSet <- function(name=NULL,style="dropdown",totalPts=1,hint="",reward="Righ
                      "' class='shiny-html-output'> </span>",sep=""))
   return(res)
 }
-
+# Numerical version of selectSet()
+selectNumber <- function(choices,correct, name=NULL,totalPts=1) {
+  vals <- choices %in% correct
+  names(vals) <- paste(choices)
+  # put things in the format for selectSet()
+  do.call(selectSet,c(list(name=name,totalPts=1),vals))
+}
 
 # Storage for internal data
 
