@@ -22,11 +22,11 @@ Ford F150  2WD|	pickup  |	Auto.	|8  |13 |17
 
 #### (a) Why are some cars listed twice?  Is this a mistake in the table?
 
-```{r} 
+```{r, echo=FALSE} 
 f = newMC(name="twice",totalPts=2)
 ```
 
-`r I(f(FALSE))` Yes, it's a mistake    
+`r I(f(FALSE))` Yes, it's a mistake.  
 `r I(f(TRUE))` A car brand might be listed more than once, but the cases have different attributes on other variables.    
 `r I(f(FALSE))` Some cars are more in demand than others.    
 
