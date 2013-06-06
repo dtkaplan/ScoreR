@@ -313,14 +313,7 @@ shinyServer(function(input, output) {
     #    cat(paste("File name: ", prob$File,"\n"),file=stderr())
     
      if (grep("http",prob$File,fixed=TRUE)) { # a web address
-       con <- url(prob$File)
-       contents <- readChar(con,10000000)
-       close(con)
-# Fix this to look like fetchGoogle, as so ...
-#        s = getURLContent(URL)
-#        foo = textConnection(s)
-#        b = read.csv(foo)
-#        close(foo)
+         contents <- getURL(prob$File)
      } # a file on this system
      else 
       contents <- readChar(prob$File, file.info(prob$File)$size)
