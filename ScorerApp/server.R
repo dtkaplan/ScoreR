@@ -3,6 +3,8 @@ library(RJSONIO)
 library(mosaic)  # for fetchGoogle
 # creating the database
 library(RSQLite)
+library(RCurl)  # This might be causing problems on glimmer.
+
 db = dbConnect(dbDriver("SQLite"),dbname="submissions.db",loadable.extensions=TRUE)
 dbGetQuery(db,paste("create table if not exists submit (",
                     "id INTEGER PRIMARY KEY,",
@@ -305,7 +307,7 @@ shinyServer(function(input, output) {
 
   probHTML <- reactive({  
     # Character string "Select Problem" is a flag not to load in any problem
-    if( input$thisProblem == "Select Problem"){
+    if( length(input$thisProblem)==0 || input$thisProblem == "Select Problem"){
       return(readChar("IntroBanner.html", file.info("IntroBanner.html")$size))
       # return("<center>No problem selected.</center>")
     }
