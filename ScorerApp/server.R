@@ -1,5 +1,6 @@
 library(shiny)
 library(RJSONIO)
+library(mosaic)  # for fetchGoogle
 # creating the database
 library(RSQLite)
 db = dbConnect(dbDriver("SQLite"),dbname="submissions.db",loadable.extensions=TRUE)
@@ -19,9 +20,16 @@ dbGetQuery(db,paste("create table if not exists submit (",
                     "user TEXT NOT NULL)",sep=""))
 
 # permanent data (until database system is set up)
+
 passwords <- read.csv("passwords.csv",stringsAsFactors=FALSE)
 # Get the list of problems
-problemSets <- read.csv("problemSets.csv",stringsAsFactors=FALSE)
+tmp <- fetchGoogle("https://docs.google.com/spreadsheet/pub?key=0Am13enSalO74dF9ZZnRmekpxcVp6MllOZDlPZU5GcXc&single=true&gid=0&output=csv")
+tmp$File <- as.character(tmp$File)
+tmp$Assignment <- as.character(tmp$Assignment)
+tmp$Problem <- as.character(tmp$Problem)
+problemSets <- tmp
+# problemSets2 <- read.csv("problemSets.csv",stringsAsFactors=FALSE)
+# problemSets <- rbind(problemSets2,problemSets)
 assignmentList <- with(problemSets,Assignment[!duplicated(Assignment)])
 # ===================
 itemSubmit <- function(val,A="bogus",P="bogus",who="bogus",text="",flag="blank",roster=NULL){
@@ -304,11 +312,25 @@ shinyServer(function(input, output) {
     prob <- probData("from probHTML") # Get the data on the selected problem, File, Answers, etc.
     #    cat(paste("File name: ", prob$File,"\n"),file=stderr())
     
+     if (grep("http",prob$File,fixed=TRUE)) { # a web address
+       con <- url(prob$File)
+       contents <- readChar(con,10000000)
+       close(con)
+# Fix this to look like fetchGoogle, as so ...
+#        s = getURLContent(URL)
+#        foo = textConnection(s)
+#        b = read.csv(foo)
+#        close(foo)
+     } # a file on this system
+     else 
+      contents <- readChar(prob$File, file.info(prob$File)$size)
+    
     # Check to see if it's available.  If not, give a message to that effect.
-    if (prob$Available) contents <- readChar(prob$File, file.info(prob$File)$size)
-    else contents <- paste("Problem '",prob$Problem,
+    if (!prob$Available) {
+      contents <- paste("Problem '",prob$Problem,
                            "' in assignment '",prob$Assignment,
                            "' not yet available.",sep="")
+    }
     
     if( !prob$Answers ) # Strip answers from the HTML file
       contents <- gsub("<aside.*?</aside>","",contents)
