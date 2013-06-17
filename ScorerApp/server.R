@@ -26,12 +26,14 @@ dbGetQuery(db,paste("create table if not exists submit (",
 passwords <- read.csv("passwords.csv",stringsAsFactors=FALSE)
 # Get the list of problems
 tmp <- fetchGoogle("https://docs.google.com/spreadsheet/pub?key=0Am13enSalO74dF9ZZnRmekpxcVp6MllOZDlPZU5GcXc&single=true&gid=0&output=csv")
+# Reading from the local files.
+problemSets2 <- read.csv("problemSets.csv",stringsAsFactors=FALSE)
+tmp <- rbind(problemSets2,tmp)
 tmp$File <- as.character(tmp$File)
 tmp$Assignment <- as.character(tmp$Assignment)
 tmp$Problem <- as.character(tmp$Problem)
 problemSets <- tmp
-# problemSets2 <- read.csv("problemSets.csv",stringsAsFactors=FALSE)
-# problemSets <- rbind(problemSets2,problemSets)
+
 assignmentList <- with(problemSets,Assignment[!duplicated(Assignment)])
 # ===================
 itemSubmit <- function(val,A="bogus",P="bogus",who="bogus",text="",flag="blank",roster=NULL){
@@ -132,7 +134,7 @@ shinyServer(function(input, output) {
 
   # is the user logged in?
   loggedIn <- reactive({
-#    return("for debugging") # SKIP login during development
+   return("for debugging") # SKIP login during development
     m <- subset(passwords, name==input$loginID) ## use tolower()?
     if( nrow(m)>0  & m[1,]$pass==input$password) 
       return(m[1,]$name)
@@ -147,7 +149,7 @@ shinyServer(function(input, output) {
 # Store the problem name, mode, and other information
   probData <- function(whence="nowhere"){ # not reactive
 #    cat(paste("A:",input$thisAssignment,
- #             "P:", input$thisProblem,"\n"),file=stderr())
+#              "P:", input$thisProblem,"\n"),file=stderr())
     if( input$thisProblem=="Select Problem") {
       return(list(Assignment=input$thisAssignment,Problem="No prob. selected",Accept=FALSE,Answers=FALSE,Available=TRUE))
     }
@@ -304,7 +306,6 @@ shinyServer(function(input, output) {
     HTML(probHTML())
   })
   
-
   probHTML <- reactive({  
     # Character string "Select Problem" is a flag not to load in any problem
     if( length(input$thisProblem)==0 || input$thisProblem == "Select Problem"){
@@ -312,9 +313,9 @@ shinyServer(function(input, output) {
       # return("<center>No problem selected.</center>")
     }
     prob <- probData("from probHTML") # Get the data on the selected problem, File, Answers, etc.
-    #    cat(paste("File name: ", prob$File,"\n"),file=stderr())
+     #   cat(paste("File name: ", prob$File,"\n"),file=stderr())
     
-     if (grep("http",prob$File,fixed=TRUE)) { # a web address
+     if (grepl("http",prob$File,fixed=TRUE)) { # a web address
          contents <- getURL(prob$File)
      } # a file on this system
      else 
@@ -326,6 +327,10 @@ shinyServer(function(input, output) {
                            "' in assignment '",prob$Assignment,
                            "' not yet available.",sep="")
     }
+    # Set up a retrigger of Mathjax
+    contents <- gsub("</head>",
+                      "<script type='text/javascript'>MathJax.Hub.Typeset()</script></head>",
+                      contents,fixed=TRUE)
     
     if( !prob$Answers ) # Strip answers from the HTML file
       contents <- gsub("<aside.*?</aside>","",contents)
