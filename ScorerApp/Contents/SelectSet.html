@@ -345,6 +345,12 @@ newScorerSet(&quot;select-set-DTK-2013-05-25&quot;)
                        &quot;6.28318&quot;=no(hint=&quot;That&#39;s &#39;tau&#39;&quot;))
 </code></pre>
 
+<h1>Above isn&#39;t working</h1>
+
+<pre><code class="r">piQuestion2 = selectSet(name = &quot;piValue2&quot;, totalPts = 4, `2.71727` = no(), `3.0` = no(), 
+    `3.14159` = yes(), `6.28318` = no())
+</code></pre>
+
 <ul>
 <li>Let&#39;s try that again &hellip; <select name='in3'><option value='NA' selected>UNANSWERED</option> <option value='{
 "itemInfo": {
@@ -355,7 +361,7 @@ newScorerSet(&quot;select-set-DTK-2013-05-25&quot;)
 },
 "type": "Fixed Choice",
 "pts":      0,
-"hint": "That's 'e'.",
+"hint": "Sorry",
 "content": "2.71727" 
 }'>2.71727</option> <option value='{
 "itemInfo": {
@@ -365,7 +371,7 @@ newScorerSet(&quot;select-set-DTK-2013-05-25&quot;)
 "totalpts":      4 
 },
 "type": "Fixed Choice",
-"pts":      2,
+"pts":      0,
 "hint": "Sorry",
 "content": "3.0" 
 }'>3.0</option> <option value='{
@@ -377,7 +383,7 @@ newScorerSet(&quot;select-set-DTK-2013-05-25&quot;)
 },
 "type": "Fixed Choice",
 "pts":      4,
-"hint": "Right as rain!",
+"hint": "Yes",
 "content": "3.14159" 
 }'>3.14159</option> <option value='{
 "itemInfo": {
@@ -388,7 +394,7 @@ newScorerSet(&quot;select-set-DTK-2013-05-25&quot;)
 },
 "type": "Fixed Choice",
 "pts":      0,
-"hint": "That's 'tau'",
+"hint": "Sorry",
 "content": "6.28318" 
 }'>6.28318</option> </select><span id='out3' class='shiny-html-output'> </span></li>
 </ul>

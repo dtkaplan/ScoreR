@@ -49,12 +49,20 @@ I(selectNumber(choices=c(3,5,6,7,8,9),correct=c(6,8),name="evens",totalPts=2))
 
 For interactive problems you may wish to give a hint when the wrong answer is selected, and a reward for the right answer. To do this, use the `yes()` and `no()` functions to indicate correctness.
 
-```{r}
+```{r eval=FALSE}
 piQuestion2 = selectSet(name="piValue2",totalPts=4,
                        "2.71727"=no(hint="That's 'e'."),
                        "3.0"=no(credit=0.5), # half credit
                        "3.14159"=yes(hint="Right as rain!"),
                        "6.28318"=no(hint="That's 'tau'"))
+```
+# Above isn't working
+```{r}
+piQuestion2 = selectSet(name="piValue2",totalPts=4,
+                        "2.71727"=no(),
+                        "3.0"=no(),
+                        "3.14159"=yes(),
+                        "6.28318"=no())
 ```
 
 * Let's try that again ... `r I(piQuestion2)`

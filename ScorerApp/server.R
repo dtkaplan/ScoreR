@@ -176,20 +176,21 @@ shinyServer(function(input, output) {
   
   checkOne <- observe({
     if( input$save==0 ) {
-#      cat("Initial save value\n",file=stderr())
+      # cat("Initial save value\n",file=stderr())
       return(3)
     }
     else {
-      
+      # cat("One\n",file=stderr())
       if( isolate(input$thisProblem)=="Select Problem") return()
       # Get the roster
+      # cat("Two\n",file=stderr())
       roster <- getRoster() #isolate(fromJSON(I(input$roster)))
-#      cat( paste("check One Roster: ",paste(roster,collapse=" "),"\n"),file=stderr())
+      #  cat( paste("check One Roster: ",paste(roster,collapse=" "),"\n"),file=stderr())
       isolate({
         prob <- input$thisProblem
         assign <- input$thisAssignment
         who <- loggedIn()
-#        cat(paste("Successive save value",isolate(input$save),"\n"),file=stderr())
+        # cat(paste("Successive save value",isolate(input$save),"\n"),file=stderr())
         itemSubmit(val=input$in1,flag="in1",P=prob,A=assign,who=who,roster=roster)
         itemSubmit(val=input$in2,flag="in2",P=prob,A=assign,who=who,roster=roster)
         itemSubmit(val=input$in3,flag="in3",P=prob,A=assign,who=who,roster=roster)
@@ -229,7 +230,9 @@ shinyServer(function(input, output) {
   }
   )
   
-  getRoster <- reactive({fromJSON(I(input$roster))})
+  getRoster <- reactive({#cat("three\n",file=stderr())
+                         #cat(paste(class(input$roster),"\n"),file=stderr())
+                         return(fromJSON(I(input$roster)))})
   
   output$mainStatus <- renderPrint({statusMessage()})
   
@@ -242,6 +245,7 @@ shinyServer(function(input, output) {
     renderTable(
       { 
         input$save # for the dependency
+        input$save2 # for the dependency
         user <- loggedIn()
         query <- paste("select assignment,probID,itemName,answer,score,autoScore,possible,lasttime,firsttime ",
                       "from submit where user=='",
@@ -328,10 +332,10 @@ shinyServer(function(input, output) {
                            "' not yet available.",sep="")
     }
     # Set up a retrigger of Mathjax
-    contents <- gsub("</head>",
-                      "<script type='text/javascript'>MathJax.Hub.Typeset()</script></head>",
-                      contents,fixed=TRUE)
-    
+#      contents <- gsub("</head>",
+#                        "<script type='text/javascript'>MathJax.Hub.Queue(['Typeset',MathJax.Hub]);</script></head>",
+#                        contents,fixed=TRUE)
+     
     if( !prob$Answers ) # Strip answers from the HTML file
       contents <- gsub("<aside.*?</aside>","",contents)
     # The regex will match the first closing aside, so can handle multiple asides

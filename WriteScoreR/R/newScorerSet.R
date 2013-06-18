@@ -32,6 +32,8 @@ closeProblem <- function() {
   holdvals <- paste("<select style='visibility: hidden' width='5' name='roster'>",
                     "<option value='",toJSON(I(roster)),
                     "'>Ignore me</option></select>",sep="")
+  # Cause mathjax to be retriggered.
+#  holdvals <- paste(holdvals,"<script type='text/javascript'>MathJax.Hub.Typeset(['Typeset',MathJax.Hub])</script>")
   return(holdvals)
 }
 newScorerSet <-function(ID) {
