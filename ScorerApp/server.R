@@ -346,7 +346,7 @@ shinyServer(function(input, output) {
     
     # MathJax update at the end of the file.
     # This kills the activity of the Shiny controls
-    #    contents <- c(contents,"<script type='text/javascript'>MathJax.Hub.Typeset()</script>")
+    contents <- c(contents,"<script type='text/javascript'>MathJax.Hub.Typeset()</script>")
     return(contents)
   }) 
   
