@@ -10,11 +10,15 @@ loginFlag = "output.loginStatus=='Login Successful!'"
 #possibleProblems <- dir("Contents")
 #htmlFiles <- possibleProblems[grep(".+\\.html",possibleProblems)]
 #htmlNames <- sub(".html","",htmlFiles)
-
+ mathjax <- function(){
+tagList(singleton(tags$head(
+  tags$script(src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"))))
+  return("mathjax")
+ }
 
 shinyUI(
   pageWithSidebar(
-    headerPanel(paste(courseName,"Assignments")),
+    headerPanel(paste(courseName,"Assignments",mathjax())), # just to see if I can set up mathjax
     sidebarPanel(
       p(textOutput("loginStatus")),
       conditionalPanel(

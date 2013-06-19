@@ -232,7 +232,9 @@ shinyServer(function(input, output) {
   
   getRoster <- reactive({#cat("three\n",file=stderr())
                          #cat(paste(class(input$roster),"\n"),file=stderr())
-                         return(fromJSON(I(input$roster)))})
+    input$roster # just to trigger the event
+                         return(fromJSON(I(input$roster)))
+                         return(c("in1"))})
   
   output$mainStatus <- renderPrint({statusMessage()})
   
@@ -333,8 +335,9 @@ shinyServer(function(input, output) {
     }
     # Set up a retrigger of Mathjax
 #      contents <- gsub("</head>",
-#                        "<script type='text/javascript'>MathJax.Hub.Queue(['Typeset',MathJax.Hub]);</script></head>",
-#                        contents,fixed=TRUE)
+#                       # "<script type='text/javascript'>MathJax.Hub.Queue(['Typeset',MathJax.Hub]);</script></head>",
+#                       "<script type='text/javascript'>MathJax.Hub.Typeset();</script></head>",
+#                       contents,fixed=TRUE)
      
     if( !prob$Answers ) # Strip answers from the HTML file
       contents <- gsub("<aside.*?</aside>","",contents)
