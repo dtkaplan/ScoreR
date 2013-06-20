@@ -58,7 +58,7 @@ nextScorerItem <- function(counter="fixedChoiceCount",
     }
     if (increment) n <- .nextScorerCount()
     else n <- get(counter, envir=.scorerEnv)
-    if (n > 10) stop("Server still only configured for 10 items of each type.")
+    if (n > 100) stop("Server still only configured for 100 items of each type.")
     return(n)
   }
   # return a list with pertinent information
