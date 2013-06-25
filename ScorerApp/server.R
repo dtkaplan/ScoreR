@@ -4,37 +4,37 @@ library(mosaic)  # for fetchGoogle
 # creating the database
 library(RSQLite)
 library(RCurl)  # This might be causing problems on glimmer.
-
-db = dbConnect(dbDriver("SQLite"),dbname="submissions.db",loadable.extensions=TRUE)
-dbGetQuery(db,paste("create table if not exists submit (",
-                    "id INTEGER PRIMARY KEY,",
-                    "setID TEXT NOT NULL,",
-                    "assignment TEXT NOT NULL,",
-                    "probID TEXT NOT NULL,",
-                    "itemName TEXT NOT NULL,",
-                    "firsttime TEXT NOT NULL,",
-                    "lasttime TEXT NOT NULL,",
-                    "score INTEGER,",
-                    "possible INTEGER,",
-                    "autoScore INTEGER,", # has it been automatically scored
-                    "answer TEXT NOT NULL,",
-                    "freetext TEXT NOT NULL,",
-                    "user TEXT NOT NULL)",sep=""))
+source("SharedAmongSessions.R", local=TRUE)
+# db = dbConnect(dbDriver("SQLite"),dbname="submissions.db",loadable.extensions=TRUE)
+# dbGetQuery(db,paste("create table if not exists submit (",
+#                     "id INTEGER PRIMARY KEY,",
+#                     "setID TEXT NOT NULL,",
+#                     "assignment TEXT NOT NULL,",
+#                     "probID TEXT NOT NULL,",
+#                     "itemName TEXT NOT NULL,",
+#                     "firsttime TEXT NOT NULL,",
+#                     "lasttime TEXT NOT NULL,",
+#                     "score INTEGER,",
+#                     "possible INTEGER,",
+#                     "autoScore INTEGER,", # has it been automatically scored
+#                     "answer TEXT NOT NULL,",
+#                     "freetext TEXT NOT NULL,",
+#                     "user TEXT NOT NULL)",sep=""))
 
 # permanent data (until database system is set up)
 
-passwords <- read.csv("passwords.csv",stringsAsFactors=FALSE)
-# Get the list of problems
-tmp <- fetchGoogle("https://docs.google.com/spreadsheet/pub?key=0Am13enSalO74dF9ZZnRmekpxcVp6MllOZDlPZU5GcXc&single=true&gid=0&output=csv")
-# Reading from the local files.
-problemSets2 <- read.csv("problemSets.csv",stringsAsFactors=FALSE)
-tmp <- rbind(problemSets2,tmp)
-tmp$File <- as.character(tmp$File)
-tmp$Assignment <- as.character(tmp$Assignment)
-tmp$Problem <- as.character(tmp$Problem)
-problemSets <- tmp
+# passwords <- read.csv("passwords.csv",stringsAsFactors=FALSE)
+# # Get the list of problems
+# tmp <- fetchGoogle("https://docs.google.com/spreadsheet/pub?key=0Am13enSalO74dF9ZZnRmekpxcVp6MllOZDlPZU5GcXc&single=true&gid=0&output=csv")
+# # Reading from the local files.
+# problemSets2 <- read.csv("problemSets.csv",stringsAsFactors=FALSE)
+# tmp <- rbind(problemSets2,tmp)
+# tmp$File <- as.character(tmp$File)
+# tmp$Assignment <- as.character(tmp$Assignment)
+# tmp$Problem <- as.character(tmp$Problem)
+# problemSets <- tmp
 
-assignmentList <- with(problemSets,Assignment[!duplicated(Assignment)])
+#assignmentList <- with(problemSets,Assignment[!duplicated(Assignment)])
 # ===================
 itemSubmit <- function(val,A="bogus",P="bogus",who="bogus",text="",flag="blank",roster=NULL){
 #  cat(paste("Flag", flag, "Roster", paste(roster,collapse=" "),"\n"),file=stderr())
@@ -118,11 +118,40 @@ probData <- function(assignment,problem){
 # =================
 # Define server logic required to plot various variables against mpg
 shinyServer(function(input, output) {
-
+  source("UserSession.R",local=TRUE) # read in code from external file
   output$assignmentSelector <- renderUI({
     selectInput("thisAssignment","Select Assignment:",assignmentList)
 #    output$mainStatus <- renderPrint({cat("\n")})
   })
+  # Choose which students to grade
+  output$studentSelector <- renderUI({
+    if( userInfo()$grader) {
+      readerNames <- c(list("Everyone"),subset(passwords,role=="reader")$name)
+      selectInput("studentsForGrading","Students to Grade:",
+                readerNames,
+                selected="Everyone",
+                multiple=TRUE)
+    } else p("You are not an instructor.")
+  })
+  # Which assignments to score
+  output$gradeLevelSelector <- renderUI({
+    if( userInfo()$grader) {
+      assignmentNames <- c(list("Selected Problem","Selected Assignment","All Assignments"),
+                       assignmentList)
+      selectInput("studentsForGrading","Assignment(s) to Grade:",
+                  assignmentNames,
+                  selected="Selected Assignment",
+                  multiple=TRUE)
+    } else p("")
+  })
+  output$classScores <- renderTable({graderScores()})
+  source("Grader.R",local=TRUE)
+#   graderScores <- reactive({
+#     if( userInfo()$grader ) {
+#       data.frame(hello=1:5,bye=11:15)
+#     }
+#     else data.frame(hello=1,bye=1)
+#   })
   
   output$problemSelector <- renderUI({
     pList <- c("No problems available.")
@@ -134,11 +163,24 @@ shinyServer(function(input, output) {
 
   # is the user logged in?
   loggedIn <- reactive({
-   return("for debugging") # SKIP login during development
+    return("for debugging") # SKIP login during development
     m <- subset(passwords, name==input$loginID) ## use tolower()?
-    if( nrow(m)>0  & m[1,]$pass==input$password) 
+    if( nrow(m)>0  && m[1,]$pass==input$password) 
       return(m[1,]$name)
     else return(NULL)
+  })
+  
+  # Information about the user
+  # this will replace loggedIn()
+  userInfo <- reactive({
+    # ONLY for debugging
+     return(list(name="Danny",grader=TRUE))
+    # Normal code
+    m <- subset(passwords, name==input$loginID)
+    if( nrow(m)>0  && m[1,]$pass==input$password ){
+      return(list(name=m[1,]$name,grader=m[1,]$role=="grader"))
+    }
+    else return(list(grader=FALSE))
   })
   
   # just for debugging.

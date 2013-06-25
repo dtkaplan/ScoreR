@@ -50,7 +50,12 @@ shinyUI(
         ),
         tabPanel("Account Maintenance",
                  h2(textOutput("AccountHeader"))
-                )
+                ),
+        tabPanel("Class Grading",
+                 p("Available only to instructors."),
+                 uiOutput("studentSelector"),
+                 uiOutput("gradeLevelSelector"), # choose assignments, 
+                 h2(tableOutput("classScores")))
         )
       )
     )
