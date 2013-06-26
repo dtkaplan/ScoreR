@@ -126,19 +126,20 @@ shinyServer(function(input, output) {
   # Choose which students to grade
   output$studentSelector <- renderUI({
     if( userInfo()$grader) {
-      readerNames <- c(list("Everyone"),subset(passwords,role=="reader")$name)
+      readerNames <- c(list("Everyone in class"),subset(passwords,role=="reader")$name)
       selectInput("studentsForGrading","Students to Grade:",
                 readerNames,
-                selected="Everyone",
+                selected="Everyone in class",
                 multiple=TRUE)
     } else p("You are not an instructor.")
   })
   # Which assignments to score
   output$gradeLevelSelector <- renderUI({
     if( userInfo()$grader) {
+      # See corresponding levels in "Grader.R"
       assignmentNames <- c(list("Selected Problem","Selected Assignment","All Assignments"),
                        assignmentList)
-      selectInput("studentsForGrading","Assignment(s) to Grade:",
+      selectInput("levelForGrading","Assignment(s) to Grade:",
                   assignmentNames,
                   selected="Selected Assignment",
                   multiple=TRUE)
@@ -163,7 +164,7 @@ shinyServer(function(input, output) {
 
   # is the user logged in?
   loggedIn <- reactive({
-    return("for debugging") # SKIP login during development
+ #   return("for debugging") # SKIP login during development
     m <- subset(passwords, name==input$loginID) ## use tolower()?
     if( nrow(m)>0  && m[1,]$pass==input$password) 
       return(m[1,]$name)
@@ -174,7 +175,7 @@ shinyServer(function(input, output) {
   # this will replace loggedIn()
   userInfo <- reactive({
     # ONLY for debugging
-     return(list(name="Danny",grader=TRUE))
+#     return(list(name="Danny",grader=TRUE))
     # Normal code
     m <- subset(passwords, name==input$loginID)
     if( nrow(m)>0  && m[1,]$pass==input$password ){
