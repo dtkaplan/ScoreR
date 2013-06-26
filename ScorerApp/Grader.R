@@ -22,7 +22,6 @@ graderScores <- reactive({
     }
     else { # a set of assignments
       tab <- dbGetQuery(db, query)
-      cat( paste( nrow(tab),"\n"),file=stderr())
       if( assignmentsChosen[1] != "All Assignments") {
         tab <- subset(tab, assignment %in% unlist(assignmentsChosen)  )
       }
