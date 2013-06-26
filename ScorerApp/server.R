@@ -145,6 +145,18 @@ shinyServer(function(input, output) {
                   multiple=TRUE)
     } else p("")
   })
+  # The download button
+  output$gradeFileDownload <- renderUI({
+    if( userInfo()$grader)
+      downloadButton('downloadGrades', 'Download Grade Table')
+    else p("")
+  })
+output$downloadGrades <- downloadHandler(
+  filename = function() { paste('grade-table', '.csv', sep='') },
+  content = function(file) {
+    write.csv(graderScores(), file)
+  }
+)
   output$classScores <- renderTable({graderScores()})
   source("Grader.R",local=TRUE)
 #   graderScores <- reactive({

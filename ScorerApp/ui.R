@@ -49,12 +49,14 @@ shinyUI(
                  h2(tableOutput("submissions")) # to track submissions for now
         ),
         tabPanel("Account Maintenance",
-                 h2(textOutput("AccountHeader"))
+                 h2(textOutput("AccountHeader")),
+                 p("This facility not available in this version of ScoreR.")
                 ),
         tabPanel("Class Grading",
                  p("Available only to instructors."),
                  uiOutput("studentSelector"),
                  uiOutput("gradeLevelSelector"), # choose assignments, 
+                 uiOutput("gradeFileDownload"),
                  h2(tableOutput("classScores")))
         )
       )
