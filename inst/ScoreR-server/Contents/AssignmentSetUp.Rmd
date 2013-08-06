@@ -7,8 +7,8 @@ require(WriteScoreR)
 
 
 ```{r}
-require(WriteScoreR)
-newScorerSet("set-up-DTK-2013-05-27")
+require(ScoreR)
+startProblem("set-up-DTK-2013-05-27")
 ```
 
 How to set up an assignment
@@ -33,6 +33,6 @@ I(selectNumber(choices=c(3,5,6,7,8,9),correct=c(6,8),name="evens",totalPts=2))
 
 * Provide different formats, not just the dropdown menu.
 
-`r I(closeProblem())`
+`r I(endProblem())`
 
 #### Danny Kaplan, May 25, 2013

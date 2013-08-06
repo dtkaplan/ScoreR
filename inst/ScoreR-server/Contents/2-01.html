@@ -215,104 +215,69 @@ hr {
 
 <h4>(a) Why are some cars listed twice?  Is this a mistake in the table?</h4>
 
-<p><label for='MCitem1'><input type='radio' name='MC1' id='MCitem1' value='{
+<p><label for='MCitem1'><input type='radio' name='ScoreR1' id='MCitem1' value='{
  "pts":      0,
 "hint": "",
-"itemInfo": {
- "setID": "Ch2-prob01-DTK-2013-05-27",
-"itemN":      1,
-"name": "twice",
-"totalpts":      2 
-},
-"type": "MC",
 "reward": "Right!",
 "content": "A" 
 }'> <b>A</b></label> Yes, it&#39;s a mistake.<br/>
-<label for='MCitem2'><input type='radio' name='MC1' id='MCitem2' value='{
+<label for='MCitem2'><input type='radio' name='ScoreR1' id='MCitem2' value='{
  "pts":      2,
 "hint": "",
-"itemInfo": {
- "setID": "Ch2-prob01-DTK-2013-05-27",
-"itemN":      1,
-"name": "twice",
-"totalpts":      2 
-},
-"type": "MC",
 "reward": "Right!",
 "content": "B" 
 }'> <b>B</b></label> A car brand might be listed more than once, but the cases have different attributes on other variables.<br/>
-<label for='MCitem3'><input type='radio' name='MC1' id='MCitem3' value='{
+<label for='MCitem3'><input type='radio' name='ScoreR1' id='MCitem3' value='{
  "pts":      0,
 "hint": "",
-"itemInfo": {
- "setID": "Ch2-prob01-DTK-2013-05-27",
-"itemN":      1,
-"name": "twice",
-"totalpts":      2 
-},
-"type": "MC",
 "reward": "Right!",
 "content": "C" 
 }'> <b>C</b></label> Some cars are more in demand than others.    </p>
 
-<p><span id='MCout1' class='shiny-html-output'> </span></p>
+<p><span id='ScoreR1out' class='shiny-html-output'> </span><select style='visibility: hidden' width='5' name='ScoreR1info'><option value='{
+ "setID": "Ch2-prob01-DTK-2013-05-27",
+"itemN":      1,
+"name": "twice",
+"totalpts":      2,
+"type": "MC",
+"reward": "" 
+}'>Question info</option></select></p>
 
 <h4>(b) What are the cases in the data frame?</h4>
 
-<p><label for='MCitem1'><input type='radio' name='MC2' id='MCitem1' value='{
+<p><label for='MCitem1'><input type='radio' name='ScoreR2' id='MCitem1' value='{
  "pts":      0,
 "hint": "",
-"itemInfo": {
- "setID": "Ch2-prob01-DTK-2013-05-27",
-"itemN":      2,
-"name": "cases",
-"totalpts":      2 
-},
-"type": "MC",
 "reward": "Right!",
 "content": "A" 
 }'> <b>A</b></label> Individual car companies<br/>
-<label for='MCitem2'><input type='radio' name='MC2' id='MCitem2' value='{
+<label for='MCitem2'><input type='radio' name='ScoreR2' id='MCitem2' value='{
  "pts":      0,
 "hint": "",
-"itemInfo": {
- "setID": "Ch2-prob01-DTK-2013-05-27",
-"itemN":      2,
-"name": "cases",
-"totalpts":      2 
-},
-"type": "MC",
 "reward": "Right!",
 "content": "B" 
 }'> <b>B</b></label> Individual makes and models of cars<br/>
-<label for='MCitem3'><input type='radio' name='MC2' id='MCitem3' value='{
+<label for='MCitem3'><input type='radio' name='ScoreR2' id='MCitem3' value='{
  "pts":      2,
 "hint": "",
-"itemInfo": {
- "setID": "Ch2-prob01-DTK-2013-05-27",
-"itemN":      2,
-"name": "cases",
-"totalpts":      2 
-},
-"type": "MC",
 "reward": "Right!",
 "content": "C" 
 }'> <b>C</b></label>  Individual configurations of cars<br/>
-<label for='MCitem4'><input type='radio' name='MC2' id='MCitem4' value='{
+<label for='MCitem4'><input type='radio' name='ScoreR2' id='MCitem4' value='{
  "pts":      0,
 "hint": "",
-"itemInfo": {
- "setID": "Ch2-prob01-DTK-2013-05-27",
-"itemN":      2,
-"name": "cases",
-"totalpts":      2 
-},
-"type": "MC",
 "reward": "Right!",
 "content": "D" 
 }'> <b>D</b></label> Different sizes of cars    </p>
 
-<p><span id='MCout2' class='shiny-html-output'> </span></p>
+<p><span id='ScoreR2out' class='shiny-html-output'> </span><select style='visibility: hidden' width='5' name='ScoreR2info'><option value='{
+ "setID": "Ch2-prob01-DTK-2013-05-27",
+"itemN":      2,
+"name": "cases",
+"totalpts":      2,
+"type": "MC",
+"reward": "" 
+}'>Question info</option></select></p>
 
 <p><aside>
 Each case must be a unique entity.  The same car company shows up more than once, as does the same &ldquo;Make and model&rdquo; and size of car.  The concept that marks each case as unique is the overall configuration of the car.  For example, the two Kia Optimas have different transmission types and different numbers of cylinders, whereas the two Saabs are identical in transmission but differ in the number of cylinders. 
@@ -323,231 +288,141 @@ Each case must be a unique entity.  The same car company shows up more than once
 <p>Some of the following are categorical variables, some are quantitative variables, while others are not a variable but a <strong>level</strong> of a categorical variable.  Which is which?</p>
 
 <ul>
-<li>Kia Optima     <select name='in1'><option value='NA' selected>UNANSWERED</option> <option value='{
-"itemInfo": {
-"setID": "Ch2-prob01-DTK-2013-05-27",
-"itemN":      1,
-"name": "Kia",
-"totalpts":      1 
-},
-"type": "Fixed Choice",
+<li>Kia Optima     <select name='ScoreR3'><option value='NA' selected>UNANSWERED</option> <option value='{
 "pts":      1,
 "hint": "",
 "reward": "Right!",
 "content": "A level of a categorical variable" 
 }'>A level of a categorical variable</option> <option value='{
-"itemInfo": {
-"setID": "Ch2-prob01-DTK-2013-05-27",
-"itemN":      1,
-"name": "Kia",
-"totalpts":      1 
-},
-"type": "Fixed Choice",
 "pts":      0,
 "hint": "",
 "reward": "Right!",
 "content": "A categorical variable" 
 }'>A categorical variable</option> <option value='{
-"itemInfo": {
-"setID": "Ch2-prob01-DTK-2013-05-27",
-"itemN":      1,
-"name": "Kia",
-"totalpts":      1 
-},
-"type": "Fixed Choice",
 "pts":      0,
 "hint": "",
 "reward": "Right!",
 "content": "A quantitative variable" 
-}'>A quantitative variable</option> </select><span id='out1' class='shiny-html-output'> </span></li>
-<li>City MPG       <select name='in2'><option value='NA' selected>UNANSWERED</option> <option value='{
-"itemInfo": {
-"setID": "Ch2-prob01-DTK-2013-05-27",
-"itemN":      2,
-"name": "city",
-"totalpts":      1 
-},
-"type": "Fixed Choice",
-"pts":      0,
-"hint": "",
-"reward": "Right!",
-"content": "A level of a categorical variable" 
-}'>A level of a categorical variable</option> <option value='{
-"itemInfo": {
-"setID": "Ch2-prob01-DTK-2013-05-27",
-"itemN":      2,
-"name": "city",
-"totalpts":      1 
-},
-"type": "Fixed Choice",
-"pts":      0,
-"hint": "",
-"reward": "Right!",
-"content": "A categorical variable" 
-}'>A categorical variable</option> <option value='{
-"itemInfo": {
-"setID": "Ch2-prob01-DTK-2013-05-27",
-"itemN":      2,
-"name": "city",
-"totalpts":      1 
-},
-"type": "Fixed Choice",
-"pts":      1,
-"hint": "",
-"reward": "Right!",
-"content": "A quantitative variable" 
-}'>A quantitative variable</option> </select><span id='out2' class='shiny-html-output'> </span></li>
-<li>Vehicle type  <select name='in3'><option value='NA' selected>UNANSWERED</option> <option value='{
-"itemInfo": {
+}'>A quantitative variable</option></select><span id='ScoreR3out' class='shiny-html-output'> </span><select style='visibility: hidden' width='5' name='ScoreR3info'><option value='{
 "setID": "Ch2-prob01-DTK-2013-05-27",
 "itemN":      3,
-"name": "vtype",
-"totalpts":      1 
-},
-"type": "Fixed Choice",
+"name": "Kia",
+"totalpts":      1,
+"type": "Fixed Choice" 
+}'>Info for Select Set</option></select></li>
+<li>City MPG       <select name='ScoreR4'><option value='NA' selected>UNANSWERED</option> <option value='{
 "pts":      0,
 "hint": "",
 "reward": "Right!",
 "content": "A level of a categorical variable" 
 }'>A level of a categorical variable</option> <option value='{
-"itemInfo": {
-"setID": "Ch2-prob01-DTK-2013-05-27",
-"itemN":      3,
-"name": "vtype",
-"totalpts":      1 
-},
-"type": "Fixed Choice",
-"pts":      1,
+"pts":      0,
 "hint": "",
 "reward": "Right!",
 "content": "A categorical variable" 
 }'>A categorical variable</option> <option value='{
-"itemInfo": {
-"setID": "Ch2-prob01-DTK-2013-05-27",
-"itemN":      3,
-"name": "vtype",
-"totalpts":      1 
-},
-"type": "Fixed Choice",
-"pts":      0,
+"pts":      1,
 "hint": "",
 "reward": "Right!",
 "content": "A quantitative variable" 
-}'>A quantitative variable</option> </select><span id='out3' class='shiny-html-output'> </span></li>
-<li>SUV <select name='in4'><option value='NA' selected>UNANSWERED</option> <option value='{
-"itemInfo": {
+}'>A quantitative variable</option></select><span id='ScoreR4out' class='shiny-html-output'> </span><select style='visibility: hidden' width='5' name='ScoreR4info'><option value='{
 "setID": "Ch2-prob01-DTK-2013-05-27",
 "itemN":      4,
-"name": "SUV",
-"totalpts":      1 
-},
-"type": "Fixed Choice",
-"pts":      1,
-"hint": "",
-"reward": "Right!",
-"content": "A level of a categorical variable" 
-}'>A level of a categorical variable</option> <option value='{
-"itemInfo": {
-"setID": "Ch2-prob01-DTK-2013-05-27",
-"itemN":      4,
-"name": "SUV",
-"totalpts":      1 
-},
-"type": "Fixed Choice",
-"pts":      0,
-"hint": "",
-"reward": "Right!",
-"content": "A categorical variable" 
-}'>A categorical variable</option> <option value='{
-"itemInfo": {
-"setID": "Ch2-prob01-DTK-2013-05-27",
-"itemN":      4,
-"name": "SUV",
-"totalpts":      1 
-},
-"type": "Fixed Choice",
-"pts":      0,
-"hint": "",
-"reward": "Right!",
-"content": "A quantitative variable" 
-}'>A quantitative variable</option> </select><span id='out4' class='shiny-html-output'> </span></li>
-<li>Transmission type <select name='in5'><option value='NA' selected>UNANSWERED</option> <option value='{
-"itemInfo": {
-"setID": "Ch2-prob01-DTK-2013-05-27",
-"itemN":      5,
-"name": "trans",
-"totalpts":      1 
-},
-"type": "Fixed Choice",
+"name": "city",
+"totalpts":      1,
+"type": "Fixed Choice" 
+}'>Info for Select Set</option></select></li>
+<li>Vehicle type  <select name='ScoreR5'><option value='NA' selected>UNANSWERED</option> <option value='{
 "pts":      0,
 "hint": "",
 "reward": "Right!",
 "content": "A level of a categorical variable" 
 }'>A level of a categorical variable</option> <option value='{
-"itemInfo": {
-"setID": "Ch2-prob01-DTK-2013-05-27",
-"itemN":      5,
-"name": "trans",
-"totalpts":      1 
-},
-"type": "Fixed Choice",
 "pts":      1,
 "hint": "",
 "reward": "Right!",
 "content": "A categorical variable" 
 }'>A categorical variable</option> <option value='{
-"itemInfo": {
-"setID": "Ch2-prob01-DTK-2013-05-27",
-"itemN":      5,
-"name": "trans",
-"totalpts":      1 
-},
-"type": "Fixed Choice",
 "pts":      0,
 "hint": "",
 "reward": "Right!",
 "content": "A quantitative variable" 
-}'>A quantitative variable</option> </select><span id='out5' class='shiny-html-output'> </span></li>
-<li>Number of cylinders <select name='in6'><option value='NA' selected>UNANSWERED</option> <option value='{
-"itemInfo": {
+}'>A quantitative variable</option></select><span id='ScoreR5out' class='shiny-html-output'> </span><select style='visibility: hidden' width='5' name='ScoreR5info'><option value='{
+"setID": "Ch2-prob01-DTK-2013-05-27",
+"itemN":      5,
+"name": "vtype",
+"totalpts":      1,
+"type": "Fixed Choice" 
+}'>Info for Select Set</option></select></li>
+<li>SUV <select name='ScoreR6'><option value='NA' selected>UNANSWERED</option> <option value='{
+"pts":      1,
+"hint": "",
+"reward": "Right!",
+"content": "A level of a categorical variable" 
+}'>A level of a categorical variable</option> <option value='{
+"pts":      0,
+"hint": "",
+"reward": "Right!",
+"content": "A categorical variable" 
+}'>A categorical variable</option> <option value='{
+"pts":      0,
+"hint": "",
+"reward": "Right!",
+"content": "A quantitative variable" 
+}'>A quantitative variable</option></select><span id='ScoreR6out' class='shiny-html-output'> </span><select style='visibility: hidden' width='5' name='ScoreR6info'><option value='{
 "setID": "Ch2-prob01-DTK-2013-05-27",
 "itemN":      6,
-"name": "cylinders",
-"totalpts":      1 
-},
-"type": "Fixed Choice",
+"name": "SUV",
+"totalpts":      1,
+"type": "Fixed Choice" 
+}'>Info for Select Set</option></select></li>
+<li>Transmission type <select name='ScoreR7'><option value='NA' selected>UNANSWERED</option> <option value='{
 "pts":      0,
 "hint": "",
 "reward": "Right!",
 "content": "A level of a categorical variable" 
 }'>A level of a categorical variable</option> <option value='{
-"itemInfo": {
+"pts":      1,
+"hint": "",
+"reward": "Right!",
+"content": "A categorical variable" 
+}'>A categorical variable</option> <option value='{
+"pts":      0,
+"hint": "",
+"reward": "Right!",
+"content": "A quantitative variable" 
+}'>A quantitative variable</option></select><span id='ScoreR7out' class='shiny-html-output'> </span><select style='visibility: hidden' width='5' name='ScoreR7info'><option value='{
 "setID": "Ch2-prob01-DTK-2013-05-27",
-"itemN":      6,
-"name": "cylinders",
-"totalpts":      1 
-},
-"type": "Fixed Choice",
+"itemN":      7,
+"name": "trans",
+"totalpts":      1,
+"type": "Fixed Choice" 
+}'>Info for Select Set</option></select></li>
+<li>Number of cylinders <select name='ScoreR8'><option value='NA' selected>UNANSWERED</option> <option value='{
+"pts":      0,
+"hint": "",
+"reward": "Right!",
+"content": "A level of a categorical variable" 
+}'>A level of a categorical variable</option> <option value='{
 "pts":      0,
 "hint": "",
 "reward": "Right!",
 "content": "A categorical variable" 
 }'>A categorical variable</option> <option value='{
-"itemInfo": {
-"setID": "Ch2-prob01-DTK-2013-05-27",
-"itemN":      6,
-"name": "cylinders",
-"totalpts":      1 
-},
-"type": "Fixed Choice",
 "pts":      1,
 "hint": "",
 "reward": "Right!",
 "content": "A quantitative variable" 
-}'>A quantitative variable</option> </select><span id='out6' class='shiny-html-output'> </span></li>
+}'>A quantitative variable</option></select><span id='ScoreR8out' class='shiny-html-output'> </span><select style='visibility: hidden' width='5' name='ScoreR8info'><option value='{
+"setID": "Ch2-prob01-DTK-2013-05-27",
+"itemN":      8,
+"name": "cylinders",
+"totalpts":      1,
+"type": "Fixed Choice" 
+}'>Info for Select Set</option></select></li>
 </ul>
 
-<p><select style='visibility: hidden' width='5' name='roster'><option value='[ "in1", "in2", "in3", "in4", "in5", "in6", "MC1", "MC2" ]'>Ignore me</option></select></p>
+<p><select style='visibility: hidden' width='5' name='roster'><option value='[ "ScoreR1", "ScoreR2", "ScoreR3", "ScoreR4", "ScoreR5", "ScoreR6", "ScoreR7", "ScoreR8" ]'>Ignore me</option></select></p>
 
 <h4>from <a href="http://www.mosaic-web.org/go/StatisticalModeling/">Statistical Modeling: A Fresh Approach</a></h4>
 

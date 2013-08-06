@@ -92,19 +92,10 @@ shinyServer(function(input, output, session) {
         who <- userInfo()$name
         for (thisProb in roster) {
           cat(paste(thisProb," hi \n"),file=stderr())
-          browser()
-          itemSubmit(val=input[[thisProb]],flag=thisProb,P=prob,A=assign,who=who,roster=roster)
+          val <- input[[thisProb]]
+          info <- input[[paste(thisProb,"info",sep="")]]
+          newItemSubmit(val,info,P=prob,A=assign,who=who)
         }
-        # cat(paste("Successive save value",isolate(input$save),"\n"),file=stderr())
-#         itemSubmit(val=input$in1,flag="in1",P=prob,A=assign,who=who,roster=roster)
-#        itemSubmit(val=input$MC20,flag="MC20",P=prob,A=assign,who=who,roster=roster)
-# #        cat(paste("Text1 is '",input$text1,"'\n",sep=""),file=stderr())
-# 
-#         itemSubmit(val=input$info1,text=input$text1,
-#                    flag="text1",P=prob,A=assign,who=who,roster=roster)
-#         itemSubmit(val=input$info2,text=input$text2,
-#                    flag="text2",P=prob,A=assign,who=who,roster=roster)
-#         
       })
       return()
     }

@@ -184,32 +184,28 @@ hljs.initHighlightingOnLoad();
 
 <p>The text is not automatically graded.  <strong>In the future</strong>, we anticipate adding features that will enable commands that are submitted to be evaluated, for example to evaluate whether user input such as <code>3*x^2 + 4</code> is equivalent to a pre-specified function. </p>
 
-<p>As with all <em>ScoreR</em> problems, the source Rmd file makes use of commands in the <code>WriteScoreR</code> package.  The function <code>newScorerSet()</code> is used to provide a unique ID to the problem. The following commands, which typically will be hidden from the reader by the use of the <code>include=FALSE</code> directive, do this.  </p>
+<p>As with all <em>ScoreR</em> problems, the source Rmd file makes use of commands in the <code>ScoreR</code> package.  The function <code>startProblem()</code> is used to provide a unique ID to the problem. The following commands, which typically will be hidden from the reader by the use of the <code>include=FALSE</code> directive, do this.  </p>
 
-<pre><code class="r">require(WriteScoreR)
-newScorerSet(&quot;free-text-DTK-2013-05-25&quot;)
+<pre><code class="r">require(ScoreR)
+startProblem(&quot;free-text-DTK-2013-05-25&quot;)
 </code></pre>
 
 <p>The uniqueness of the ID is ensured by the author.  One way to help ensure uniqueness is to include the date in the ID.</p>
 
-<p>The <code>freeText()</code> function in <code>WriteScoreR</code> implements free-text entry.  It&#39;s very, very simple to add a free-text question to a problem.  Just</p>
+<p>The <code>freeText()</code> function in <code>ScoreR</code> implements free-text entry.  It&#39;s very, very simple to add a free-text question to a problem.  Just</p>
 
 <pre><code class="r">I(textItem(name = &quot;question-topic&quot;, rows = 2, totalPts = 10))
 </code></pre>
 
-<p><textarea cols='30' rows='2' id='text1' placeholder='Your answer here ...'></textarea><select style='visibility: hidden' width='5' name='info1'><option value='{
- "pts":      0,
-"hint": "",
-"itemInfo": {
+<p><textarea cols='30' rows='2' id='ScoreR1' placeholder='Your answer here ...'></textarea><span id='ScoreR1out' value='spanvalue' class='shiny-html-output'></span><select style='visibility: hidden'width='5' name='ScoreR1info'><option value='{
  "setID": "free-text-DTK-2013-05-25",
 "itemN":      1,
 "name": "question-topic",
-"totalpts":     10 
-},
+"totalpts":     10,
 "type": "Free text",
-"reward": "",
-"content": "Free text" 
-}'>Ignore me</option></select><span id='tout1' value='spanvalue' class='shiny-html-output'></span></p>
+"hint": "",
+"reward": "" 
+}'>Question info for free text</option></select></p>
 
 <p>The name, of course, should be unique within the problem.  The optional arguments <code>rows</code> and <code>cols</code> sets the size of the text entry box.  On many browsers, this block can be resized by the user, so a small box is useful in for adding in extended text.</p>
 
@@ -217,7 +213,7 @@ newScorerSet(&quot;free-text-DTK-2013-05-25&quot;)
 
 <p>Note that the user <strong>must</strong> click on the radio buttons to the right of the box in order to submit the text.  <strong>To do</strong>: Replace with with a simple button, or change the updating rule so that an event is triggered only when the user leaves the box.  Currently, events are triggered every few characters or seconds, which leads to frequent updating when a user is editing.  <strong>Question</strong>: Is this a problem?  Perhaps it&#39;s alright to have the submission be automatic and frequent.</p>
 
-<p><select style='visibility: hidden' width='5' name='roster'><option value='[ "text1" ]'>Ignore me</option></select></p>
+<p><select style='visibility: hidden' width='5' name='roster'><option value='[ "ScoreR1" ]'>Ignore me</option></select></p>
 
 <h4>Danny Kaplan, May 26, 2013</h4>
 

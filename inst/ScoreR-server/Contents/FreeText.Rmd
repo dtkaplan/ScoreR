@@ -2,21 +2,21 @@ Entering Free Text
 ========================================================
 
 ```{r include=FALSE}
-require(WriteScoreR)
+require(ScoreR)
 ```
 A **free text** input enables the user to submit free text such as an essay, a fragment of software, etc.
 
 The text is not automatically graded.  **In the future**, we anticipate adding features that will enable commands that are submitted to be evaluated, for example to evaluate whether user input such as `3*x^2 + 4` is equivalent to a pre-specified function. 
 
-As with all *ScoreR* problems, the source Rmd file makes use of commands in the `WriteScoreR` package.  The function `newScorerSet()` is used to provide a unique ID to the problem. The following commands, which typically will be hidden from the reader by the use of the `include=FALSE` directive, do this.  
+As with all *ScoreR* problems, the source Rmd file makes use of commands in the `ScoreR` package.  The function `startProblem()` is used to provide a unique ID to the problem. The following commands, which typically will be hidden from the reader by the use of the `include=FALSE` directive, do this.  
 ```{r}
-require(WriteScoreR)
-newScorerSet("free-text-DTK-2013-05-25")
+require(ScoreR)
+startProblem("free-text-DTK-2013-05-25")
 ```
 
 The uniqueness of the ID is ensured by the author.  One way to help ensure uniqueness is to include the date in the ID.
 
-The `freeText()` function in `WriteScoreR` implements free-text entry.  It's very, very simple to add a free-text question to a problem.  Just
+The `freeText()` function in `ScoreR` implements free-text entry.  It's very, very simple to add a free-text question to a problem.  Just
 
 ```{r eval=FALSE} 
 I(textItem(name="question-topic",rows=2,totalPts=10))
@@ -30,6 +30,6 @@ The value of `totalPts` sets the maximum point value of the essay. This is recor
 
 Note that the user **must** click on the radio buttons to the right of the box in order to submit the text.  **To do**: Replace with with a simple button, or change the updating rule so that an event is triggered only when the user leaves the box.  Currently, events are triggered every few characters or seconds, which leads to frequent updating when a user is editing.  **Question**: Is this a problem?  Perhaps it's alright to have the submission be automatic and frequent.
 
-`r I(closeProblem())`
+`r I(endProblem())`
 
 #### Danny Kaplan, May 26, 2013

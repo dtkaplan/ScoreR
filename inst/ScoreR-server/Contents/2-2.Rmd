@@ -2,8 +2,8 @@ Chapter 2, Problem 1
 ========================
 
 ```{r include=FALSE}
-require(WriteScoreR)
-newScorerSet("Ch2-prob1-DTK-2013-05-26")
+require(ScoreR)
+startProblem("Ch2-prob1-DTK-2013-05-26")
 require(mosaic)
 ```
 
@@ -72,5 +72,5 @@ How many have an uptake that is less than 1/10 of the concentration (in the unit
  17  33  34  51  68  
 
 
-`r I(closeProblem())`
+`r I(endProblem())`
 #### from [Statistical Modeling: A Fresh Approach](http://www.mosaic-web.org/go/StatisticalModeling/)

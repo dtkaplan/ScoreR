@@ -1,38 +1,48 @@
-# ===================
-itemSubmit <- function(val,A="bogus",P="bogus",who="bogus",text="",flag="blank",roster=NULL){
-  #  cat(paste("Flag", flag, "Roster", paste(roster,collapse=" "),"\n"),file=stderr())
-  if( !(flag %in% roster)) return()
-  if (is.null(val) || is.na(val) || val=="NA" || val=="") { 
-    # cat("empty val\n",file=stderr()); 
-    return(0)
-  }
-  if (who == "bogus") {cat("bogus who\n",file=stderr()); return()}
+
+#' @param val a character string containing information from 
+#' the user-interactive component of the item.  This will be JSON encoded
+#' unless the item is a text submission (or potentially something else)
+#' @param info a character string, JSON encoded, containing static information
+#' about the item
+#' @param P a character string naming the problem (in the user's view)
+#' @param A a character string naming the assignment (in the user's view)
+#' @param who a character string with the user's ID
+newItemSubmit <- function(val,info,P=prob,A=assign,who=who) {
+  # Test if there was a change to the item value.  If not, simply return.
+  if (val=="" || is.null(val) || is.na(val) || val=="NA") return(NULL)
+  # Get information about the problem to see if answers are being accepted
   prob <- probData(assignment=A,problem=P) # Get the data on the selected problem, File, Answers, etc.
-  if( !prob$Accept || !prob$Available) {cat("prob not avail\n",file=stderr());return() }# don't accept submission
-  if( substr(flag,1,4)=="text" && nchar(text)==0) return(); # empty text submission
-  #cat(paste(nchar(val),"\n"),file=stderr())
+  if( !prob$Accept || !prob$Available) return(NULL) 
   
-  # plan for Tuesday morning.
-#   # The NEW STUFF
-#   v <- try(fromJSON(I(val)), silent=TRUE) 
-#   if (inherits(foo,'try-error')) {
-#     text <- val # it was just plain text
-#     # extract out the number <n> from the "flag" and query the input$info<n>
-#      v <- fromJSON(I(input[['info<n>']])) # REPLACE <n> with the number.
-#   }
-# When you have made this change, you won't need the next line.
-  v <- fromJSON(I(val)) # read in the structure from the stored data
+  info <- fromJSON(I(info)) # translate the static info from JSON 
   
+  # Pull out the value set interactively by the user
+  # If it's a text item, that's simply the character string <val>.  Otherwise, unpack
+  # the JSON-encoded value
+  if (info$type=="Free text") {
+    text <- val 
+    content <- ""
+    autoscore <- 0  # Not auto-scored
+    pts <- 2 # change to indicate ungraded
+    ### CHANGE ABOVE
+    ### CHANGE ABOVE
+  } else {
+    val <- fromJSON(I(val))
+    content <- val$content
+    autoscore <- 1 # auto-scored
+    text <- ""
+    pts <- val$pts
+  }
+  type <- info$type
+  totalpts <- info$totalpts
+  setID <- info$setID
+  ItemName <- info$name
   
-  
-  content <- v$content
-  type <- v$type
-  pts <- v$pts
-  totalpts <- v$itemInfo$totalpts
-  setID <- v$itemInfo$setID
-  ItemName <- v$itemInfo$name
-  
+  testing <- getSubmittedAnswers(who,A,P) 
+  browser()
   # TO DO : if (prob$Accept=="Immediate") flash up the hint or reward.  
+  
+  
   
   
   # check if the problem has an earlier entry
@@ -43,7 +53,7 @@ itemSubmit <- function(val,A="bogus",P="bogus",who="bogus",text="",flag="blank",
                       "itemName='",ItemName,"'",
                       sep="")
   res = dbGetQuery(db,searchQuery)
-  #  cat(paste(searchQuery,"\n"),file=stderr())
+  
   if( nrow(res) == 0 ) {
     query = paste("insert into submit values (null, '",
                   setID,"','",
@@ -53,9 +63,9 @@ itemSubmit <- function(val,A="bogus",P="bogus",who="bogus",text="",flag="blank",
                   date(),"','",date(),"',",
                   pts,",", # points scored
                   totalpts,",", # points possible
-                  ifelse(type %in% c("Free text"),0,1),",'", # not scored if Free text, etc
-                  content,"','",
-                  toJSON(I(text)),"','",
+                  autoscore,",'", # not scored if Free text, etc
+                  content,"','", # Fixed strings, don't need JSON
+                  toJSON(I(text)),"','", 
                   who,"')",sep="")
     #   cat(paste(query,"\n"),file=stderr())
     dbGetQuery(db,query)
@@ -71,4 +81,15 @@ itemSubmit <- function(val,A="bogus",P="bogus",who="bogus",text="",flag="blank",
     #  cat(query,file=stderr())
     dbGetQuery(db,query)
   }
+}
+# ==================
+# check if the problem has an earlier entry
+getSubmittedAnswers <- function(who,assignment,problem) {
+  searchQuery = paste("select * from submit where ",
+                      "user='",who,"' and ",
+                      "assignment='",assignment,"' and ",
+                      "probID='",problem,"'",
+                      sep="")
+  res = dbGetQuery(db,searchQuery)
+  return(res)
 }

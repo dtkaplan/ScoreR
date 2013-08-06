@@ -184,8 +184,8 @@ hljs.initHighlightingOnLoad();
 <body>
 <h1>Scoring an assignment</h1>
 
-<pre><code class="r">require(WriteScoreR)
-newScorerSet(&quot;score-DTK-2013-05-27&quot;)
+<pre><code class="r">require(ScoreR)
+startProblem(&quot;score-DTK-2013-05-27&quot;)
 </code></pre>
 
 <p>How to score the free-text answers, and what the different reports mean.</p>
@@ -197,116 +197,65 @@ newScorerSet(&quot;score-DTK-2013-05-27&quot;)
 </code></pre>
 
 <ul>
-<li><p>Which is closest to \( \pi \)? <select name='in1'><option value='NA' selected>UNANSWERED</option> <option value='{
-"itemInfo": {
-"setID": "score-DTK-2013-05-27",
-"itemN":      1,
-"name": "piValue",
-"totalpts":      4 
-},
-"type": "Fixed Choice",
+<li><p>Which is closest to \( \pi \)? <select name='ScoreR1'><option value='NA' selected>UNANSWERED</option> <option value='{
 "pts":      0,
 "hint": "",
 "reward": "Right!",
 "content": "2.71727" 
 }'>2.71727</option> <option value='{
-"itemInfo": {
-"setID": "score-DTK-2013-05-27",
-"itemN":      1,
-"name": "piValue",
-"totalpts":      4 
-},
-"type": "Fixed Choice",
 "pts":      4,
 "hint": "",
 "reward": "Right!",
 "content": "3.14159" 
 }'>3.14159</option> <option value='{
-"itemInfo": {
-"setID": "score-DTK-2013-05-27",
-"itemN":      1,
-"name": "piValue",
-"totalpts":      4 
-},
-"type": "Fixed Choice",
 "pts":      0,
 "hint": "",
 "reward": "Right!",
 "content": "6.28318" 
-}'>6.28318</option> </select><span id='out1' class='shiny-html-output'> </span></p></li>
-<li><p>Pick an even number out of this set:  <select name='in2'><option value='NA' selected>UNANSWERED</option> <option value='{
-"itemInfo": {
+}'>6.28318</option></select><span id='ScoreR1out' class='shiny-html-output'> </span><select style='visibility: hidden' width='5' name='ScoreR1info'><option value='{
 "setID": "score-DTK-2013-05-27",
-"itemN":      2,
-"name": "evens",
-"totalpts":      1 
-},
-"type": "Fixed Choice",
+"itemN":      1,
+"name": "piValue",
+"totalpts":      4,
+"type": "Fixed Choice" 
+}'>Info for Select Set</option></select></p></li>
+<li><p>Pick an even number out of this set:  <select name='ScoreR2'><option value='NA' selected>UNANSWERED</option> <option value='{
 "pts":      0,
 "hint": "",
 "reward": "Right!",
 "content": "3" 
 }'>3</option> <option value='{
-"itemInfo": {
-"setID": "score-DTK-2013-05-27",
-"itemN":      2,
-"name": "evens",
-"totalpts":      1 
-},
-"type": "Fixed Choice",
 "pts":      0,
 "hint": "",
 "reward": "Right!",
 "content": "5" 
 }'>5</option> <option value='{
-"itemInfo": {
-"setID": "score-DTK-2013-05-27",
-"itemN":      2,
-"name": "evens",
-"totalpts":      1 
-},
-"type": "Fixed Choice",
 "pts":      1,
 "hint": "",
 "reward": "Right!",
 "content": "6" 
 }'>6</option> <option value='{
-"itemInfo": {
-"setID": "score-DTK-2013-05-27",
-"itemN":      2,
-"name": "evens",
-"totalpts":      1 
-},
-"type": "Fixed Choice",
 "pts":      0,
 "hint": "",
 "reward": "Right!",
 "content": "7" 
 }'>7</option> <option value='{
-"itemInfo": {
-"setID": "score-DTK-2013-05-27",
-"itemN":      2,
-"name": "evens",
-"totalpts":      1 
-},
-"type": "Fixed Choice",
 "pts":      1,
 "hint": "",
 "reward": "Right!",
 "content": "8" 
 }'>8</option> <option value='{
-"itemInfo": {
-"setID": "score-DTK-2013-05-27",
-"itemN":      2,
-"name": "evens",
-"totalpts":      1 
-},
-"type": "Fixed Choice",
 "pts":      0,
 "hint": "",
 "reward": "Right!",
 "content": "9" 
-}'>9</option> </select><span id='out2' class='shiny-html-output'> </span></p></li>
+}'>9</option></select><span id='ScoreR2out' class='shiny-html-output'> </span><select style='visibility: hidden' width='5' name='ScoreR2info'><option value='{
+"setID": "score-DTK-2013-05-27",
+"itemN":      2,
+"name": "evens",
+"totalpts":      1,
+"type": "Fixed Choice" 
+}'>Info for Select Set</option></select></p></li>
 </ul>
 
 <pre><code class="r">I(selectNumber(choices = c(3, 5, 6, 7, 8, 9), correct = c(6, 8), name = &quot;evens&quot;, 
@@ -319,7 +268,7 @@ newScorerSet(&quot;score-DTK-2013-05-27&quot;)
 <li>Provide different formats, not just the dropdown menu.</li>
 </ul>
 
-<p><select style='visibility: hidden' width='5' name='roster'><option value='[ "in1", "in2" ]'>Ignore me</option></select></p>
+<p><select style='visibility: hidden' width='5' name='roster'><option value='[ "ScoreR1", "ScoreR2" ]'>Ignore me</option></select></p>
 
 <h4>Danny Kaplan, May 25, 2013</h4>
 
