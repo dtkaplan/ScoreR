@@ -1,0 +1,68 @@
+Problem 2-01
+========================
+
+```{r include=FALSE}
+require(WriteScoreR)
+newScorerSet("Ch2-prob02-DTK-2013-05-27")
+require(mosaic)
+```
+
+Here is a small data frame about automobiles.
+
+
+Make and model| Vehicle type |	Trans. type |	# of cyl.	| City MPG	| Hwy MPG
+------|:-------:|:------:|:--------:|:-----:|:------:
+Kia Optima  	| compact |	Man.	|4  |21	|31
+Kia Optima  	| compact	| Auto.	|6	|20	|28
+Saab 9-7X AWD	|  SUV	  |Auto.	|6	|14 |20
+Saab 9-7X AWD	|  SUV  	|Auto.	|8	|12	|16
+Ford Focus    |	compact |	Man.	|4	|24	|35
+Ford Focus    |	compact	| Auto.	|4	|24 |33
+Ford F150  2WD|	pickup  |	Auto.	|8  |13 |17
+
+#### (a) Why are some cars listed twice?  Is this a mistake in the table?
+
+```{r} 
+f = newMC(name="twice",totalPts=2)
+```
+
+`r I(f(FALSE))` Yes, it's a mistake    
+`r I(f(TRUE))` A car brand might be listed more than once, but the cases have different attributes on other variables.    
+`r I(f(FALSE))` Some cars are more in demand than others.    
+
+`r f(finish=TRUE)`
+
+#### (b) What are the cases in the data frame? 
+
+```{r include=FALSE}
+f = newMC(name="cases",totalPts=2)
+```
+
+`r I(f(FALSE))` Individual car companies    
+`r I(f(FALSE))` Individual makes and models of cars    
+`r I(f(TRUE))`  Individual configurations of cars   
+`r I(f(FALSE))` Different sizes of cars    
+
+`r f(finish=TRUE)`
+
+<aside>
+Each case must be a unique entity.  The same car company shows up more than once, as does the same "Make and model" and size of car.  The concept that marks each case as unique is the overall configuration of the car.  For example, the two Kia Optimas have different transmission types and different numbers of cylinders, whereas the two Saabs are identical in transmission but differ in the number of cylinders. 
+</aside>
+
+#### (<span>c</span>) Quantitative and categorical
+
+Some of the following are categorical variables, some are quantitative variables, while others are not a variable but a **level** of a categorical variable.  Which is which?
+
+* Kia Optima     `r I(selectSet(name="Kia",totalPts=1,"A level of a categorical variable"=TRUE,"A categorical variable"=FALSE,"A quantitative variable"=FALSE))`
+* City MPG       `r I(selectSet(name="city",totalPts=1,"A level of a categorical variable"=FALSE,"A categorical variable"=FALSE,"A quantitative variable"=TRUE))`
+* Vehicle type  `r I(selectSet(name="vtype",totalPts=1,"A level of a categorical variable"=FALSE,"A categorical variable"=TRUE,"A quantitative variable"=FALSE))`
+* SUV `r I(selectSet(name="SUV",totalPts=1,"A level of a categorical variable"=TRUE,"A categorical variable"=FALSE,"A quantitative variable"=FALSE))`
+* Transmission type `r I(selectSet(name="trans",totalPts=1,"A level of a categorical variable"=FALSE,"A categorical variable"=TRUE,"A quantitative variable"=FALSE))`
+* Number of cylinders `r I(selectSet(name="cylinders",totalPts=1,"A level of a categorical variable"=FALSE,"A categorical variable"=FALSE,"A quantitative variable"=TRUE))`
+
+* Transmission type `r I(selectSet(name="trans2",totalPts=1,"A level of a categorical variable"=FALSE,"A categorical variable"=TRUE,"A quantitative variable"=FALSE))`
+* Number of cylinders `r I(selectSet(name="cylinders2",totalPts=1,"A level of a categorical variable"=FALSE,"A categorical variable"=FALSE,"A quantitative variable"=TRUE))`
+
+`r I(closeProblem())`
+
+#### from [Statistical Modeling: A Fresh Approach](http://www.mosaic-web.org/go/StatisticalModeling/)

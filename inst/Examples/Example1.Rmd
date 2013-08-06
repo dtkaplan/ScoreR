@@ -1,0 +1,59 @@
+Example ScoreR Markup
+=========================
+
+### Boilerplate at the top
+
+Usually, this would be hidden with a knitr `include=FALSE` directive:
+```{r}
+require("ScoreR")
+startProblem("example-1-2013/07/30")
+```
+
+### Multiple Choice
+
+What day is bad news for Caesar?  
+```{r}
+Q <- newMC(name="example", totalPts=4)
+```
+
+`r I(Q(FALSE))` The Fourth of July  
+`r I(Q(TRUE))` The Ides of March  
+`r I(Q(credit=.5))` The days around the Ides of March  
+`r I(Q(finish=TRUE))`
+
+Note: In markdown, putting two or more empty spaces at the end of a line causes a line break.  That's what was used to separate the items here.  The item selectors themselves are being generated with knitr code like `I(Q(FALSE))`
+    
+What day is associated with independence?  
+```{r}
+Q <- newMC(name="anotherexample", totalPts=4)
+```
+
+`r I(Q(TRUE))` The Fourth of July  
+`r I(Q(FALSE))` The Ides of March  
+`r I(Q(finish=TRUE))`
+
+
+### Text Entry
+
+Free text entry:
+
+`r I(textItem(name="first",totalPts=3))`
+
+### Select from a Set
+
+Which one of these things swims? `r I(selectSet(name="swim",totalPts=5,Fish=TRUE,Dog=TRUE,Tree=FALSE,Chair=FALSE))`
+
+
+### Numerical Entry
+
+Not yet implemented ...
+`r I(numberItem(ans=pi))`
+
+
+### Finish up at the end of the problem
+
+This also will usually be hidden, with a knitr `include=FALSE` directive
+
+```{r results="asis"}
+I(endProblem())
+```

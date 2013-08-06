@@ -1,0 +1,22 @@
+Package: ScoreR
+Type: Package
+Title: Create Exercises for the ScoreR online grading system
+Version: 0.2
+Date: 2013-07-30
+Author: Daniel Kaplan
+Maintainer: Daniel Kaplan <dtkaplan@gmail.com>
+Description: Translates markup in an Rmd file into online questions.
+Depends:
+    R (>= 2.15.0),
+    RJSONIO,
+    whisker,
+    RSQLite
+License: Not yet licensed for any use except by individual permission by the
+    author.  All rights reserved.
+Collate:
+    'package-documentation.R'
+    'startProblem.R'
+    'freeText.R'
+    'internals.R'
+    'selectSet.R'
+    'multipleChoice.R'

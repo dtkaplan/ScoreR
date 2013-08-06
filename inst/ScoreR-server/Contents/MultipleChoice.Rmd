@@ -1,0 +1,77 @@
+Multiple Choice Questions
+========================================================
+
+```{r include=FALSE}
+require(ScoreR)
+```
+
+A **multiple choice** question is in many respects like selecting from a set.  The different format is to accommodate long answers that might not be appropriate in a drop-down menu.  A multiple choice format also can be used with mathematical markup that can't be included in a drop-down menu.
+
+### The Header
+
+As with all *ScoreR* problem, the source Rmd file makes use of commands in the `WriteScoreR` package.  The function `newScorerSet()` is used to provide a unique ID to the problem. The following commands, which typically will be hidden from the reader by the use of the `include=FALSE` directive, do this.  
+```{r}
+require(ScoreR)
+startProblem("multiple-choice-DTK-2013-05-25")
+```
+
+### Three steps
+
+There are three (simple) steps to creating a multiple-choice problem in *ScoreR*:
+
+1. Initialization of the question
+2. Creation of the individual items, typically embedded in *markdown* statements
+3. Termination of the question.
+
+Initialization is done with the `newMC()` function.
+
+```{r}
+f = newMC(totalPts=5) # Ordinarily, make this silent
+```
+
+The function name, in this case `f`, is arbitrary.  You will use that name to create the individual items with statements like `I(f(TRUE))` and I(f(FALSE))`, which will be embedded in text.  For instance:
+
+Which of these is equal to $-1$?  
+`r I(f(FALSE))` The value of $a x^2 + b x - c$ for all $a$, $b$, and $c$  
+`r I(f(TRUE))`  $e^{i\pi}$  
+`r I(f(FALSE))` $\ln(0)$  
+`r I(f(FALSE))` There's no such thing as a negative number, just a negative attitude.
+
+After the items have been defined, terminate the question by calling the function with the argument `finish=TRUE`
+```{r results="hide"} 
+I(f(finish=TRUE))
+```
+You may well want to use inline knitr notation --- that's up to you.
+
+### Hints and Labels
+
+You may prefer not to have bullet points before the individual items, yet still have each on it's own line.  To do this, in Markdown, put several blank spaces at the end of each line.
+`r f=newMC(name="movietitle",totalPts=1)`
+Which of these is a movie?    
+`r I(f(TRUE))` Gone with the Wind    
+`r I(f(FALSE))` The Wind is Gone    
+`r I(f(FALSE))` Go Wind, Go!   
+
+```{r include=FALSE}
+f(finish=TRUE)
+```
+
+You can use the `markers` argument to `newMc()` to specify labels other than A,B,C,....  You can also assign a name to the item and specify a reward for the correct answer.  Within the individual items (e.g., within `f()`), you can specify a hint.
+
+For example: 
+
+```{r}
+f = newMC(name="Anna Karenina",totalPts=4,
+          markers=c("Б","Г","Д"))
+```
+
+#### What are the first words of Tolstoy's "Anna Karenina"?
+
+`r I(f(TRUE))` Happy families are all alike; every unhappy family is unhappy in its own way.  
+`r I(f(FALSE))` The prettiest belle of them all was Anna.  Also, the saddest.  
+`r I(f(TRUE))` Все счастливые семьи похожи друг на друга, каждая несчастливая семья несчастлива по-своему.  
+`r f(finish=TRUE)`
+
+
+`r I(endProblem())`
+#### Danny Kaplan, May 25, 2013

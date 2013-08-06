@@ -1,0 +1,75 @@
+Selecting from a Set
+========================================================
+
+```{r include=FALSE}
+require(WriteScoreR)
+```
+
+A question in the form of **selecting from a set** provides the reader with a set of short possible answers.  The reader picks one for the answer.
+
+As with all *ScoreR* problems, the source Rmd file makes use of commands in the `WriteScoreR` package.  The function `newScorerSet()` is used to provide a unique ID to the problem. The following commands, which typically will be hidden from the reader by the use of the `include=FALSE` directive, do this.  
+```{r}
+require(WriteScoreR)
+newScorerSet("select-set-DTK-2013-05-25")
+```
+
+The uniqueness of the ID is ensured by the author.  One way to help ensure uniqueness is to include the date in the ID.
+
+The `selectSet()` function in `WriteScoreR` implements selection from a set.  The function returns a character string which needs to be embedded in the document at the point where the selection is to occur.  You may find it helpful to create the string in an ordinary knitr code block, and then reference it using inline knitr notation.
+
+The simplest style for selecting from a set is to provide the choices as the namres of assigned arguments, indicating the correct answer by assigning `TRUE`.  For instance, here's a command to create a set of three for a question about $\pi$:
+
+```{r}
+piQuestion = selectSet(name="piValue",totalPts=4,
+                       "2.71727"=FALSE,"3.14159"=TRUE,
+                       "6.28318"=FALSE)
+```
+
+To create the question, embed the string "as-is" using knitr.  In the knitr markup, this requires wrapping the string with the `I()` function.
+
+* Which is closest to $\pi$? `r I(piQuestion)`
+
+Notice that the numbers have been created as character strings.  Of course, you can use any character string, not just numerals.
+
+The problem has been assigned a name using the `name` argument.  This facilitates interpretation of the scores when grading the problems.  If no name is assigned, a numerical value, in sequence, will be assigned. 
+
+The point value for the question is set by the argument `totalPts` (with a default of 1).
+
+### Purely Numerical Selections
+
+When the set contains only numbers, there is a shortcut function, `selectNumber()` that lets you provide vectors of choices and the correct answer(s).  Be careful that your correct answers match the corresponding choices exactly.  For instance:
+
+* Pick an even number out of this set:  `r I(selectNumber(choices=c(3,5,6,7,8,9),correct=c(6,8),name="evens",totalPts=2))`
+
+```{r eval=FALSE}
+I(selectNumber(choices=c(3,5,6,7,8,9),correct=c(6,8),name="evens",totalPts=2))
+```
+
+### Interactive Problems, Hints, and Partial Credit
+
+For interactive problems you may wish to give a hint when the wrong answer is selected, and a reward for the right answer. To do this, use the `yes()` and `no()` functions to indicate correctness.
+
+```{r eval=FALSE}
+piQuestion2 = selectSet(name="piValue2",totalPts=4,
+                       "2.71727"=no(hint="That's 'e'."),
+                       "3.0"=no(credit=0.5), # half credit
+                       "3.14159"=yes(hint="Right as rain!"),
+                       "6.28318"=no(hint="That's 'tau'"))
+```
+# Above isn't working
+```{r}
+piQuestion2 = selectSet(name="piValue2",totalPts=4,
+                        "2.71727"=no(),
+                        "3.0"=no(),
+                        "3.14159"=yes(),
+                        "6.28318"=no())
+```
+
+* Let's try that again ... `r I(piQuestion2)`
+
+### To Do
+
+* Provide different formats, not just the dropdown menu.
+
+`r I(closeProblem())`
+#### Danny Kaplan, May 25, 2013
