@@ -31,7 +31,6 @@ shinyUI(
         p(textOutput("asLoggedInStatus")),
         uiOutput("assignmentSelector"),
         uiOutput("problemSelector"),
-       # checkboxInput("save","Submit answers")
         actionButton("save","Submit")
       )
     ),

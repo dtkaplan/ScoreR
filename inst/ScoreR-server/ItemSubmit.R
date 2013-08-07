@@ -38,8 +38,8 @@ newItemSubmit <- function(val,info,P=prob,A=assign,who=who) {
   setID <- info$setID
   ItemName <- info$name
   
-  testing <- getSubmittedAnswers(who,A,P) 
-  browser()
+  #testing <- getSubmittedAnswers(who,A,P) 
+  #browser()
   # TO DO : if (prob$Accept=="Immediate") flash up the hint or reward.  
   
   

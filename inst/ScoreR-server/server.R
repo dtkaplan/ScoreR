@@ -67,61 +67,59 @@ shinyServer(function(input, output, session) {
   )
   
   output$loginStatus = renderText(
- #   ifelse (length(loggedIn())>0 ,"Login Successful!","Please login ..." )
     ifelse (!is.null(userInfo()$name) ,"Login Successful!","Please login ..." )
   )
   
-  
-  checkOne <- observe({
-    # Just checking how to update a value
-    # updateTextInput(session,"text1",value="When in the course...")
-    if( input$save==0 ) {
-      # cat("Initial save value\n",file=stderr())
-      return(3)
-    }
-    else {
-      # cat("One\n",file=stderr())
-      if( isolate(input$thisProblem)=="Select Problem") return()
-      # Get the roster
-      # cat("Two\n",file=stderr())
-      roster <- getRoster() #isolate(fromJSON(I(input$roster)))
-      #  cat( paste("check One Roster: ",paste(roster,collapse=" "),"\n"),file=stderr())
-      isolate({
+  # handle pressing the submit button
+  userSubmit <- observe({
+    if( input$save==0 ) return() # Nothing's happened yet.
+    if( isolate(input$thisProblem)=="Select Problem") return() # No problem's displayed
+
+    # The user is pressing the submit button.
+    # Get the roster
+    roster <- getRoster() #isolate(fromJSON(I(input$roster)))
+    # don't activate just because one of the other inputs changes, unless there is a submit press
+    isolate({
         prob <- input$thisProblem
         assign <- input$thisAssignment
         who <- userInfo()$name
-        for (thisProb in roster) {
-          cat(paste(thisProb," hi \n"),file=stderr())
+        for (k in seq_along(roster)) {
+          thisProb <- paste("ScoreR",k,sep="")
           val <- input[[thisProb]]
           info <- input[[paste(thisProb,"info",sep="")]]
           newItemSubmit(val,info,P=prob,A=assign,who=who)
         }
-      })
-      return()
-    }
-  }
-  )
-  
-  getRoster <- reactive({
-                         cat(paste((fromJSON(I(input$roster))),"\n"),file=stderr())
-    input$roster # just to trigger the event
-                         return(fromJSON(I(gsub("\\\\","",input$roster))))
-                         ### UNDO the gsub when you solve the roster problem.
+    })
+    return()
+    })
+  # =============
+  getRoster <- reactive({ 
+    if (is.null(input$roster)) return(NULL)
+    else fromJSON(I(gsub("\\\\","",input$roster))) 
   })
-  
-  output$mainStatus <- renderPrint({statusMessage()})
-  
- 
-  checkRoster <- observe({
-    input$roster
-  })
-  
+  # ==============
   output$probContents <- renderText({
-    input$thisProblem # Just to create the reaction
+    input$thisProblem # just for the dependency
+    # Construct the HTML to load into the problem tab
     HTML(probHTML())
   })
+  # ==============
+  # Once the HTML has been loaded, get the roster and submitted answers and
+  # update the displays for the user selections to reflect any values
+  # already in the database.
   
-
-  
+  # perhaps use invalidateLater()???
+  # Or maybe user the state of roster to handle this?
+  updateSelectionDisplay <- observe({
+    roster <- getRoster() # for the dependency
+    prob <- isolate(input$thisProblem)
+    assign <- isolate(input$thisAssignment)
+    who <- userInfo()$name
+    # Get the answers already submitted
+    testing <- getSubmittedAnswers(who,assign,prob)
+    browser()
+    
+    testing <- testing
+  })
 })
 

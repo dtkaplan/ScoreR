@@ -26,7 +26,7 @@ There are three (simple) steps to creating a multiple-choice problem in *ScoreR*
 Initialization is done with the `newMC()` function.
 
 ```{r}
-f = newMC(totalPts=5) # Ordinarily, make this silent
+f = newMC(totalPts=5,name="minus1") # Ordinarily, make this silent
 ```
 
 The function name, in this case `f`, is arbitrary.  You will use that name to create the individual items with statements like `I(f(TRUE))` and I(f(FALSE))`, which will be embedded in text.  For instance:

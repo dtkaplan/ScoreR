@@ -24,6 +24,7 @@ startProblem <-function(ID) {
   assign("multiChoiceCount", 0, envir=.scorerEnv) # Count of multiple choice
   assign("uniqueID", ID, envir=.scorerEnv) # which item set is being displayed
   assign("timeStamp", date(),envir=.scorerEnv)
+  assign("roster", c(), envir=.scorerEnv)
   # Put boilerplate, e.g. CSS definitions, here.
 }
 
@@ -45,10 +46,10 @@ endProblem <- function() {
 #                     "'>Ignore me</option></select>",sep="")
   # This is all that matters in the end
   nQ <- get("questionCount", envir=.scorerEnv)
-  roster <- if (nQ > 0) paste("ScoreR",1:nQ, sep="") else NULL
+  roster <- get('roster', envir=.scorerEnv)
   holdvals <- paste("<select style='visibility: hidden' width='5' name='roster'>",
                     "<option value='",toJSON(I(roster)),
-                    "'>Ignore me</option></select>",sep="")
+                    "'>problem roster</option></select>",sep="")
   return(holdvals)
 }
 
