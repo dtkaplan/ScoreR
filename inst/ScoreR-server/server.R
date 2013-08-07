@@ -12,7 +12,7 @@ source("ItemSubmit.R", local=TRUE)
 shinyServer(function(input, output, session) {
   source("UserSession.R",local=TRUE) # read in code from external file
   source("Grading.R",local=TRUE) # instructor grading
-  source("ProbHTML.R",local=TRUE) # loading the HTML of a problem
+  source("probHTML.R",local=TRUE) # loading the HTML of a problem
   source("ShowScores.R",local=TRUE) # showing students their scores
   
   output$problemSelector <- renderUI({
