@@ -1,0 +1,15 @@
+Installing the ScoreR server
+===============================
+
+1. Copy over the .R files in `inst/ScoreR-server` to an application directory on a shiny server.
+2. Copy over the files `passwords.csv`, `problemSets.csv`, `IntroBanner.Rmd` into the same directory as (1).
+3. Edit the `passwords.csv` file to create accounts.
+3. Open up the app (using the URL to your shiny server app).  You should be able to see the instructions for using the system as the first two "assignments"
+3. Delete the entries from `problemSets.csv` --- these are just to let you see how things are working.
+7. Edit the LINKS TO THE Google Doc files.
+
+
+TODO:
+======
+
+Update the readin of the password and problem list.

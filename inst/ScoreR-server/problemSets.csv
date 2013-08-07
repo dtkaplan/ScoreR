@@ -1,10 +1,5 @@
 Assignment,Problem,Accept,Available,Answers,Mode,File,Note
-"New formatting","New example1","TRUE","TRUE","TRUE","NA","./Contents/Example1.html","the new formating system"
 "Writing ScoreR Problems","Intro","TRUE","TRUE","TRUE","NA","./Contents/intro.html","Due on Thursday"
 "Writing ScoreR Problems","Select from a Set","TRUE","TRUE","TRUE","NA","./Contents/SelectSet.html","NA"
 "Writing ScoreR Problems","Free Text","TRUE","TRUE","TRUE","NA","./Contents/FreeText.html","NA"
 "Writing ScoreR Problems","Multiple Choice","TRUE","TRUE","TRUE","NA","./Contents/MultipleChoice.html","NA"
-"Managing Assignments","Setting up an assignment","TRUE","TRUE","TRUE","NA","./Contents/AssignmentSetUp.html","NA"
-"Managing Assignments","Scoring an assignment","TRUE","TRUE","TRUE","NA","./Contents/AssignmentScoring.html","NA"
-"Chapter 2","2-01","TRUE","TRUE","FALSE","NA","./Contents/2-01.html","Cases and variables"
-"Chapter 2","2-02","TRUE","TRUE","FALSE","NA","./Contents/2-02.html","Just for testing"
