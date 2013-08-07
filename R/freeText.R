@@ -35,7 +35,10 @@ textItem <- function(name=NULL,totalPts=1,hint="",rows=2,cols=30){
                     "width='5' name='",infoID,
                     "'><option value='",toJSON(itemInfo),
                     "'>Question info for free text</option></select>",sep="")
-  outputvals <- paste("<span id='",outputID,
-               "' value='spanvalue' class='shiny-html-output'></span>",sep="")
-  res <- paste(res,outputvals, holdvals,sep="")
+  outputvals <- paste("<input type='text' readonly='readonly' style='color:green' size='3' id='",outputID,"'></input>",
+                      sep="")
+
+  res <- paste(res,holdvals,sep="")
+  # Free text doesn't need an output box.
+  # res <- paste(res,outputvals, holdvals,sep="")
 }

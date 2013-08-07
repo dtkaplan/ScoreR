@@ -78,8 +78,10 @@ selectSet <- function(name=NULL,style=c("dropdown"),totalPts=1,hint="",reward="R
   }
   res <- paste(res, "</select>",sep="") # finished with selector markup
   # markup for questions specific output.
-  outputvals <- paste("<span id='",outputID,
-                     "' class='shiny-html-output'> </span>",sep="")
+  # outputvals <- paste("<span id='",outputID,
+  #                   "' class='shiny-html-output'> </span>",sep="")
+  outputvals <- paste("<small><input type='text' readonly='readonly' style='color:green' size='3' id='",outputID,"'></input></small>",
+                      sep="")
   # Add the information-holding field
   holdvals <- paste("<select style='visibility: hidden' width='5' name='",infoID,
                     "'><option value='",toJSON(itemInfo),

@@ -112,14 +112,28 @@ shinyServer(function(input, output, session) {
   # Or maybe user the state of roster to handle this?
   updateSelectionDisplay <- observe({
     roster <- getRoster() # for the dependency
+    if (is.null(roster)) return() # no itemps in the update
     prob <- isolate(input$thisProblem)
     assign <- isolate(input$thisAssignment)
     who <- userInfo()$name
     # Get the answers already submitted
-    testing <- getSubmittedAnswers(who,assign,prob)
-    browser()
-    
-    testing <- testing
+    fromDB <- getSubmittedAnswers(who,assign,prob)
+    # Walk through the problems on the roster and pull out any that have free-text
+    # associated with them
+    submittedNames <- fromDB$itemName
+    for (k in seq_along(roster)){
+      inds <- which( roster[k] == submittedNames )
+      if (length(inds) != 0 ) {
+        itemID <- paste("ScoreR",k,sep="")
+        outputID <- paste(itemID,"out",sep="")
+        # If it's free text, update that from the input from the database
+        freetext <- fromJSON(fromDB[inds[1],"freetext"])
+        answer <- fromDB[inds[1],"answer"]
+        if (nchar(freetext) > 0) updateTextInput(session,itemID,value=freetext)
+        else updateTextInput(session,outputID,value=paste("last =",answer))
+        
+      }
+    }
   })
 })
 

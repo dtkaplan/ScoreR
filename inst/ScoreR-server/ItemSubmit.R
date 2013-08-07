@@ -23,9 +23,7 @@ newItemSubmit <- function(val,info,P=prob,A=assign,who=who) {
     text <- val 
     content <- ""
     autoscore <- 0  # Not auto-scored
-    pts <- 2 # change to indicate ungraded
-    ### CHANGE ABOVE
-    ### CHANGE ABOVE
+    pts <- 0 
   } else {
     val <- fromJSON(I(val))
     content <- val$content
@@ -38,7 +36,7 @@ newItemSubmit <- function(val,info,P=prob,A=assign,who=who) {
   setID <- info$setID
   ItemName <- info$name
   
-  #testing <- getSubmittedAnswers(who,A,P) 
+  
   #browser()
   # TO DO : if (prob$Accept=="Immediate") flash up the hint or reward.  
   

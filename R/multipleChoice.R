@@ -57,9 +57,11 @@ newMC <- function(name=NULL,totalPts=1,hint="",reward="",markers=LETTERS){
     if(finish) {
       thisCount <<- -1 # Signal that it's finished to trigger error if re-used.
       # place the markup 
-      outputvals <- paste("<span id='",outputID,
-                   "' class='shiny-html-output'> </span>",
-                   sep="")
+      #outputvals <- paste("<span id='",outputID,
+      #             "' class='shiny-html-output'> </span>",
+      #             sep="")
+      outputvals <- paste("<input type='text' readonly='readonly' style='color:green' size='3' id='",outputID,"'></input>",
+                          sep="")
       holdvals <- paste("<select style='visibility: hidden' width='5' name='",
                         infoID,
                         "'><option value='",toJSON(itemInfo),
