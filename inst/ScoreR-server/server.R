@@ -29,11 +29,11 @@ shinyServer(function(input, output, session) {
   # this will replace loggedIn()
   userInfo <- reactive({
     # ONLY for debugging
-    return(list(name="Danny",grader=TRUE))
+    # return(list(name="Danny",grader=TRUE))
     # Normal code
     m <- subset(passwords, name==input$loginID)
     if( nrow(m)>0  && m[1,]$pass==input$password ){
-      return(list(name=m[1,]$name,grader=m[1,]$role=="grader"))
+      return(list(name=m[1,]$name,grader=m[1,]$role %in% c("grader","instructor")))
     }
     else return(list(name=NULL,grader=FALSE))
   })
@@ -60,9 +60,13 @@ shinyServer(function(input, output, session) {
     }
   }
    
-
+  # Flags for conditional display
   output$asLoggedInStatus = renderText(
     paste("Logged in as",userInfo()$name)
+  )
+  
+  output$userStatus = renderText(
+    ifelse(userInfo()$grader, "instructor","reader")
   )
   
   output$loginStatus = renderText(
@@ -71,7 +75,7 @@ shinyServer(function(input, output, session) {
   # reload the problem and password files
   reloadFiles <- observe({
     input$reload # for the dependency
-    updateInputs()
+    if (userInfo()$grader) updateInputs()
   })
   # handle pressing the submit button
   userSubmit <- observe({
