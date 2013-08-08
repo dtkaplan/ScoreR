@@ -1,6 +1,4 @@
 # Actions to take that are shared across sessions
-#  problemFile <- "https://docs.google.com/spreadsheet/pub?key=0Am13enSalO74dG00aEtrZWFBU0Z5bDhsU1hETVI2N3c&single=true&gid=0&output=csv"
-#  accountFile <- "https://docs.google.com/spreadsheet/pub?key=0Am13enSalO74dG00aEtrZWFBU0Z5bDhsU1hETVI2N3c&single=true&gid=1&output=csv"
 
 problemFile <- "https://docs.google.com/spreadsheet/pub?key=0Am13enSalO74dFlKanJHXzBzdXJGNzJBdDBwamt1a2c&single=true&gid=0&output=csv"
 accountFile <- "https://docs.google.com/spreadsheet/pub?key=0Am13enSalO74dFlKanJHXzBzdXJGNzJBdDBwamt1a2c&single=true&gid=1&output=csv"

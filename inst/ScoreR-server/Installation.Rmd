@@ -2,6 +2,7 @@ Installing the ScoreR server
 ===============================
 
 1. Copy over the .R files in `inst/ScoreR-server` to an application directory on a shiny server.
+2. Edit the `courseName` variable in `ui.R`.
 2. Create a Google spreadsheet with the problem listing and passwords.  Here's [an example](https://docs.google.com/spreadsheet/ccc?key=0Am13enSalO74dG00aEtrZWFBU0Z5bDhsU1hETVI2N3c&usp=sharing). You can copy this file on Google and rename it as you like.  
 2. If you're using Google spreadsheets, "Publish" the spreadsheet as a CSV file and copy over the obscure link into the SharedAmongSessions.R file. Alternatively, you can replace the `fetchGoogle()` with `read.csv()` if you have your own web repository where you want to keep the problem listing and password file.
 2. Copy over `IntroBanner.Rmd` into the same directory as (1).

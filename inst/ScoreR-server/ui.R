@@ -7,10 +7,6 @@ loginFlag = "output.loginStatus=='Login Successful!'"
 instructorFlag = "output.userStatus=='instructor'"
 
 
-
-#possibleProblems <- dir("Contents")
-#htmlFiles <- possibleProblems[grep(".+\\.html",possibleProblems)]
-#htmlNames <- sub(".html","",htmlFiles)
 mathjax <- function(){
   tagList(singleton(tags$head(
   tags$script(src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"))))
@@ -19,7 +15,8 @@ mathjax <- function(){
 shinyUI(
   pageWithSidebar(
     headerPanel(paste(courseName,"Assignments")), # just to see if I can set up mathjax
-    sidebarPanel(
+    #sidebarPanel( # sidebarPanel is class span4, make it a bit narrower
+      div(class="span3",tags$form(#class="well",
       mathjax(),
       
       conditionalPanel(
@@ -34,6 +31,7 @@ shinyUI(
         uiOutput("assignmentSelector"),
         uiOutput("problemSelector"),
         actionButton("save","Submit")
+      )
       )
     ),
     mainPanel(
