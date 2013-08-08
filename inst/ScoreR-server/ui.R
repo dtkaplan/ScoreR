@@ -31,7 +31,8 @@ shinyUI(
         p(textOutput("asLoggedInStatus")),
         uiOutput("assignmentSelector"),
         uiOutput("problemSelector"),
-        actionButton("save","Submit")
+        actionButton("save","Submit"),
+        actionButton("reload","Reload (move this)")
       )
     ),
     mainPanel(

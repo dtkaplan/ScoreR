@@ -17,7 +17,7 @@ shinyServer(function(input, output, session) {
   
   output$problemSelector <- renderUI({
     pList <- c("No problems available.")
-    probs <- subset(problemSets,Assignment==input$thisAssignment)
+    probs <- subset(problemList,Assignment==input$thisAssignment)
     if( nrow(probs)>0 ) pList=as.character(probs$Problem)
     # Character string "Select Problem" is a flag not to load in any problem
     selectInput("thisProblem","Select a Problem:",c("Select Problem",pList))
@@ -51,13 +51,12 @@ shinyServer(function(input, output, session) {
       return(list(Assignment=input$thisAssignment,Problem="No prob. selected",Accept=FALSE,Answers=FALSE,Available=TRUE))
     }
     else{
-    probs <- subset(problemSets,Assignment==input$thisAssignment & Problem == input$thisProblem)
-#  cat(paste("whence=",whence,"nrow",nrow(probs),"\n"),file=stderr())
-    if( nrow(probs)==0) stop("BUG: No such problem in problem list.")
-    if( nrow(probs)>1 ) warning(paste(
-      "More than one problem matches:",input$thisProblem, 
-      "in", input$thisAssignment,". Check problemSets.csv"))
-    return(as.list(probs[1,]))
+      probs <- subset(problemList,Assignment==input$thisAssignment & Problem == input$thisProblem)
+      if( nrow(probs)==0) stop("BUG: No such problem in problem list.")
+      if( nrow(probs)>1 ) warning(paste(
+        "More than one problem matches:",input$thisProblem, 
+        "in", input$thisAssignment,". Check the assignment list spreadsheet"))
+      return(as.list(probs[1,]))
     }
   }
    
@@ -69,7 +68,11 @@ shinyServer(function(input, output, session) {
   output$loginStatus = renderText(
     ifelse (!is.null(userInfo()$name) ,"Login Successful!","Please login ..." )
   )
-  
+  # reload the problem and password files
+  reloadFiles <- observe({
+    input$reload # for the dependency
+    updateInputs()
+  })
   # handle pressing the submit button
   userSubmit <- observe({
     if( input$save==0 ) return() # Nothing's happened yet.

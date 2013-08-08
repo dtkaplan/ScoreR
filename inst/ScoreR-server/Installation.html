@@ -145,7 +145,11 @@ hr {
 
 <ol>
 <li>Copy over the .R files in <code>inst/ScoreR-server</code> to an application directory on a shiny server.</li>
-<li>Copy over the files <code>passwords.csv</code>, <code>problemSets.csv</code>, <code>IntroBanner.Rmd</code> into the same directory as (1)</li>
+<li>Create a Google spreadsheet with the problem listing and passwords.  Here&#39;s an example: <a href="https://docs.google.com/spreadsheet/ccc?key=0Am13enSalO74dG00aEtrZWFBU0Z5bDhsU1hETVI2N3c&amp;usp=sharing">https://docs.google.com/spreadsheet/ccc?key=0Am13enSalO74dG00aEtrZWFBU0Z5bDhsU1hETVI2N3c&amp;usp=sharing</a></li>
+<li>&ldquo;Publish&rdquo; the spreadsheet as a CSV file and copy over the obscure link into the SharedAmongSessions.R file.</li>
+<li>Copy over <code>IntroBanner.Rmd</code> into the same directory as (1).</li>
+<li>Edit the <code>passwords.csv</code> file to create accounts.</li>
+<li>Open up the app (using the URL to your shiny server app).  You should be able to see the instructions for using the system as the first two &ldquo;assignments&rdquo;</li>
 </ol>
 
 <h1>TODO:</h1>

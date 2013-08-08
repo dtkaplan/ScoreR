@@ -7,8 +7,6 @@ output$submissions <-
   renderTable(
 { 
   input$save # for the dependency
-  input$save2 # for the dependency
-  #user <- loggedIn()
   user <- userInfo()$name
   query <- paste("select assignment,probID,itemName,answer,score,autoScore,possible,lasttime,firsttime ",
                  "from submit where user=='",
@@ -37,7 +35,7 @@ output$submissions <-
                       sep="")
     }
     tab <- dbGetQuery(db, query)
-    tab <- merge(tab,problemSets, # See if the answers are released
+    tab <- merge(tab,assignmentList, # See if the answers are released
                  by.x=c("assignment","probID"),
                  by.y=c("Assignment","Problem"))
     # Keep all the problems in this assignment so that the report shows zero for 
