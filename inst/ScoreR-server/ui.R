@@ -38,17 +38,19 @@ shinyUI(
       conditionalPanel(
         condition = "output.userStatus=='instructor'",
         wellPanel(
-          tabsetPanel(
-            tabPanel("Account Maintenance",
-                     p("After editing the problem list, press this button. Then login again."),
-                     actionButton("reload","Reset Problem List")
-            ),
-            tabPanel("Class Grading",
-                     p("Available only to instructors."),
+          tabsetPanel(  
+            tabPanel("Score Report",
+                     # p("Available only to instructors."),
                      uiOutput("studentSelector"),
                      uiOutput("gradeLevelSelector"), # choose assignments, 
                      uiOutput("gradeFileDownload"),
-                     h2(tableOutput("classScores")))
+                     h2(tableOutput("classScores"))),
+            tabPanel("Manual Grading",
+                     p("Grading stuff will go here.")),
+            tabPanel("Account Maintenance",
+                     p("After editing the problem list, press this button. Then login again."),
+                     actionButton("reload","Reset Problem List")
+            )    
           )
         )
       ),
