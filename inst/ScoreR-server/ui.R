@@ -44,9 +44,18 @@ shinyUI(
                      uiOutput("studentSelector"),
                      uiOutput("gradeLevelSelector"), # choose assignments, 
                      uiOutput("gradeFileDownload"),
-                     h2(tableOutput("classScores"))),
+                     h2(tableOutput("classScores"))
+                     ),
             tabPanel("Manual Grading",
-                     p("Grading stuff will go here.")),
+                     uiOutput("studentSelectorMan"),
+                     uiOutput("itemSelectorMan"), # choose an item from the present problem, 
+                     h2(tableOutput("gradedTable")),
+                     h2(tableOutput("itemTable")), # temporary
+                     p("Put the text,next, and score selectors here."),
+                     numericInput("whichSubmission","Submission being graded:",value=1,min=1,max=1,step=1),
+                     
+                     p(textOutput("currentItemText"))
+                     ),
             tabPanel("Account Maintenance",
                      p("After editing the problem list, press this button. Then login again."),
                      actionButton("reload","Reset Problem List")

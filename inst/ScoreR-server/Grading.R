@@ -2,7 +2,9 @@ output$assignmentSelector <- renderUI({
   selectInput("thisAssignment","Select Assignment:",assignmentList)
   #    output$mainStatus <- renderPrint({cat("\n")})
 })
+# =============================
 # Choose which students to grade
+# For the grade report
 output$studentSelector <- renderUI({
   if( userInfo()$grader) {
     readerNames <- c(list("Everyone in class"),as.character(subset(passwords,role=="reader")$name))
@@ -12,7 +14,19 @@ output$studentSelector <- renderUI({
                 multiple=TRUE)
   } else p("You are not an instructor.")
 })
+# a copy of the above for manual grading tab.  
+output$studentSelectorMan <- renderUI({
+  if( userInfo()$grader) {
+    readerNames <- c(list("Everyone in class"),as.character(subset(passwords,role=="reader")$name))
+    selectInput("studentsForGrading","Students to Grade:",
+                readerNames,
+                selected="Everyone in class",
+                multiple=TRUE)
+  } else p("You are not an instructor.")
+})
+# ==============================
 # Which assignments to score
+# For the grade report
 output$gradeLevelSelector <- renderUI({
   if( userInfo()$grader) {
     # See corresponding levels in "Grader.R"
@@ -24,6 +38,26 @@ output$gradeLevelSelector <- renderUI({
                 multiple=TRUE)
   } else p("")
 })
+# Which item from the present problem
+output$itemSelectorMan <- renderUI({
+  if( userInfo()$grader) {
+    tab <- manuallyScoredTable()
+    thisProblem <- subset(tab,probID==input$thisProblem)
+    itemNames <- c(list(), thisProblem$itemName)
+    if( length(itemNames) > 0 ) 
+      selectInput("itemForGrading","Item to Grade Manually:",
+                itemNames)
+    else h3("No manually scored items in this problem.")
+  } else p("")
+})
+
+# How many have been graded.
+output$gradedTable <- renderTable({ manuallyScoredTable() })
+# The contents of the selected item.
+output$itemTable <- renderTable({itemContentsTable()})
+# The currently selected text for manual grading
+output$currentItemText = renderText({"hello there"})
+# ==============================
 # The download button
 output$gradeFileDownload <- renderUI({
   if( userInfo()$grader)

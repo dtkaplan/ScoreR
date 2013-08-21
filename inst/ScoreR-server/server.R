@@ -8,6 +8,12 @@ source("SharedAmongSessions.R", local=TRUE)
 source("ItemSubmit.R", local=TRUE)
 
 
+# To let me intercept and debug db calls
+dbGetQuery <- function(conn, statement, ...) {
+  # browser()
+  DBI::dbGetQuery(conn, statement, ...)
+}
+
 # =================
 shinyServer(function(input, output, session) {
   source("UserSession.R",local=TRUE) # read in code from external file
@@ -29,7 +35,7 @@ shinyServer(function(input, output, session) {
   # this will replace loggedIn()
   userInfo <- reactive({
     # ONLY for debugging
-    # return(list(name="Danny",grader=TRUE))
+    #       return(list(name="Danny",grader=TRUE))
     # Normal code
     m <- subset(passwords, name==input$loginID)
     if( nrow(m)>0  && m[1,]$pass==input$password ){
