@@ -5,7 +5,7 @@ output$assignmentSelector <- renderUI({
 # Choose which students to grade
 output$studentSelector <- renderUI({
   if( userInfo()$grader) {
-    readerNames <- c(list("Everyone in class"),subset(passwords,role=="reader")$name)
+    readerNames <- c(list("Everyone in class"),as.character(subset(passwords,role=="reader")$name))
     selectInput("studentsForGrading","Students to Grade:",
                 readerNames,
                 selected="Everyone in class",
