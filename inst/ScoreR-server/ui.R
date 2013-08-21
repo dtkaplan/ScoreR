@@ -54,7 +54,7 @@ shinyUI(
                      p("Put the text,next, and score selectors here."),
                      numericInput("whichSubmission","Submission being graded:",value=1,min=1,max=1,step=1),
                      
-                     p(textOutput("currentItemText"))
+                     pre(textOutput("currentItemText"))
                      ),
             tabPanel("Account Maintenance",
                      p("After editing the problem list, press this button. Then login again."),

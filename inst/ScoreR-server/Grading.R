@@ -56,7 +56,13 @@ output$gradedTable <- renderTable({ manuallyScoredTable() })
 # The contents of the selected item.
 output$itemTable <- renderTable({itemContentsTable()})
 # The currently selected text for manual grading
-output$currentItemText = renderText({"hello there"})
+output$currentItemText = renderText({
+  tab <- itemContentsTable()
+  if( nrow(tab) > 0 )
+    fromJSON(I(tab$freetext)[input$whichSubmission])
+  else
+    "--- No submission ----"
+  })
 # ==============================
 # The download button
 output$gradeFileDownload <- renderUI({
