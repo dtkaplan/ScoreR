@@ -59,10 +59,12 @@ output$itemTable <- renderTable({itemContentsTable()})
 output$currentItemText <- renderText({
   tab <- itemContentsTable()
   if( nrow(tab) > 0 ) {
-    updateSelectInput(session,"scoreAssigned",choices=as.list(0:(tab$possible[1])),
-                      selected=tab$score[input$whichSubmission])
+    currentScore <- tab$score[input$whichSubmission]
+    # Make the default NA unless a non-zero score has been assigned.
+    updateSelectInput(session,"scoreAssigned",
+                      choices=c("NA",as.list(0:(tab$possible[1]))),
+                      selected=ifelse(currentScore>0,currentScore,"NA"))
     scoredItemID <<- tab$id[input$whichSubmission]
-    browser()
     fromJSON(I(tab$freetext)[input$whichSubmission])
   }
   else
