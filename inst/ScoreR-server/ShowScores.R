@@ -21,7 +21,7 @@ output$submissions <-
       tab <- dbGetQuery(db, query)
       tab$score <- as.character(tab$score)
       if (!prob$Answers) tab$score <- "not released"
-      else tab$score[tab$autoScore==0] <- "not yet scored"
+      else tab$score[tab$autoScore==0 & tab$score==0] <- "not yet scored"
       tab$autoScore <- NULL
       tab$assignment <- NULL
       tab$probID <- NULL
