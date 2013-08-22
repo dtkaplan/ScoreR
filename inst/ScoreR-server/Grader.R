@@ -23,17 +23,18 @@ manuallyScoredTable <- reactive({
 itemContentsTable <- reactive({
   tab <- subset(assignmentItems(),
          probID==input$thisProblem & itemName==input$itemForGrading)
+  if (input$ungradedOnly) tab <- subset(tab, score==0)
   updateNumericInput(session,"whichSubmission",value=1,max=nrow(tab))
   return(tab)
 })
 
 # update the score for a submission
 updateScoreSubmission <- observe({
-  cat("In updateScoreSubmission\n",file=stderr())
+  # cat("In updateScoreSubmission\n",file=stderr())
   if (input$scoreAssigned!="NA") {
     query = paste("update submit set score=",input$scoreAssigned," ",
                   " where id='",scoredItemID,"'",sep="")
-    cat(paste(query,"\n"),file=stderr())
+    # cat(paste(query,"\n"),file=stderr())
     dbGetQuery(db,query)
   }
 })

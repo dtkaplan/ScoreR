@@ -50,8 +50,8 @@ shinyUI(
                      uiOutput("studentSelectorMan"),
                      uiOutput("itemSelectorMan"), # choose an item from the present problem, 
                      h2(tableOutput("gradedTable")),
-                     h2(tableOutput("itemTable")), # temporary
-                     p("Put the text,next, and score selectors here."),
+                     checkboxInput("ungradedOnly","Ungraded Only",value=TRUE),
+                     # h2(tableOutput("itemTable")), # temporary
                      numericInput("whichSubmission","Submission being graded:",value=1,min=1,max=1,step=1),
                      selectInput("scoreAssigned","Score:",
                                  choices=c("NA",as.list(0)),selected="NA"),

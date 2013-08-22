@@ -66,7 +66,6 @@ output$currentItemText <- renderText({
     response <- dbGetQuery(db, query)
     currentScore <- response$score[1] # get it from the database 
     # in case it was changed in the present session.
-    browser()
     # Make the default NA unless a non-zero score has been assigned.
     updateSelectInput(session,"scoreAssigned",
                       choices=c("NA",as.list(0:(tab$possible[1]))),
@@ -75,7 +74,10 @@ output$currentItemText <- renderText({
     # PUT THE USER, Date, and Score information here.
     # is there an update text?
     # Now enter the submission text in the box, so it can be seen.
-    fromJSON(I(tab$freetext)[input$whichSubmission])
+    tab <- tab[input$whichSubmission,] # get this submission
+    paste(fromJSON(I(tab$freetext)),
+          "\n\nSubmission from ",tab$user,
+          " on ",tab$lasttime,". Prev. score: ",tab$score ,sep="")
   }
   else
     "--- No submission ----"
