@@ -13,7 +13,8 @@ dbGetQuery <- function(conn, statement, ...) {
   # browser()
   DBI::dbGetQuery(conn, statement, ...)
 }
-
+## Passing the ID of the item being scored
+scoredItemID <- 0
 # =================
 shinyServer(function(input, output, session) {
   source("UserSession.R",local=TRUE) # read in code from external file

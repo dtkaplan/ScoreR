@@ -56,10 +56,15 @@ output$gradedTable <- renderTable({ manuallyScoredTable() })
 # The contents of the selected item.
 output$itemTable <- renderTable({itemContentsTable()})
 # The currently selected text for manual grading
-output$currentItemText = renderText({
+output$currentItemText <- renderText({
   tab <- itemContentsTable()
-  if( nrow(tab) > 0 )
+  if( nrow(tab) > 0 ) {
+    updateSelectInput(session,"scoreAssigned",choices=as.list(0:(tab$possible[1])),
+                      selected=tab$score[input$whichSubmission])
+    scoredItemID <<- tab$id[input$whichSubmission]
+    browser()
     fromJSON(I(tab$freetext)[input$whichSubmission])
+  }
   else
     "--- No submission ----"
   })

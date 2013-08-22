@@ -3,7 +3,7 @@
 
 ## MANUAL GRADING
 assignmentItems <- reactive({
-  query <- paste("select assignment,user,probID,itemName,answer,",
+  query <- paste("select id,assignment,user,probID,itemName,answer,",
                  "freetext,score,autoScore,possible,lasttime,firsttime ",
                  "from submit where assignment=='",
                   input$thisAssignment,"'",
@@ -25,6 +25,12 @@ itemContentsTable <- reactive({
          probID==input$thisProblem & itemName==input$itemForGrading)
   updateNumericInput(session,"whichSubmission",value=1,max=nrow(tab))
   return(tab)
+})
+
+# update the score for a submission
+updateScoreSubmission <- observe({
+  browser()
+  cat(paste("Updating id with score ",input$scoreAssigned,"\n"),file=stderr())
 })
 
 # SCORE REPORTS

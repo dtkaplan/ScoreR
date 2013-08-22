@@ -53,7 +53,8 @@ shinyUI(
                      h2(tableOutput("itemTable")), # temporary
                      p("Put the text,next, and score selectors here."),
                      numericInput("whichSubmission","Submission being graded:",value=1,min=1,max=1,step=1),
-                     
+                     selectInput("scoreAssigned","Score:",
+                                 choices=as.list(0:9),selected=3),
                      pre(textOutput("currentItemText"))
                      ),
             tabPanel("Account Maintenance",
