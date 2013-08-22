@@ -59,12 +59,22 @@ output$itemTable <- renderTable({itemContentsTable()})
 output$currentItemText <- renderText({
   tab <- itemContentsTable()
   if( nrow(tab) > 0 ) {
-    currentScore <- tab$score[input$whichSubmission]
+    #currentScore <- tab$score[input$whichSubmission]
+    query <- paste("select score from submit where id=='",
+                   tab$id[input$whichSubmission],"'",
+                   sep="")
+    response <- dbGetQuery(db, query)
+    currentScore <- response$score[1] # get it from the database 
+    # in case it was changed in the present session.
+    browser()
     # Make the default NA unless a non-zero score has been assigned.
     updateSelectInput(session,"scoreAssigned",
                       choices=c("NA",as.list(0:(tab$possible[1]))),
                       selected=ifelse(currentScore>0,currentScore,"NA"))
     scoredItemID <<- tab$id[input$whichSubmission]
+    # PUT THE USER, Date, and Score information here.
+    # is there an update text?
+    # Now enter the submission text in the box, so it can be seen.
     fromJSON(I(tab$freetext)[input$whichSubmission])
   }
   else

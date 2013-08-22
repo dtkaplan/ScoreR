@@ -29,13 +29,12 @@ itemContentsTable <- reactive({
 
 # update the score for a submission
 updateScoreSubmission <- observe({
-  browser()
-  if (scoredItemID == 0 || input$scoreAssigned=="NA") return(NULL)
-  else {
-    query = paste("update submit set score=",input$scoreAssigned,",",
-                  "where id='",scoredItemID,"'",sep="")
-    #  dbGetQuery(db,query)
+  cat("In updateScoreSubmission\n",file=stderr())
+  if (input$scoreAssigned!="NA") {
+    query = paste("update submit set score=",input$scoreAssigned," ",
+                  " where id='",scoredItemID,"'",sep="")
     cat(paste(query,"\n"),file=stderr())
+    dbGetQuery(db,query)
   }
 })
 
