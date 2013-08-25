@@ -12,17 +12,7 @@ output$studentSelector <- renderUI({
                 readerNames,
                 selected="Everyone in class",
                 multiple=TRUE)
-  } else p("You are not an instructor.")
-})
-# a copy of the above for manual grading tab.  
-output$studentSelectorMan <- renderUI({
-  if( userInfo()$grader) {
-    readerNames <- c(list("Everyone in class"),as.character(subset(passwords,role=="reader")$name))
-    selectInput("studentsForGrading","Students to Grade:",
-                readerNames,
-                selected="Everyone in class",
-                multiple=TRUE)
-  } else p("You are not an instructor.")
+  } else p(paste("Logged in as", userInfo()$name))
 })
 # ==============================
 # Which assignments to score

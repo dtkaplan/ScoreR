@@ -2,11 +2,16 @@
 
 problemFile <- "https://docs.google.com/spreadsheet/pub?key=0Am13enSalO74dFlKanJHXzBzdXJGNzJBdDBwamt1a2c&single=true&gid=0&output=csv"
 accountFile <- "https://docs.google.com/spreadsheet/pub?key=0Am13enSalO74dFlKanJHXzBzdXJGNzJBdDBwamt1a2c&single=true&gid=1&output=csv"
+problemFile <- "Contents/ProblemSpreadsheet.csv"
+accountFile <- "Contents/AccountSpreadsheet.csv"
+
 
 # Function to update the list of problems and accounts
 updateInputs <- function(){
-  passwords <<- fetchGoogle(accountFile)
-  tmp <- fetchGoogle(problemFile)
+  passwords <<- read.csv(accountFile)
+  tmp <- read.csv(problemFile)
+#  passwords <<- fetchGoogle(accountFile)
+#  tmp <- fetchGoogle(problemFile)
   tmp$File <- as.character(tmp$File)
   tmp$Assignment <- as.character(tmp$Assignment)
   tmp$Problem <- as.character(tmp$Problem)

@@ -1,5 +1,4 @@
-
-
+# Read in the problem HTML file and display it
 probHTML <- reactive({  
   # Character string "Select Problem" is a flag not to load in any problem
   if( length(input$thisProblem)==0 || input$thisProblem == "Select Problem"){
@@ -21,11 +20,6 @@ probHTML <- reactive({
                       "' in assignment '",prob$Assignment,
                       "' not yet available.",sep="")
   }
-  # Set up a retrigger of Mathjax
-  #      contents <- gsub("</head>",
-  #                       # "<script type='text/javascript'>MathJax.Hub.Queue(['Typeset',MathJax.Hub]);</script></head>",
-  #                       "<script type='text/javascript'>MathJax.Hub.Typeset();</script></head>",
-  #                       contents,fixed=TRUE)
   
   if( !prob$Answers ) # Strip answers from the HTML file
     contents <- gsub("<aside.*?</aside>","",contents)
@@ -33,7 +27,6 @@ probHTML <- reactive({
   # but it won't handle nested asides.
   
   # MathJax update at the end of the file.
-  # This kills the activity of the Shiny controls
   contents <- c(contents,"<script type='text/javascript'>MathJax.Hub.Typeset()</script>")
   return(contents)
 }) 

@@ -30,7 +30,8 @@ shinyUI(
         span(textOutput("asLoggedInStatus"),textOutput("userStatus")),
         uiOutput("assignmentSelector"),
         uiOutput("problemSelector"),
-        actionButton("save","Submit")
+        actionButton("save","Submit"),
+        uiOutput("studentSelector")
       )
       )
     ),
@@ -41,16 +42,15 @@ shinyUI(
           tabsetPanel(  
             tabPanel("Score Report",
                      # p("Available only to instructors."),
-                     uiOutput("studentSelector"),
+                    # uiOutput("studentSelector"),
                      uiOutput("gradeLevelSelector"), # choose assignments, 
                      uiOutput("gradeFileDownload"),
                      h2(tableOutput("classScores"))
                      ),
             tabPanel("Manual Grading",
-                     uiOutput("studentSelectorMan"),
-                     uiOutput("itemSelectorMan"), # choose an item from the present problem, 
                      h2(tableOutput("gradedTable")),
-                     checkboxInput("ungradedOnly","Ungraded Only",value=TRUE),
+                     uiOutput("itemSelectorMan"), # choose an item from the present problem, 
+                     checkboxInput("ungradedOnly","Show Ungraded Submissions Only",value=TRUE),
                      # h2(tableOutput("itemTable")), # temporary
                      numericInput("whichSubmission","Submission being graded:",value=1,min=1,max=1,step=1),
                      selectInput("scoreAssigned","Score:",

@@ -71,9 +71,9 @@ shinyServer(function(input, output, session) {
   output$asLoggedInStatus = renderText(
     paste("Logged in as",userInfo()$name)
   )
-  
+  # Sets the JavaScript flag used for conditional display of widgets.
   output$userStatus = renderText(
-    ifelse(userInfo()$grader, "instructor","reader")
+     ifelse(userInfo()$grader, "instructor","reader")   
   )
   
   output$loginStatus = renderText(
@@ -129,7 +129,13 @@ shinyServer(function(input, output, session) {
     if (is.null(roster)) return() # no itemps in the update
     prob <- isolate(input$thisProblem)
     assign <- isolate(input$thisAssignment)
+    # Display the answers for this user, or if instructor, for the selected student
     who <- userInfo()$name
+    if(userInfo()$grader) { 
+      selectedStudents <- input$studentsForGrading
+      if (selectedStudents[1] != "Everyone in class" )
+        who <- selectedStudents[1] # display answers for first selected student in the problem text
+    }
     # Get the answers already submitted
     fromDB <- getSubmittedAnswers(who,assign,prob)
     # Walk through the problems on the roster and pull out any that have free-text

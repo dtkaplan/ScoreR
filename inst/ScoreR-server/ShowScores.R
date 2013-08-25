@@ -1,8 +1,4 @@
 # For the Scores Tab ==================
-# Need to figure out how to trigger this when "Scores" tab is revealed.
-
-## TO DO:
-# In the relevant display, list all of the problems and assignments, even those that the person hasn't answered.
 output$submissions <- 
   renderTable(
 { 

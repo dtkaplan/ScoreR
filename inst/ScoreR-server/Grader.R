@@ -23,7 +23,13 @@ manuallyScoredTable <- reactive({
 itemContentsTable <- reactive({
   tab <- subset(assignmentItems(),
          probID==input$thisProblem & itemName==input$itemForGrading)
+  # Display only the ungraded submissions.
   if (input$ungradedOnly) tab <- subset(tab, score==0)
+  # Display only those students selected.
+  studentsChosen <- input$studentsForGrading # which students to list
+  if( studentsChosen[1] != "Everyone in class") {
+      tab <- subset(tab, user %in% unlist(studentsChosen))
+  }
   updateNumericInput(session,"whichSubmission",value=1,max=nrow(tab))
   return(tab)
 })
