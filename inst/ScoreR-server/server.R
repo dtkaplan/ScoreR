@@ -79,6 +79,19 @@ shinyServer(function(input, output, session) {
   output$loginStatus = renderText(
     ifelse (!is.null(userInfo()$name) ,"Login Successful!","Please login ..." )
   )
+  # handle pressing of the scorer text submit button.
+  scorerSubmit <- observe({
+    input$scorerTextSubmit  # for the dependency
+    textContents <- isolate(input$scorerTextEditing)
+    textContents <- toJSON(I(textContents))
+    if (scoredItemID > 0 ) {
+      query = paste("update submit set freetext='",
+                    textContents," ",
+                    "' where id='",scoredItemID,"'",sep="")
+      # cat(paste(query,"\n"),file=stderr())
+      dbGetQuery(db,query)
+    }
+  })
   # reload the problem and password files
   reloadFiles <- observe({
     input$reload # for the dependency

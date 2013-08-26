@@ -55,7 +55,9 @@ shinyUI(
                      numericInput("whichSubmission","Submission being graded:",value=1,min=1,max=1,step=1),
                      selectInput("scoreAssigned","Score:",
                                  choices=c("NA",as.list(0)),selected="NA"),
-                     pre(textOutput("currentItemText"))
+                     pre(textOutput("currentItemText")),
+                     tags$textarea(id="scorerTextEditing",rows=10,cols=60,"Default value ..."),
+                     actionButton("scorerTextSubmit","Submit edited text.")
                      ),
             tabPanel("Account Maintenance",
                      p("After editing the problem list, press this button. Then login again."),

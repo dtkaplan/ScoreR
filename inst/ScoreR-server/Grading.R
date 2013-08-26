@@ -50,7 +50,7 @@ output$currentItemText <- renderText({
   tab <- itemContentsTable()
   if( nrow(tab) > 0 ) {
     #currentScore <- tab$score[input$whichSubmission]
-    query <- paste("select score from submit where id=='",
+    query <- paste("select score, freetext from submit where id=='",
                    tab$id[input$whichSubmission],"'",
                    sep="")
     response <- dbGetQuery(db, query)
@@ -65,6 +65,7 @@ output$currentItemText <- renderText({
     # is there an update text?
     # Now enter the submission text in the box, so it can be seen.
     tab <- tab[input$whichSubmission,] # get this submission
+    updateTextInput(session,"scorerTextEditing",value=fromJSON(I(response$freetext[1])))
     paste(fromJSON(I(tab$freetext)),
           "\n\nSubmission from ",tab$user,
           " on ",tab$lasttime,". Prev. score: ",tab$score ,sep="")
