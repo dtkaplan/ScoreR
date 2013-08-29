@@ -17,6 +17,7 @@ manuallyScoredTable <- reactive({
   notAuto <- subset(tab,autoScore==0)
   scoreCounts <- aggregate(cbind('Already Scored'=score>0,'Not Scored'=score==0)~probID+itemName,
                            data=notAuto,FUN=sum)
+#  browser()
   return(scoreCounts)
 })
 # Get a table giving the contents of the answers to the selected item in the selected problem
@@ -53,6 +54,9 @@ graderScores <- reactive({
   query <- paste("select assignment,user,probID,itemName,answer,",
                  "score,autoScore,possible,lasttime,firsttime ",
                  "from submit",sep="")
+  if (length(assignmentsChosen)==0) # initially, there's nothing there.
+    return(data.frame(vars="nothing"))
+  
   if(assignmentsChosen[1] == "Selected Assignment"){
     # take all problems in the assignment 
     query <- paste( query, " where assignment=='",
