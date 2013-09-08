@@ -39,6 +39,7 @@ newMC <- function(name=NULL,totalPts=1,hint="",reward="",markers=LETTERS){
   itemInfo <- nextScorerItem(name=name,possiblePoints=totalPts)
   itemInfo$type="MC"
   itemInfo$reward=reward
+  itemInfo$uniqueID <- get("uniqueID", envir=.scorerEnv) 
   
   # Name of the user interactive part
   questionID <- paste("ScoreR",itemInfo$itemN,sep="")
@@ -78,7 +79,8 @@ newMC <- function(name=NULL,totalPts=1,hint="",reward="",markers=LETTERS){
     valsForThisChoice$pts <- round(totalPts*credit) # scale total points according to credit.
     valsForThisChoice$hint <- hint
     valsForThisChoice$reward <- reward
-    valsForThisChoice$content=identifier # just a placeholder
+    valsForThisChoice$uniqueID <- get("uniqueID", envir=.scorerEnv)
+    valsForThisChoice$content <- identifier # just a placeholder 
     itemStr = paste("<label for='",thisID,
                     "'><input type='radio' name='",questionID,
                     "' id='",thisID,"' value='",toJSON(valsForThisChoice),

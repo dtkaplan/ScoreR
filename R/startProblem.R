@@ -32,19 +32,6 @@ startProblem <-function(ID) {
 #' @rdname startProblem
 #' @export
 endProblem <- function() {
-#   nSS <- get("fixedChoiceCount",envir=.scorerEnv)
-#   SSset <- if (nSS > 0) paste("in",1:nSS,sep="") else NULL
-#   nMC <- get("multiChoiceCount",envir=.scorerEnv)
-#   MCset <- if (nMC > 0) paste("MC",1:nMC,sep="") else NULL
-#   nText <- get("textCount",envir=.scorerEnv)
-#   Textset <- if (nText > 0) paste("text",1:nText,sep="") else NULL
-#   nNumber <- get("numberCount",envir=.scorerEnv)
-#   Numberset <- if (nNumber > 0) paste("number",1:nNumber,sep="") else NULL
-#   roster <- c(SSset,MCset,Textset,Numberset)
-#   holdvals <- paste("<select style='visibility: hidden' width='5' name='roster'>",
-#                     "<option value='",toJSON(I(roster)),
-#                     "'>Ignore me</option></select>",sep="")
-  # This is all that matters in the end
   nQ <- get("questionCount", envir=.scorerEnv)
   roster <- get('roster', envir=.scorerEnv)
   holdvals <- paste("<select style='visibility: hidden' width='5' name='roster'>",
