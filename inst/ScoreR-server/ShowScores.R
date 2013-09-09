@@ -9,12 +9,15 @@ output$submissions <-
                  user,"'",sep="")
   # Which scoring mode        
   if (input$scoreChoice=="Current problem") {
-    if( input$thisProblem == "Select Problem") tab=data.frame("No problem selected"=0)
+    if( input$thisProblem == "Select Problem") 
+      tab=data.frame("No problem has been selected."=0)
     else {
       prob <- probData() # Get the data on the selected problem, File, Answers, etc.
       query <- paste( query, " and probID=='",
                       input$thisProblem,"'",sep="") 
       tab <- dbGetQuery(db, query)
+      if (nrow(tab)==0) 
+        return(data.frame("Nothing submitted for this problem."="Remember to press the submit button. You can do so right now!"))
       tab$score <- as.character(tab$score)
       if (!prob$Answers) tab$score <- "not released"
       else tab$score[tab$autoScore==0 & tab$score==0] <- "not yet scored"
@@ -24,14 +27,18 @@ output$submissions <-
       
     }
   }
-  else { # Current assignment or current problem
+  else { # Current assignment or all assignments
     if (input$scoreChoice=="Current assignment") {
       query <- paste( query, " and assignment=='",
                       input$thisAssignment,"'",
                       sep="")
     }
     tab <- dbGetQuery(db, query)
-    tab <- merge(tab,assignmentList, # See if the answers are released
+    if (nrow(tab)==0) 
+      return(data.frame("No answers yet submitted"=0))
+    checkit(names(tab), "tab names")
+    checkit(names(problemList), "assignmentList names")
+    tab <- merge(tab,problemList, # See if the answers are released
                  by.x=c("assignment","probID"),
                  by.y=c("Assignment","Problem"))
     # Keep all the problems in this assignment so that the report shows zero for 

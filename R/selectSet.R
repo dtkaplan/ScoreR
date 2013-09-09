@@ -40,6 +40,7 @@ selectSet <- function(name=NULL,style=c("dropdown"),totalPts=1,hint="",reward="R
   nms <- names(dots)
   itemInfo <- nextScorerItem(name=name,possiblePoints=totalPts)
   itemInfo$type <- "Fixed Choice"
+  itemInfo$uniqueID <- get("uniqueID", envir=.scorerEnv) 
   
   # Name of the user interactive part
   questionID <- paste("ScoreR",itemInfo$itemN,sep="")
@@ -70,6 +71,7 @@ selectSet <- function(name=NULL,style=c("dropdown"),totalPts=1,hint="",reward="R
       vv$reward <- reward
     }
     vv$content <- nms[k]
+    vv$uniqueID <- get("uniqueID", envir=.scorerEnv)
     
     opt <- paste("<option value='",
                  toJSON(vv),

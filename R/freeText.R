@@ -19,6 +19,7 @@ textItem <- function(name=NULL,totalPts=1,hint="",rows=2,cols=30){
   itemInfo$type="Free text"
   itemInfo$hint=hint
   itemInfo$reward=""
+  itemInfo$uniqueID <- get("uniqueID", envir=.scorerEnv)
   # Name of the user interactive part
   questionID <- paste("ScoreR",itemInfo$itemN,sep="")
   # Name of the static data holding part
@@ -31,7 +32,7 @@ textItem <- function(name=NULL,totalPts=1,hint="",rows=2,cols=30){
                "' placeholder='Your answer here ...'></textarea>",
                sep="")
   # Something to hold the values, e.g. the name of the item, etc.
-  holdvals <- paste("<select style='visibility: hidden'",
+  holdvals <- paste("<select style='visibility: hidden' ",
                     "width='5' name='",infoID,
                     "'><option value='",toJSON(itemInfo),
                     "'>Question info for free text</option></select>",sep="")

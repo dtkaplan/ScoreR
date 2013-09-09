@@ -13,6 +13,18 @@ dbGetQuery <- function(conn, statement, ...) {
   # browser()
   DBI::dbGetQuery(conn, statement, ...)
 }
+# General check to print a message
+checkit <- function(obj,front="Not set:"){
+  if (is.null(obj) || is.na(obj) || obj=="")
+    obj="NULL"
+  if (!exists("obj"))
+    obj="Doesn't exist."
+  if (is.list(obj))
+    warning(paste(paste(front,paste(paste(names(obj),obj,sep=": "),collapse=" "))),"\n")
+  else warning(paste(front,obj,front,"\n"))
+}
+
+
 ## Passing the ID of the item being scored
 scoredItemID <- 0
 # =================
@@ -59,7 +71,7 @@ shinyServer(function(input, output, session) {
     }
     else{
       probs <- subset(problemList,Assignment==input$thisAssignment & Problem == input$thisProblem)
-      if( nrow(probs)==0) stop("BUG: No such problem in problem list.")
+      if( nrow(probs)==0) return(NULL) # No such problem in problem list.")
       if( nrow(probs)>1 ) warning(paste(
         "More than one problem matches:",input$thisProblem, 
         "in", input$thisAssignment,". Check the assignment list spreadsheet"))

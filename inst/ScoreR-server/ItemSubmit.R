@@ -19,6 +19,19 @@ newItemSubmit <- function(val,info,P=prob,A=assign,who=who) {
   # Pull out the value set interactively by the user
   # If it's a text item, that's simply the character string <val>.  Otherwise, unpack
   # the JSON-encoded value
+  # browser()
+  checkit(info,"itemSubmit info:")
+  checkit(val,"itemSubmit val:")
+  if( isValidJSON(I(val)) ) checkit("valid JSON","itemSubmit:")
+  else checkit("invalid invalid invalid", "itemSubmit:")
+  if (isValidJSON(I(val)) && info$type %in% "Free text") {
+    checkit("bad free text","itemSubmit returning:")
+    return()
+  }
+  if (!isValidJSON(I(val)) && !(info$type %in% "Free text")) {
+    checkit("bad fixed choice", "itemSubmit returning:")
+    return()
+  }
   if (info$type=="Free text") {
     text <- val 
     content <- ""

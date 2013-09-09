@@ -1,21 +1,30 @@
 # Actions to take that are shared across sessions
 
+# Example spreadsheet
 problemFile <- "https://docs.google.com/spreadsheet/pub?key=0Am13enSalO74dFlKanJHXzBzdXJGNzJBdDBwamt1a2c&single=true&gid=0&output=csv"
 accountFile <- "https://docs.google.com/spreadsheet/pub?key=0Am13enSalO74dFlKanJHXzBzdXJGNzJBdDBwamt1a2c&single=true&gid=1&output=csv"
-problemFile <- "Contents/ProblemSpreadsheet.csv"
-accountFile <- "Contents/AccountSpreadsheet.csv"
+
+# Stats 155 spreadsheet
+problemFile <- "https://docs.google.com/spreadsheet/pub?key=0Am13enSalO74dG00aEtrZWFBU0Z5bDhsU1hETVI2N3c&single=true&gid=0&output=csv"
+accountFile <- "https://docs.google.com/spreadsheet/pub?key=0Am13enSalO74dG00aEtrZWFBU0Z5bDhsU1hETVI2N3c&single=true&gid=1&output=csv"
+
+#problemFile <- "Contents/ProblemSpreadsheet.csv"
+#accountFile <- "Contents/AccountSpreadsheet.csv"
 
 
 # Function to update the list of problems and accounts
 updateInputs <- function(){
-  passwords <<- read.csv(accountFile)
-  tmp <- read.csv(problemFile)
-#  passwords <<- fetchGoogle(accountFile)
-#  tmp <- fetchGoogle(problemFile)
+#  passwords <<- read.csv(accountFile)
+#  tmp <- read.csv(problemFile)
+  passwords <<- fetchGoogle(accountFile)
+  tmp <- fetchGoogle(problemFile)
   tmp$File <- as.character(tmp$File)
   tmp$Assignment <- as.character(tmp$Assignment)
   tmp$Problem <- as.character(tmp$Problem)
+  # Show only those problems listed as available
+  tmp <- subset(tmp, Available=="TRUE")
   problemList <<- tmp
+
   assignmentList <<- with(tmp,Assignment[!duplicated(Assignment)])
 }
 
