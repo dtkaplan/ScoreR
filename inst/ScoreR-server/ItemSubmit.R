@@ -34,6 +34,8 @@ newItemSubmit <- function(val,info,P=prob,A=assign,who=who) {
   }
   if (info$type=="Free text") {
     text <- val 
+    # This will go to SQL, so need to escape single quotes by translating to two single quotes
+    text <- gsub("'","''",text) 
     content <- ""
     autoscore <- 0  # Not auto-scored
     pts <- 0 
