@@ -20,8 +20,9 @@ probHTML <- reactive({
                       "' in assignment '",prob$Assignment,
                       "' not yet available.",sep="")
   }
-  
-  if( !prob$Answers ) # Strip answers from the HTML file
+  # Strip answers from the HTML file unless they have been released or 
+  # the instructor asks to see them for manual grading.
+  if( !(prob$Answers || input$showAnswerNarration) )  
     contents <- gsub("<aside.*?</aside>","",contents)
   # The regex will match the first closing aside, so can handle multiple asides
   # but it won't handle nested asides.

@@ -51,6 +51,7 @@ shinyUI(
                      h2(tableOutput("gradedTable")),
                      uiOutput("itemSelectorMan"), # choose an item from the present problem, 
                      checkboxInput("ungradedOnly","Show Ungraded Submissions Only",value=TRUE),
+                     checkboxInput("showAnswerNarration", "Show answer narration for instructor"),
                      # h2(tableOutput("itemTable")), # temporary
                      numericInput("whichSubmission","Submission being graded:",value=1,min=1,max=1,step=1),
                      selectInput("scoreAssigned","Score:",
