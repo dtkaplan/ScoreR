@@ -35,6 +35,41 @@ itemContentsTable <- reactive({
   return(tab)
 })
 
+# set a default score for essays in this problem
+defaultScoreEssay <- function(probID,assignment,from=0,to=4){
+#  if( is.na(assignment) || is.na(probID) || assignment=="" || probID=="" || probID=="Select Problem") return()
+  query <- paste("update submit set score=",to,
+                " where assignment='",assignment, 
+                "' and probID='",probID, 
+                "' and autoScore=0", sep="")
+  # if from is NA, then move all the scores to the target.  Otherwise, just the scores
+  # already at the from value.
+  if (!is.na(from)) query <- paste(query, " and score=", from, sep="") 
+  checkit(query,"default")
+  dbGetQuery(db,query)
+}
+defaultEssayScoreAllToZero <- observe({
+  input$defaultScoreAllToZero # for the dependency
+  isolate(defaultScoreEssay(probID=input$thisProblem,assignment=input$thisAssignment,from=NA,to=0))
+})
+defaultEssayScoreToOne <- observe({
+  input$defaultScore1 # for the dependency
+  isolate(defaultScoreEssay(probID=input$thisProblem,assignment=input$thisAssignment,from=0,to=1))
+})
+defaultEssayScoreToTwo <- observe({
+  input$defaultScore2 # for the dependency
+  isolate(defaultScoreEssay(probID=input$thisProblem,assignment=input$thisAssignment,from=0,to=2))
+})
+defaultEssayScoreToThree <- observe({
+  input$defaultScore3 # for the dependency
+  isolate(defaultScoreEssay(probID=input$thisProblem,assignment=input$thisAssignment,from=0,to=3))
+})
+defaultEssayScoreToFour <- observe({
+  input$defaultScore4 # for the dependency
+  isolate(defaultScoreEssay(probID=input$thisProblem,assignment=input$thisAssignment,from=0,to=4))
+})
+
+
 # update the score for a submission
 updateScoreSubmission <- observe({
   # cat("In updateScoreSubmission\n",file=stderr())

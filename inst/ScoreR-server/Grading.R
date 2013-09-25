@@ -44,7 +44,7 @@ output$itemSelectorMan <- renderUI({
 # How many have been graded.
 output$gradedTable <- renderTable({ manuallyScoredTable() })
 # The contents of the selected item.
-output$itemTable <- renderTable({itemContentsTable()})
+output$itemTable <- renderTable({ itemContentsTable()})
 # The currently selected text for manual grading
 output$currentItemText <- renderText({
   tab <- itemContentsTable()
@@ -68,7 +68,7 @@ output$currentItemText <- renderText({
     updateTextInput(session,"scorerTextEditing",value=fromJSON(I(response$freetext[1])))
     paste(fromJSON(I(tab$freetext)),
           "\n\nSubmission from ",tab$user,
-          " on ",tab$lasttime,". Prev. score: ",tab$score ,sep="")
+          " on ",tab$lasttime,". Prev. score: ",response$score ,sep="")
   }
   else
     "--- No submission ----"
