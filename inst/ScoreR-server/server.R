@@ -174,9 +174,17 @@ shinyServer(function(input, output, session) {
         # If it's free text, update that from the input from the database
         freetext <- fromJSON(fromDB[inds[1],"freetext"])
         answer <- fromDB[inds[1],"answer"]
+        score <- fromDB[inds[1],"score"]
+        possible <- fromDB[inds[1],"possible"]
         if (nchar(freetext) > 0) updateTextInput(session,itemID,value=freetext)
-        else updateTextInput(session,outputID,value=paste("last =",answer))
-        
+        else {
+          # if the score has been released, put it here
+          # MAKE THIS CONDITIONAL ON WHETHER THE SCORE IS RELEASED FOR THIS PROBLEM
+          probData <- probData() # Get the data on the selected problem, File, Answers, etc.
+          if( probData$Answers ) scoreMessage <- paste("Score",score,"/",possible)
+          else scoreMessage <- ""
+          updateTextInput(session,outputID,value=paste("last =",answer,scoreMessage))
+        }
       }
     }
   })
