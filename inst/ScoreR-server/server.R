@@ -11,6 +11,7 @@ source("ItemSubmit.R", local=TRUE)
 # To let me intercept and debug db calls
 dbGetQuery <- function(conn, statement, ...) {
   # browser()
+   cat(paste(statement,"\n"),file=stderr())
   DBI::dbGetQuery(conn, statement, ...)
 }
 # General check to print a message
@@ -95,8 +96,10 @@ shinyServer(function(input, output, session) {
   scorerSubmit <- observe({
     input$scorerTextSubmit  # for the dependency
     textContents <- isolate(input$scorerTextEditing)
+    # handle SQL escaping of quotes
+    textContents <- gsub("'", "''", textContents)
     textContents <- toJSON(I(textContents))
-    if (scoredItemID > 0 ) {
+    if (!is.na(scoredItemID) && scoredItemID > 0 ) {
       query = paste("update submit set freetext='",
                     textContents," ",
                     "' where id='",scoredItemID,"'",sep="")

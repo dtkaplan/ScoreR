@@ -37,7 +37,9 @@ itemContentsTable <- reactive({
 
 # set a default score for essays in this problem
 defaultScoreEssay <- function(probID,assignment,from=0,to=4){
-#  if( is.na(assignment) || is.na(probID) || assignment=="" || probID=="" || probID=="Select Problem") return()
+  if( is.null(assignment) || is.null(probID) || 
+        assignment=="" || probID=="" || 
+        probID=="Select Problem") return(NULL)
   query <- paste("update submit set score=",to,
                 " where assignment='",assignment, 
                 "' and probID='",probID, 
